@@ -1,9 +1,9 @@
 ---
 home: true
-heroImage: /logo.png
+heroImage: https://cdn.gocn.vip/clickvisual/logo.png
 heroText: ClickVisual
 actionText: 快速上手 →
-actionLink: /quickstart/
+actionLink: /clickvisual/
 tagline: 轻量级的开源日志查询、分析、报警的可视化平台
 sidebar: auto
 features:

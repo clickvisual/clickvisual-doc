@@ -4,7 +4,7 @@ module.exports = {
     title: "ClickVisual",
     description: "A light weight web log visual analytic platform for clickhouse.",
     head: [
-        ["link", {rel: "icon", href: "/images/logo.png"}],
+        ["link", {rel: "icon", href: "https://cdn.gocn.vip/clickvisual/logo.png"}],
         [
             "meta",
             {
