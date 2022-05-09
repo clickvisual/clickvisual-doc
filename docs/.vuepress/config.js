@@ -76,9 +76,9 @@ var _hmt = _hmt || [];
                     title: "快速开始",
                     collapsable: false, // 可选的, 默认值是 true,
                     children: [
-                        "01quickstart/what-is-the-mogo",
+                        "01quickstart/what-is-the-clickvisual",
                         "01quickstart/quick-learning",
-                        "01quickstart/experience-mogo-with-docker-compose",
+                        "01quickstart/experience-clickvisual-with-docker-compose",
                     ],
                 },
                 {
@@ -103,7 +103,7 @@ var _hmt = _hmt || [];
                         "03funcintro/clickHouse-commonly-used-sql",
                         "03funcintro/fluent-bit-configuration-reference",
                         "03funcintro/alarm-function-configuration-description",
-                        "03funcintro/mogo-configuration-description",
+                        "03funcintro/clickvisual-configuration-description",
                     ],
                 },
                 {
@@ -111,7 +111,7 @@ var _hmt = _hmt || [];
                     collapsable: false, // 可选的, 默认值是 true,
                     children: [
                         "04appauth/auth-intro",
-                        "04appauth/mogo-auth",
+                        "04appauth/clickvisual-auth",
                         "04appauth/auth-proxy",
                         "04appauth/gitlab-oauth2",
                         "04appauth/github-oauth2",

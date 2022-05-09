@@ -1,6 +1,6 @@
 # 系统设置
 
-完成 Mogo 部署后，首先要做的是配置 Kubernetes 集群、配置 ClickHouse 数据源。
+完成 ClickVisual 部署后，首先要做的是配置 Kubernetes 集群、配置 ClickHouse 数据源。
 
 ## 1. 集群配置管理
 

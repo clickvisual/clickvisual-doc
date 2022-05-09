@@ -7,10 +7,10 @@
 
 ```
 # 获取最新版本
-latest=$(curl -sL https://api.github.com/repos/shimohq/mogo/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+latest=$(curl -sL https://api.github.com/repos/shimohq/ClickVisual/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
 
 # MacOS amd64系统
-wget "https://github.com/shimohq/mogo/releases/download/${latest}/mogo-${latest}-darwin-amd64.tar.gz" -O mogo-${latest}.tar.gz
+wget "https://github.com/shimohq/ClickVisual/releases/download/${latest}/ClickVisual-${latest}-darwin-amd64.tar.gz" -O ClickVisual-${latest}.tar.gz
 ```
 
 ![img.png](../../images/binary-download.png)
@@ -18,37 +18,37 @@ wget "https://github.com/shimohq/mogo/releases/download/${latest}/mogo-${latest}
 ## Linux AMD64 架构
 ```
 # 获取最新版本
-latest=$(curl -sL https://api.github.com/repos/shimohq/mogo/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+latest=$(curl -sL https://api.github.com/repos/shimohq/ClickVisual/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
 
 # Linux amd64系统
-wget "https://github.com/shimohq/mogo/releases/download/${latest}/mogo-${latest}-linux-amd64.tar.gz" -O mogo-${latest}.tar.gz
+wget "https://github.com/shimohq/ClickVisual/releases/download/${latest}/ClickVisual-${latest}-linux-amd64.tar.gz" -O ClickVisual-${latest}.tar.gz
 ```
 ## Mac ARM64 架构
 ```
 # 获取最新版本
-latest=$(curl -sL https://api.github.com/repos/shimohq/mogo/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+latest=$(curl -sL https://api.github.com/repos/shimohq/ClickVisual/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
 
 # Mac arm64系统
-wget "https://github.com/shimohq/mogo/releases/download/${latest}/mogo-${latest}-mac-arm64.tar.gz" -O mogo-${latest}.tar.gz
+wget "https://github.com/shimohq/ClickVisual/releases/download/${latest}/ClickVisual-${latest}-mac-arm64.tar.gz" -O ClickVisual-${latest}.tar.gz
 ```
 
 ## Linux ARM64 架构
 ```
 # 获取最新版本
-latest=$(curl -sL https://api.github.com/repos/shimohq/mogo/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+latest=$(curl -sL https://api.github.com/repos/shimohq/ClickVisual/releases/latest | grep  ".tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
 
 # Linux arm64系统
-wget "https://github.com/shimohq/mogo/releases/download/${latest}/mogo-${latest}-linux-arm64.tar.gz" -O mogo-${latest}.tar.gz
+wget "https://github.com/shimohq/ClickVisual/releases/download/${latest}/ClickVisual-${latest}-linux-arm64.tar.gz" -O ClickVisual-${latest}.tar.gz
 ```
 
-## 启动 Mogo
+## 启动 ClickVisual
 ```
 # 解压压缩包
-mkdir -p ./mogo-${latest} && tar -zxvf mogo-${latest}.tar.gz -C ./mogo-${latest}
+mkdir -p ./ClickVisual-${latest} && tar -zxvf ClickVisual-${latest}.tar.gz -C ./ClickVisual-${latest}
 
 # 修改配置文件 config/default.toml，将 MySQL、Redis 等配置改成你自己的配置。
-# 修改完配置文件后，使用如下指令运行 mogo
-cd ./mogo-${latest} && ./mogo -config config/default.toml
+# 修改完配置文件后，使用如下指令运行 ClickVisual
+cd ./ClickVisual-${latest} && ./ClickVisual -config config/default.toml
 
 # 访问 http://localhost:19001
 # login username: shimo

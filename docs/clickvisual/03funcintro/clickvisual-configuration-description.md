@@ -1,6 +1,6 @@
-# Mogo 配置说明
+# ClickVisual 配置说明
 
-本文主要对 Mogo 启动的配置项做详细说明。
+本文主要对 ClickVisual 启动的配置项做详细说明。
 
 
 
@@ -9,8 +9,8 @@ app 段配置说明：
 [app]
 # OAuth 签发 hashStatecode 所需的 secretKey
 secretKey = "secretKey"
-# 如果配置了 mogo 域名，需要将 rootURL 配置为 mogo 域名　　　　　　　
-rootURL = "https://dev.mogo.com/"
+# 如果配置了 ClickVisual 域名，需要将 rootURL 配置为 ClickVisual 域名　　　　　　　
+rootURL = "https://dev.ClickVisual.com/"
 # 登录后默认访问的 URL　
 baseURL = "/api/admin/login/"
 # 日志查询中需要隐藏的元数据字段　　　　
@@ -36,14 +36,14 @@ name = "default.log"
 
 server 段配置说明：
 ```
-# Mogo API Server 配置
+# ClickVisual API Server 配置
 [server.http]
 # 启动的 HTTP API Server Host
 host = "0.0.0.0"
 # 启动的 HTTP API Server Port
 port = 9001
 
-# Mogo governor Server 配置，governor 用户提供 metrics 采集、profling 调试、日志级别调整等。
+# ClickVisual governor Server 配置，governor 用户提供 metrics 采集、profling 调试、日志级别调整等。
 [server.governor]
 # 启动的 HTTP Governor Server Host
 host = "0.0.0.0"
@@ -59,7 +59,7 @@ connMaxLifetime = "300s"
 # 是否开启 debug 模式，debug 模式下会打印 plain sql
 debug = true
 # MySQL 实例的 DSN 连接串
-dsn = "root:root@tcp(127.0.0.1:3306)/mogo?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=True&loc=Local&readTimeout=1s&timeout=1s&writeTimeout=3s"
+dsn = "root:root@tcp(127.0.0.1:3306)/ClickVisual?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=True&loc=Local&readTimeout=1s&timeout=1s&writeTimeout=3s"
 # 日志级别
 level = "error"
 # 最大空闲连接数
@@ -73,8 +73,8 @@ auth 段配置说明
 [auth]
 # 使用 redis 存储用户 session
 mode = "redis"
-# 组件名，默认 mogo-session
-name = "mogo-session"
+# 组件名，默认 ClickVisual-session
+name = "ClickVisual-session"
 keypairs = "secret"
 redisSize = 10
 redisNetwork = "tcp"
@@ -92,8 +92,8 @@ enabled = false
 [auth.proxy]
 # 是否允许开启代理模式
 enabled = true
-# 代理模式下默认使用 'X-MOGO-USER' 读取 username
-headerName = "X-MOGO-USER"
+# 代理模式下默认使用 'X-ClickVisual-USER' 读取 username
+headerName = "X-ClickVisual-USER"
 
 # 第三方登录配置
 [[auth.tps]]

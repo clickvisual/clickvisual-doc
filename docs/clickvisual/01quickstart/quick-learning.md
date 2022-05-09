@@ -1,13 +1,13 @@
 # 快速上手
-本文主要是帮助你快速了解 Mogo，查询你的日志信息。想要更多了解 Mogo，请参考：什么是 Mogo。
+本文主要是帮助你快速了解 ClickVisual，查询你的日志信息。想要更多了解 ClickVisual，请参考：什么是 ClickVisual。
 
-## 第一步：安装Mogo
+## 第一步：安装ClickVisual
 
-Mogo可以安装在不同种类的操作系统上，并且可以使用二进制、Docker 形式安装，请参考：安装介绍。
+ClickVisual可以安装在不同种类的操作系统上，并且可以使用二进制、Docker 形式安装，请参考：安装介绍。
 
 
-## 第二步：初始化 Mogo 数据库
-初次安装 Mogo，需要初始化数据库，访问 http://localhost:19001/install/init
+## 第二步：初始化 ClickVisual 数据库
+初次安装 ClickVisual，需要初始化数据库，访问 http://localhost:19001/install/init
 对已有数据库进行版本更新的情况下，访问 http://localhost:19001/api/v1/migration
 
 ![img.png](../../images/welcome.png)

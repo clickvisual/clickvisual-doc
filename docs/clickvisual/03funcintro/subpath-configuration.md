@@ -4,11 +4,11 @@
 
 需要修改两个配置：导入环境变量，重新编译前端；后端服务启动配置修改。
 
-假设需要支持http://localhost:19001/mogo/这个子路径
+假设需要支持http://localhost:19001/ClickVisual/这个子路径
 
 1. 首先导入环境变量，重新编译前端，可以在项目根目录执行 make build.ui build.dist
 
-> export PUBLIC_PATH=/mogo/
+> export PUBLIC_PATH=/ClickVisual/
 
 2. 完成前端编译后进行后端编译，执行make build.api
 
@@ -23,9 +23,9 @@
 ``` 
 [app]
 serveFromSubPath = true
-rootURL = "http://localhost:19001/mogo/"
+rootURL = "http://localhost:19001/ClickVisual/"
 ```
 
-此时目录结构如下图所示，执行./bin/mogo --config=./config/default.toml 启动服务即可
+此时目录结构如下图所示，执行./bin/ClickVisual --config=./config/default.toml 启动服务即可
 
 ![img.png](../../images/config-tree.png)
