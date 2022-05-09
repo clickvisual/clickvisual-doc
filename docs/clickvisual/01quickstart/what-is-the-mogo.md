@@ -13,25 +13,25 @@ Mogo 是一个轻量级的开源日志查询、分析、报警的可视化平台
 
 ## 技术架构
 
-![](../images/technical-architecture.png)
+![](../../images/technical-architecture.png)
 
 ## Mogo 使用效果
 
 ### 日志查询
 
-![](../images/table-query.png)
+![](../../images/table-query.png)
 
 ### 可视化配置
 
-![](../images/visual-configuration.png)
+![](../../images/visual-configuration.png)
 
 ### 增加告警规则
 
-![](../images/adding-alarm-rule.png)
+![](../../images/adding-alarm-rule.png)
 
 ### 查看历史告警
 
-![](../images/alarms-history.png)
+![](../../images/alarms-history.png)
 
 ### 场景支持
 - 日志查询
