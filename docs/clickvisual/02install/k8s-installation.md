@@ -1,0 +1,447 @@
+# Kubernetes 集群安装
+
+本文主要介绍如何使用 helm 或 kubectl 将 Mogo 部署到 Kubernetes 集群。
+
+## 1. 部署要求
+- Kubernetes >= 1.17
+- Helm >= 3.0.0
+
+## 2. 部署 fluent-bit（参考）
+可以直接参考 fluent-bit 官方网站进行部署 https://docs.fluentbit.io/，只需要保证，写入 kafka 的数据包含以下两个字段即可。
+- _time_
+- _log_
+
+如果采用 DaemonSet 方式部署，可以使用如下的 DaemonSet yaml。注意需要挂载 configMap。fluentbit-daemonset.yaml 如下：
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: kube-system
+  labels:
+    k8s-app: fluent-bit-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      k8s-app: fluent-bit-logging
+  template:
+    metadata:
+      labels:
+        k8s-app: fluent-bit-logging
+        version: v1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      containers:
+      - name: fluent-bit  
+        image: bitnami/fluent-bit:1.8.12      
+        imagePullPolicy: Always
+        env:
+        - name: CLUSTER_NAME
+          value: ${CLUSTER_NAME}
+        - name: KAFKA_BROKERS
+          value: ${KAFKA_BROKERS}
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        resources:
+          requests:
+            cpu: 5m
+            memory: 32Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: fluent-bit-config
+          mountPath: /fluent-bit/etc/
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      - name: fluent-bit-config
+        configMap:
+          name: fluent-bit-config
+```
+
+
+挂载的 fluentbit-configmap.yaml 配置可以参考如下：
+``` 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: kube-system
+  labels:
+    k8s-app: fluent-bit
+data:
+  # Configuration files: server, input, filters and output
+  # ======================================================
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush         1
+        Log_Level     info
+        Daemon        off
+        Parsers_File  parsers.conf
+        HTTP_Server   On
+        HTTP_Listen   0.0.0.0
+        HTTP_Port     2020
+
+    @INCLUDE input-kubernetes.conf
+    @INCLUDE filter-kubernetes.conf
+    @INCLUDE filter-modify.conf
+    @INCLUDE output-kafka.conf
+
+    # Deamonet中有配置ENV时禁用
+    #@Set CLUSTER_NAME=shimodev
+    #@Set KAFKA_BROKERS=127.0.0.1:9092
+
+  input-kubernetes.conf: |
+    [INPUT]
+        Name              tail
+        # Tag 标识数据源，用于后续处理流程Filter,output时选择数据
+        Tag               ingress.*
+        Path              /var/log/containers/nginx-ingress-controller*.log
+        Parser            docker
+        DB                /var/log/flb_ingress.db
+        Mem_Buf_Limit     15MB
+        Buffer_Chunk_Size 32k
+        Buffer_Max_Size   64k
+        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+        # 采集文件没有数据库偏移位置记录的，从文件的头部开始读取，日志文件较大时会导致fluent内存占用率升高出现oomkill
+        #Read_from_Head    On
+
+    [INPUT]
+        Name              tail
+        # Tag 标识数据源，用于后续处理流程Filter,output时选择数据
+        Tag               ingress_stderr.*
+        Path              /var/log/containers/nginx-ingress-controller*.log
+        Parser            docker
+        DB                /var/log/flb_ingress_stderr.db
+        Mem_Buf_Limit     15MB
+        Buffer_Chunk_Size 32k
+        Buffer_Max_Size   64k
+        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+        # 采集文件没有数据库偏移位置记录的，从文件的头部开始读取，日志文件较大时会导致fluent内存占用率升高出现oomkill
+        #Read_from_Head    On
+
+    [INPUT]
+        Name              tail
+        Tag               kube.*
+        Path              /var/log/containers/*_default_*.log,/var/log/containers/*_release_*.log
+        Exclude_path     *fluent-bit-*,*mongo-*,*minio-*,*mysql-*
+        Parser            docker
+        DB                /var/log/flb_kube.db
+        Mem_Buf_Limit     15MB
+        Buffer_Chunk_Size 1MB
+        Buffer_Max_Size   5MB
+        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+
+    [INPUT]
+        Name              tail
+        Tag               ego.*
+        Path              /var/log/containers/*_default_*.log,/var/log/containers/*_release_*.log
+        Exclude_path     *fluent-bit-*,*mongo-*,*minio-*,*mysql-*
+        Parser            docker
+        DB                /var/log/flb_ego.db
+        Mem_Buf_Limit     15MB
+        Buffer_Chunk_Size 1MB
+        Buffer_Max_Size   5MB
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+
+  filter-kubernetes.conf: |
+    [FILTER]
+        Name                kubernetes
+        Match               ingress.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Kube_Tag_Prefix     ingress.var.log.containers.
+        # Merge_Log=On 解析log字段的json内容，提取到根层级, 附加到Merge_Log_Key指定的字段上.
+        Merge_Log           Off
+        #Merge_Log_Key       log_processed
+        #Merge_Log_Trim      On
+        # 合并log字段后是否保持原始log字段
+        Keep_Log            On
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Labels              Off
+        Annotations         Off
+        #Regex_Parser
+
+    [FILTER]
+        Name                kubernetes
+        Match               ingress_stderr.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Kube_Tag_Prefix     ingress_stderr.var.log.containers.
+        # Merge_Log=On 解析log字段的json内容，提取到根层级, 附加到Merge_Log_Key指定的字段上.
+        Merge_Log           Off
+        # 合并log字段后是否保持原始log字段
+        Keep_Log            Off
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Labels              Off
+        Annotations         Off
+        #Regex_Parser
+
+
+    [FILTER]
+        Name                kubernetes
+        Match               kube.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Kube_Tag_Prefix     kube.var.log.containers.
+        Merge_Log           Off
+        Keep_Log            On
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Labels              Off
+        Annotations         Off
+
+    [FILTER]
+        Name                kubernetes
+        Match               ego.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Kube_Tag_Prefix     ego.var.log.containers.
+        Merge_Log           Off
+        Keep_Log            Off
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Labels              Off
+        Annotations         Off
+
+
+
+  filter-modify.conf: |
+    [FILTER]
+        Name         nest
+        Match        *
+        Wildcard     pod_name
+        Operation    lift
+        Nested_under kubernetes
+        Add_prefix   kubernetes_
+
+    [FILTER]
+        Name            modify
+        Match           *
+        Rename          time _time_
+        Rename          log _log_
+        Rename          stream _source_
+        Rename          kubernetes_host _node_name_
+        Rename          kubernetes_namespace_name _namespace_
+        Rename          kubernetes_container_name _container_name_
+        Rename          kubernetes_pod_name _pod_name_
+        Remove          kubernetes_pod_id
+        Remove          kubernetes_docker_id
+        Remove          kubernetes_container_hash
+        Remove          kubernetes_container_image
+        Add             _cluster_ ${CLUSTER_NAME}
+        Add             _log_agent_ ${HOSTNAME}
+        # ${NODE_IP} 通过daemonset中配置ENV注入
+        Add             _node_ip_ ${NODE_IP}
+
+    [FILTER]
+        Name    grep
+        Match   ingress.*
+        #Regex container_name ^nginx-ingress-controller$
+        #Regex stream ^stdout$
+        Exclude _source_ ^stderr$
+        # 排除 TCP 代理日志（日志格式不同影响采集）
+        Exclude log ^\[*
+
+    [FILTER]
+        Name    grep
+        Match   ingress_stderr.*
+        Exclude _source_ ^stdout$
+
+    [FILTER]
+        Name    grep
+        Match   kube.*
+        #Regex stream ^stdout$
+        Exclude log (ego.sys)
+
+    [FILTER]
+        Name    grep
+        Match   ego.*
+        #Regex lname ^(ego.sys)$
+        Regex   log ("lname":"ego.sys")
+
+    # [FILTER]
+    #     Name            modify
+    #     Match           ego.*
+    #     Hard_rename     ts _time_
+
+  output-kafka.conf: |
+    [OUTPUT]
+        Name           kafka
+        Match          ingress.*
+        Brokers        ${KAFKA_BROKERS}
+        Topics         ingress-stdout-logs-${CLUSTER_NAME}
+        #Timestamp_Key  @timestamp
+        Timestamp_Key  _time_
+        Retry_Limit    false
+        # hides errors "Receive failed: Disconnected" when kafka kills idle connections
+        rdkafka.log.connection.close false
+        # producer buffer is not included in http://fluentbit.io/documentation/0.12/configuration/memory_usage.html#estimating
+        rdkafka.queue.buffering.max.kbytes 10240
+        # for logs you'll probably want this ot be 0 or 1, not more
+        rdkafka.request.required.acks 1
+
+    [OUTPUT]
+        Name           kafka
+        Match          ingress_stderr.*
+        Brokers        ${KAFKA_BROKERS}
+        Topics         ingress-stderr-logs-${CLUSTER_NAME}
+        #Timestamp_Key  @timestamp
+        Timestamp_Key  _time_
+        Retry_Limit    false
+        # hides errors "Receive failed: Disconnected" when kafka kills idle connections
+        rdkafka.log.connection.close false
+        # producer buffer is not included in http://fluentbit.io/documentation/0.12/configuration/memory_usage.html#estimating
+        rdkafka.queue.buffering.max.kbytes 10240
+        # for logs you'll probably want this ot be 0 or 1, not more
+        rdkafka.request.required.acks 1
+
+    [OUTPUT]
+        Name           kafka
+        Match          kube.*
+        Brokers        ${KAFKA_BROKERS}
+        Topics         app-stdout-logs-${CLUSTER_NAME}
+        Timestamp_Key  _time_
+        Retry_Limit    false
+        # hides errors "Receive failed: Disconnected" when kafka kills idle connections
+        rdkafka.log.connection.close false
+        # producer buffer is not included in http://fluentbit.io/documentation/0.12/configuration/memory_usage.html#estimating
+        rdkafka.queue.buffering.max.kbytes 10240
+        # for logs you'll probably want this ot be 0 or 1, not more
+        rdkafka.request.required.acks 1
+
+    [OUTPUT]
+        Name           kafka
+        Match          ego.*
+        Brokers        ${KAFKA_BROKERS}
+        Topics         ego-stdout-logs-${CLUSTER_NAME}
+        Timestamp_Key  _time_
+        Retry_Limit    false
+        # hides errors "Receive failed: Disconnected" when kafka kills idle connections
+        rdkafka.log.connection.close false
+        # producer buffer is not included in http://fluentbit.io/documentation/0.12/configuration/memory_usage.html#estimating
+        rdkafka.queue.buffering.max.kbytes 10240
+        # for logs you'll probably want this ot be 0 or 1, not more
+        rdkafka.request.required.acks 1
+
+  parsers.conf: |
+    [PARSER]
+        Name   apache
+        Format regex
+        Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   apache2
+        Format regex
+        Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   apache_error
+        Format regex
+        Regex  ^\[[^ ]* (?<time>[^\]]*)\] \[(?<level>[^\]]*)\](?: \[pid (?<pid>[^\]]*)\])?( \[client (?<client>[^\]]*)\])? (?<message>.*)$
+
+    [PARSER]
+        Name   nginx
+        Format regex
+        Regex ^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   json
+        Format json
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name        docker
+        Format      json
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L
+        Time_Keep   On
+        # 与FILTER 阶段中Merge_Log=On 效果类似，解析log字段的json内容，但无法提到根层级
+        #Decode_Field_As escaped_utf8 kubernetes do_next
+        #Decode_Field_As json kubernetes
+
+    [PARSER]
+        # http://rubular.com/r/tjUt3Awgg4
+        Name cri
+        Format regex
+        Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+
+    [PARSER]
+        Name        syslog
+        Format      regex
+        Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
+        Time_Key    time
+        Time_Format %b %d %H:%M:%S
+```
+
+2. 部署 Mogo
+   克隆仓库：
+
+```
+git clone https://github.com/shimohq/mogo.git
+cd mogo &amp;&amp; cp api/config/default.toml data/helm/mogo/default.toml
+```
+
+修改 data/helm/mogo/default.toml 中的 mysql、auth 以及其他段配置，将 mysql.dsn 、 auth.redisAddr、auth.redisPassword 替换为你自己的配置。
+
+
+
+方法一：[推荐] 使用 helm 直接安装：
+```
+helm install mogo data/helm/mogo --set image.tag=latest --namespac default
+```
+如果你已将 mogo 镜像推送到你自己的 harbor 仓库，可以通过 --set image.respository 指令修改仓库地址
+```
+helm install mogo data/helm/mogo --set image.repository=${YOUR_HARBOR}/${PATH}/mogo --set image.tag=latest --namespace default<br/>
+```
+
+方法二：[可选] 使用 helm 渲染出 yaml 后，手动通过 kubectl 安装：
+```
+# 使用 helm template 指令渲染安装的 yaml
+helm template mogo data/helm/mogo --set image.tag=latest > mogo.yaml
+
+# 可以使用 "--set image.repository" 来覆盖默认镜像路径
+# helm template mogo mogo --set image.repository=${YOUR_HARBOR}/${PATH}/mogo --set image.tag=latest > mogo.yaml
+
+# 检查 mogo.yaml 是否无误，随后通过 kuebctl apply mogo.yaml
+kubectl apply -f mogo.yaml --namespace default
+```
