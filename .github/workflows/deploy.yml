@@ -17,6 +17,6 @@ jobs:
       - name: Install ossutil
         run: wget http://gosspublic.alicdn.com/ossutil/1.7.3/ossutil64 && chmod 755 ossutil64
       - name: Config ossutil
-        run: ./ossutil64 config -e oss-cn-shanghai.aliyuncs.com -i ${{ secrets.OSS_ACCESS_KEY_ID }} -k ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+        run: ./ossutil64 config -e oss-cn-beijing.aliyuncs.com -i ${{ secrets.OSS_ACCESS_KEY_ID }} -k ${{ secrets.OSS_ACCESS_KEY_SECRET }}
       - name: Upload docs
         run: ./ossutil64 cp -r -f ./docs/.vuepress/dist/ oss://gocn-cdn/clickvisual/
