@@ -4,7 +4,7 @@ module.exports = {
     title: "ClickVisual",
     description: "A light weight web log visual analytic platform for clickhouse.",
     head: [
-        ["link", {rel: "icon", href: "https://cdn.gocn.vip/clickvisual/logo.png"}],
+        ["link", {rel: "icon", href: "/icon.png"}],
         [
             "meta",
             {
@@ -145,7 +145,6 @@ var _hmt = _hmt || [];
                     moment.locale("zh-cn");
                     return moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
                 },
-
                 dateOptions: {
                     hours12: true,
                 },
