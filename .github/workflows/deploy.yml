@@ -13,7 +13,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
       - name: Build docs
-        run: yarn install && yarn run docs:build
+        run: npm install && npm run docs:build
       - name: Install ossutil
         run: wget http://gosspublic.alicdn.com/ossutil/1.7.3/ossutil64 && chmod 755 ossutil64
       - name: Config ossutil
