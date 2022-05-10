@@ -151,19 +151,19 @@ var _hmt = _hmt || [];
                 },
             },
         ],
-        [
-            '@vssue/vuepress-plugin-vssue',
-            {
-                platform: 'github', //v3的platform是github，v4的是github-v4
-                locale: 'zh', //语言
-                // 其他的 Vssue 配置
-                owner: 'clickvisual', //github 账户名或组织名
-                repo: 'clickvisual-doc', //github 一个项目的名称
-                clientId: '',//注册的 Client ID
-                clientSecret: '',//注册的 Client Secret
-                autoCreateIssue: true // 自动创建评论，默认是false，最好开启，这样首次进入页面的时候就不用去点击创建评论的按钮了。
-            },
-        ],
+        // [
+        //     '@vssue/vuepress-plugin-vssue',
+        //     {
+        //         platform: 'github', //v3的platform是github，v4的是github-v4
+        //         locale: 'zh', //语言
+        //         // 其他的 Vssue 配置
+        //         owner: 'clickvisual', //github 账户名或组织名
+        //         repo: 'clickvisual-doc', //github 一个项目的名称
+        //         clientId: '',//注册的 Client ID
+        //         clientSecret: '',//注册的 Client Secret
+        //         autoCreateIssue: true // 自动创建评论，默认是false，最好开启，这样首次进入页面的时候就不用去点击创建评论的按钮了。
+        //     },
+        // ],
         "@vuepress/back-to-top",
         "@vuepress/active-header-links",
         "@vuepress/medium-zoom",
