@@ -126,7 +126,7 @@ var _hmt = _hmt || [];
                 },
             ]
         },
-        sidebarDepth: 1,
+        sidebarDepth: 2,
         lastUpdated: "上次更新",
         serviceWorker: {
             updatePopup: {
