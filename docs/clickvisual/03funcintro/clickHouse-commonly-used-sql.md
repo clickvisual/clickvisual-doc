@@ -1,7 +1,7 @@
 # ClickHouse常用SQL
 
 ## 今日PV
-```
+```sql
 with (
     select count(1) from ingress_stdout where toDate(_time_second_) = addDays(toDate(now()), -1)
 ) as yesterday_pv
@@ -13,7 +13,7 @@ where toDate(_time_second_) = toDate(now());
 ![img.png](../../images/sql-result-1.png)
 
 ## 流入流出
-```
+```sql
 select concat(formatDateTime(_time_second_,'%Y-%m-%d %H'),':00') as hour ,
       SUM(if(body_bytes_sent is null, 0, body_bytes_sent)) as net_out,
       SUM(if(request_length is null, 0, request_length)) as net_in
@@ -25,7 +25,7 @@ order by hour limit 24;
 ![img.png](../../images/sql-result-2.png)
 
 ## TOP10 访问path
-```
+```sql
 select path(url) as _path, count(1) as pv
 from ingress_stdout
 where _time_second_ >= addMinutes(now(),-15)
@@ -36,7 +36,7 @@ order by pv desc limit 10;
 ![img.png](../../images/sql-result-3.png)
 
 ## PV趋势同比昨日（按时段）
-```
+```sql
 select today._hour as hour,
        yesterday.pv as yesterday_pv,
        today.pv as today_pv,

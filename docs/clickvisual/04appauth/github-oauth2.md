@@ -4,18 +4,18 @@
 
 创建 GitHub OAuth 应用
 你需要创建一个 Github Oauth 应用，选择一个描述性名称，并使用以下重定向 URI
-```
+```sh
 https://ClickVisual.example.com/login/github
 ```
 
 在这里 https://ClickVisual.example.com 是你访问 ClickVisual 的地址。如果你没有使用 HTTPS，使用 IP+Port 方式，那么你需要将地址设置为
-```
+```sh
 http://ip:port/login/github
 ```
 
 开启 GitHub 功能
 下面是开启Github授权的配置
-```
+```toml
 [[auth.tps]]
 typ = "github"
 enable = true

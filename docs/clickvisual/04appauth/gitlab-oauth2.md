@@ -21,7 +21,7 @@ ClickVisual 支持对接 GitLab OAuth2，你需要在 GitLab 中注册应用程�
 
 ## 2. 开启 GitLab 授权认证功能
    下面是在 ClickVisual 本地配置中，开启 GitLab 授权认证的配置样例：
-```
+```toml
 [app]
 rootURL = "https://ClickVisual.example.com/"　　　　　　　　　　　# 你的 ClickVisual 域名
 

@@ -78,7 +78,7 @@ prom2click 仓库地址：[https://github.com/mindis/prom2click](https://github.
 - prom2click 为对应服务访问地址
 - alertmanager 为对应服务访问地址
 
-```
+```yaml
 alerting:
   # 告警配置文件
   alertmanagers:
@@ -101,7 +101,7 @@ remote_write:
 
 告警方式为 webhook，回调到 ClickVisual 服务，修改 url 地址，保证可以正常访问 ClickVisual 服务。
 
-```
+```yaml
 route:
   group_by: ['alertname', 'cluster', 'service']
   group_wait: 30s
@@ -123,7 +123,7 @@ receivers:
 
 如果 Prometheus 采用本地配置文件方式启动，例如下面这个例子，则将文件路径配置为 `/etc/prometheus/rules`
 
-```
+```yaml
 rule_files:
 - /etc/prometheus/rules/*.yaml
 ```

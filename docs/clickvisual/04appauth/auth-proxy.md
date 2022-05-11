@@ -5,7 +5,7 @@
 
 
 HTTP Proxy 配置：
-```
+```yaml
 [auth.proxy]
 # Defaults to false, but set to true to enable this feature
 enabled = true
@@ -14,15 +14,15 @@ headerName = "X-WEBAUTH-USER"
 ```
 
 使用 Curl 测试 ClickVisual 的 AuthProxy 功能：
-```
+```sh
 curl -H "X-WEBAUTH-USER: shimo"  http://localhost:19001/api/v1/users/info
 [
-{
-"id":1,
-"name":"shimo",
-"login":"shimo",
-"email":"shimo@shimo.im",
-"isAdmin":true
+    {
+    "id":1,
+    "name":"shimo",
+    "login":"shimo",
+    "email":"shimo@shimo.im",
+    "isAdmin":true
 }
 ]
 ```

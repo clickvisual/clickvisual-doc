@@ -3,7 +3,7 @@
 本文主要对 ClickVisual 启动的配置项做详细说明。
 
 app 段配置说明：
-```
+```toml
 [app]
 # OAuth 签发 hashStatecode 所需的 secretKey
 secretKey = "secretKey"
@@ -20,7 +20,7 @@ permissionFile = "./config/resource.yaml"
 ```
 
 logger 段配置说明：
-```
+```toml
 [logger]
 # 日志等级，可选 debug|info|warn|error|panic|fatal，建议测试环境选择 debug，生产环境选择 error
 level = "debug"
@@ -33,7 +33,7 @@ name = "default.log"
 ```
 
 server 段配置说明：
-```
+```toml
 # ClickVisual API Server 配置
 [server.http]
 # 启动的 HTTP API Server Host
@@ -50,7 +50,7 @@ port = 9003
 ```
 
 mysql 段配置说明
-```
+```toml
 [mysql]
 # 连接的最大存活时间，默认300s
 connMaxLifetime = "300s"
@@ -67,7 +67,7 @@ maxOpenConns = 50
 ```
 
 auth 段配置说明
-```
+```toml
 [auth]
 # 使用 redis 存储用户 session
 mode = "redis"
