@@ -3,7 +3,7 @@
 本文主要介绍如何使用 docker-compose 在本地快速启动 ClickVisual demo，体验日志生成、采集、查询的完整流程。
 
 ## 1. 基本信息
-- 项目地址：https://github.com/shimohq/ClickVisual
+- 项目地址：https://github.com/clickvisual/clickvisual
 - 浏览器输入 http://127.0.0.1:19001 访问 ClickVisual UI，账号/密码：shimo/shimo
 - 浏览器输入 http://127.0.0.1:19002 查看 Kafka 数据消费详情
 - 浏览器输入 http://127.0.0.1:19003 模拟真实用户访问 Nginx 写入 access 日志
@@ -13,7 +13,7 @@
 
 ## 2. 操作流程
 ### 2.1. 启动 ClickVisual
-- 克隆 ClickVisual：git clone https://github.91chi.fun//https://github.com/shimohq/ClickVisual.git
+- 克隆 ClickVisual：git clone https://github.91chi.fun//https://github.com/clickvisual/clickvisual.git
 - 在 ClickVisual 项目的根目录下执行：docker-compose up
 - 在浏览器里输入 http://127.0.0.1:19001，进入到 ClickVisual 登录页面，输入账号/密码：shimo/shimo
 
