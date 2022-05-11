@@ -178,21 +178,19 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 
 
 8. 参考资料
-- GitHub 地址：https://github.com/clickvisual/clickvisual
-- clickvisual文档：https://clickvisual.gocn.vip
-- clickvisual 使用文档：https://clickvisual.gocn.vip/doc/AV62KU4AABMRQ
-- fluent-bit 文档：https://docs.fluentbit.io/
-- Kubernetes 日志
-- 6 个 Kubernetes 日志系统建设中的典型问题，你遇到过几个：https://developer.aliyun.com/article/718735
-- 一文看懂 Kubernetes 日志系统设计和实践：https://developer.aliyun.com/article/727594
-- 9 个技巧，解决 Kubernetes 中的日志输出问题：https://developer.aliyun.com/article/747821
-- 直击痛点，详解 Kubernetes 日志采集最佳实践：https://developer.aliyun.com/article/749468?spm=a2c6h.14164896.0.0.24031164UoPfIX
-- Clickhouse
-- Clickhouse官方文档：https://clickhouse.com/
-- Clickhouse作为Kubernetes日志管理解决方案中的存储：http://dockone.io/article/9356
-- Uber 如何使用 ClickHouse 建立快速可靠且与模式无关的日志分析平台？：https://www.infoq.cn/article/l4thjgnr7hxpkgpmw6dz
-- 干货 | 携程ClickHouse日志分析实践：https://mp.weixin.qq.com/s/IjOWAPOJXANRQqRAMWXmaw
-- 为什么我们要从ES迁移到ClickHouse：https://mp.weixin.qq.com/s/l4RgNQPxvdNIqx52LEgBnQ
-- ClickHouse 在日志存储与分析方面作为 ElasticSearch 和 MySQL 的替代方案：https://mp.weixin.qq.com/s/nJXorcgi0QfXPCKr_HdUZg
-- 快手、携程等公司转战到 ClickHouse，ES 难道不行了？：https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg
-- 日志分析下ES/ClickHouse/Loki比较与思考：https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg
+- [GitHub](https://github.com/clickvisual/clickvisual)
+- [clickvisual文档](https://clickvisual.gocn.vip)
+- [clickvisual 使用文档](https://clickvisual.gocn.vip/doc/AV62KU4AABMRQ)
+- [fluent-bit 文档](https://docs.fluentbit.io/)
+- [6 个 Kubernetes 日志系统建设中的典型问题，你遇到过几个](https://developer.aliyun.com/article/718735)
+- [一文看懂 Kubernetes 日志系统设计和实践](https://developer.aliyun.com/article/727594)
+- [9 个技巧，解决 Kubernetes 中的日志输出问题](https://developer.aliyun.com/article/747821)
+- [直击痛点，详解 Kubernetes 日志采集最佳实践](https://developer.aliyun.com/article/749468?spm=a2c6h.14164896.0.0.24031164UoPfIX)
+- [Clickhouse官方文档](https://clickhouse.com/)
+- [Clickhouse作为Kubernetes日志管理解决方案中的存储](http://dockone.io/article/9356)
+- [Uber 如何使用 ClickHouse 建立快速可靠且与模式无关的日志分析平台](https://www.infoq.cn/article/l4thjgnr7hxpkgpmw6dz)
+- [干货 | 携程ClickHouse日志分析实践](https://mp.weixin.qq.com/s/IjOWAPOJXANRQqRAMWXmaw)
+- [为什么我们要从ES迁移到ClickHouse](https://mp.weixin.qq.com/s/l4RgNQPxvdNIqx52LEgBnQ)
+- [ClickHouse 在日志存储与分析方面作为 ElasticSearch 和 MySQL 的替代方案](https://mp.weixin.qq.com/s/nJXorcgi0QfXPCKr_HdUZg)
+- [快手、携程等公司转战到 ClickHouse，ES 难道不行了？](https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg)
+- [日志分析下ES/ClickHouse/Loki比较与思考](https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg)
