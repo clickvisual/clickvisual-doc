@@ -11,11 +11,11 @@
 1. 在 ClickHouse 中产生对应数据表的 Materialized View，作用是将数据按照配置的规则以秒为单位录入 metrics.samples 表中
 2. 产生的 Prometheus 告警规则写入配置的文件或者 configmap 中
 3. Prometheus 读取 metrics.samples 的数据，并根据告警规则产生告警，推送到 Prometheus AlertManager
-4. Prometheus AlertManager 通过 webhook 推送到 ClickVisual，再由 ClickVisual 分发到钉钉
+4. Prometheus AlertManager 通过 webhook 推送到 clickvisual，再由 clickvisual 分发到钉钉
 
 ## 集群部署
 
-可参考[https://github.com/shimohq/ClickVisual/tree/master/data/k8s/prometheus](https://github.com/shimohq/ClickVisual/tree/master/data/k8s/prometheus) 中的配置。
+可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
 
 ### ClickHouse 配置
 
@@ -99,7 +99,7 @@ remote_write:
 
 ### Prometheus AlertManager 配置
 
-告警方式为 webhook，回调到 ClickVisual 服务，修改 url 地址，保证可以正常访问 ClickVisual 服务。
+告警方式为 webhook，回调到 clickvisual 服务，修改 url 地址，保证可以正常访问 clickvisual 服务。
 
 ```yaml
 route:
@@ -112,10 +112,10 @@ route:
 receivers:
 - name: 'webhook'
   webhook_configs:
-  - url: 'http://ClickVisual:9001/api/v1/prometheus/alerts'
+  - url: 'http://clickvisual:9001/api/v1/prometheus/alerts'
 ```
 
-### ClickVisual 配置
+### clickvisual 配置
 
 访问：系统设置 -> 实例管理
 

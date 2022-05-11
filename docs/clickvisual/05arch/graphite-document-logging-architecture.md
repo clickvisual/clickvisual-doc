@@ -23,7 +23,7 @@
 - 日志采集：LogCollector采用Daemonset方式部署，将宿主机日志目录挂载到LogCollector的容器内，LogCollector通过挂载的目录能够采集到应用日志、系统日志、K8S审计日志等
 - 日志传输：通过不同Logstore映射到Kafka中不同的Topic，将不同数据结构的日志做了分离
 - 日志存储：使用Clickhouse中的两种引擎数据表和物化视图
-- 日志管理：开源的ClickVisual系统，能够查询日志，设置日志索引，设置LogCollector配置，设置Clickhouse表，设置报警等
+- 日志管理：开源的clickvisual系统，能够查询日志，设置日志索引，设置LogCollector配置，设置Clickhouse表，设置报警等
 
 ![img.png](../../images/technical-architecture.png)
 
@@ -86,7 +86,7 @@ agent 类型采集方式daemonset部署sidecar部署ilogtail文件日志能够�
 
 ## 3.4. LogCollector采集日志
 ### 3.4.1. 配置
-我们LogCollector采用的是fluent-bit，该工具是cncf旗下的，能够更好的与云原生相结合。通过ClickVisual系统可以选择Kubernetes集群，很方便的设置fluent-bit configmap的配置规则。
+我们LogCollector采用的是fluent-bit，该工具是cncf旗下的，能够更好的与云原生相结合。通过clickvisual系统可以选择Kubernetes集群，很方便的设置fluent-bit configmap的配置规则。
 
 ![img.png](../../images/config.png)
 
@@ -96,12 +96,12 @@ fluent-bit的默认采集数据结构
 - @timestamp字段：string or float，用于记录采集日志的时间
 - log字段：string，用于记录日志的完整内容
 
-Clickhouse如果使用@timestamp的时候，因为里面有@特殊字符，会处理的有问题。所以我们在处理fluent-bit的采集数据结构，会做一些映射关系，并且规定双下划线为ClickVisual系统日志索引，避免和业务日志的索引冲突。
+Clickhouse如果使用@timestamp的时候，因为里面有@特殊字符，会处理的有问题。所以我们在处理fluent-bit的采集数据结构，会做一些映射关系，并且规定双下划线为clickvisual系统日志索引，避免和业务日志的索引冲突。
 
 - _time_字段：string or float，用于记录采集日志的时间
 - _log_字段：string，用于记录日志的完整内容
 
-例如你的日志记录的是{"id":1}，那么实际fluent-bit采集的日志会是{"_time_":"2022-01-15...","_log_":"{\"id\":1}" 该日志结构会直接写入到kafka中，ClickVisual系统会根据这两个字段_time_、_log_设置clickhouse中的数据表。
+例如你的日志记录的是{"id":1}，那么实际fluent-bit采集的日志会是{"_time_":"2022-01-15...","_log_":"{\"id\":1}" 该日志结构会直接写入到kafka中，clickvisual系统会根据这两个字段_time_、_log_设置clickhouse中的数据表。
 
 ### 3.4.3. 采集
 如果我们要采集ingress日志，我们需要在input配置里，设置ingress的日志目录，fluent-bit会把ingress日志采集到内存里。
@@ -133,7 +133,7 @@ Kafka主要用于日志传输。上文说到我们使用fluent-bit采集日志�
 create table logger.ingress_stdout_stream ( _source_ String, _pod_name_ String, _namespace_ String, _node_name_ String, _container_name_ String, _cluster_ String, _log_agent_ String, _node_ip_ String, _time_ Float64, _log_ String ) engine = Kafka SETTINGS kafka_broker_list = 'kafka:9092', kafka_topic_list = 'ingress-stdout', kafka_group_name = 'logger_ingress_stdout', kafka_format = 'JSONEachRow', kafka_num_consumers = 1;
 ```
 
-- 物化视图：将数据从ingress_stdout_stream数据表读取出来，_log_根据ClickVisual配置的索引，提取字段在写入到ingress_stdout结果表里
+- 物化视图：将数据从ingress_stdout_stream数据表读取出来，_log_根据clickvisual配置的索引，提取字段在写入到ingress_stdout结果表里
 ```
 CREATE MATERIALIZED VIEW logger.ingress_stdout_view TO logger.ingress_stdout AS SELECT    toDateTime(toInt64(_time_)) AS _time_second_, fromUnixTimestamp64Nano(toInt64(_time_*1000000000),'Asia/Shanghai') AS _time_nanosecond_, _pod_name_, _namespace_, _node_name_, _container_name_, _cluster_, _log_agent_, _node_ip_, _source_, _log_ AS _raw_log_,JSONExtractInt(_log_, 'status') AS status,JSONExtractString(_log_, 'url') AS url FROM logger.ingress_stdout_stream where 1=1;
 ```
@@ -152,15 +152,15 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 - _time_字段用于存储fluent-bit采集的时间
 - _log_字段用于存放原始日志内容
 
-通过 ClickVisual，在 ClickHouse里设置了三个表
+通过 clickvisual，在 ClickHouse里设置了三个表
 - app_stdout_stream： 将数据从Kafka采集到ClickHouse的Kafka引擎表。
-- app_stdout_view： 视图表用于存放 ClickVisual 设置的索引规则。
+- app_stdout_view： 视图表用于存放 clickvisual 设置的索引规则。
 - app_stdout：根据 app_stdout_view 索引解析规则，消费 app_stdout_stream 里的数据，存放于 app_stdout 结果表中。
 
-最后 ClickVisual 的 UI界面，根据 app_stdout 的数据，查询日志信息。
+最后 clickvisual 的 UI界面，根据 app_stdout 的数据，查询日志信息。
 
 
-7. ClickVisual 界面展示
+7. clickvisual 界面展示
 
 查询日志界面：
 
@@ -174,13 +174,13 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 
 ![img.png](../../images/fluent-config.png)
 
-以上文档描述是针对石墨Kubernetes的日志采集，想了解物理机采集日志方案的，可以在下文中找到《ClickVisual使用文档》的链接，运行docker-compose体验ClickVisual 全部流程，查询Clickhouse日志。限于篇幅有限，ClickVisual的日志报警功能，下次在讲解。
+以上文档描述是针对石墨Kubernetes的日志采集，想了解物理机采集日志方案的，可以在下文中找到《clickvisual使用文档》的链接，运行docker-compose体验clickvisual 全部流程，查询Clickhouse日志。限于篇幅有限，clickvisual的日志报警功能，下次在讲解。
 
 
 8. 参考资料
-- GitHub 地址：https://github.com/shimohq/ClickVisual
-- ClickVisual文档：https://clickvisual.gocn.vip
-- ClickVisual 使用文档：https://clickvisual.gocn.vip/doc/AV62KU4AABMRQ
+- GitHub 地址：https://github.com/clickvisual/clickvisual
+- clickvisual文档：https://clickvisual.gocn.vip
+- clickvisual 使用文档：https://clickvisual.gocn.vip/doc/AV62KU4AABMRQ
 - fluent-bit 文档：https://docs.fluentbit.io/
 - Kubernetes 日志
 - 6 个 Kubernetes 日志系统建设中的典型问题，你遇到过几个：https://developer.aliyun.com/article/718735
