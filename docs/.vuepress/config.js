@@ -79,6 +79,7 @@ var _hmt = _hmt || [];
                         "01quickstart/what-is-the-clickvisual",
                         "01quickstart/quick-learning",
                         "01quickstart/experience-clickvisual-with-docker-compose",
+                        "01quickstart/qa",
                     ],
                 },
                 {
