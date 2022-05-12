@@ -13,7 +13,7 @@
 
 ## 2. 操作流程
 ### 2.1. 启动 clickvisual
-- 克隆 clickvisual：git clone https://github.91chi.fun//https://github.com/clickvisual/clickvisual.git
+- 克隆 clickvisual：git clone https://github.com/clickvisual/clickvisual.git
 - 在 clickvisual 项目的根目录下执行：docker-compose up
 - 在浏览器里输入 http://127.0.0.1:19001，进入到 clickvisual 登录页面，输入账号/密码：clickvisual/clickvisual
 
