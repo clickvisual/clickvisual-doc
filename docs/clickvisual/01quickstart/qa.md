@@ -1,10 +1,11 @@
 # 常见问题
 
 ## 服务启动后跳转到 localhost
-
+### 现象
 ![img.png](../../images/qa-1.png)
 
-服务配置中包含地址设置
+### 解决
+服务配置中包含地址设置，调整这个地址即可
 ```toml
 [app]
 rootURL = "http://localhost:19001"
