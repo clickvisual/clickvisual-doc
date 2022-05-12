@@ -10,6 +10,7 @@
 [app]
 rootURL = "http://localhost:19001"
  ```
+- 此处的rootURL 必须有http:// 前缀，不然会是一个非法的url不能使用
 
 配置文件对应地址
 - docker：/data/all-in-one/clickvisual/config/docker.toml
