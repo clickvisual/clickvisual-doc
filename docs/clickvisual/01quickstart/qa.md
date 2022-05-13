@@ -32,7 +32,7 @@ rootURL = "http://localhost:19001"
 
 查看这个 steam_sql 的结构，确保如下图所示在 kafka 里面传输的日志数据是以上结构的子集。
 
-例如上面这两个就无法对应，steam_sql 中的 _time_ 是 String，但是 kafka 里面的是 Float，无法正常消费。
+例如上面这两个就无法对应，steam_sql 中的 `_time_` 是 String，但是 kafka 里面的是 Float，无法正常消费。
 
 这个配置在这里设置
 
