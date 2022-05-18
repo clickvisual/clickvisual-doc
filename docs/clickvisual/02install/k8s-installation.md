@@ -418,7 +418,7 @@ data:
 
 ```
 git clone https://github.com/clickvisual/clickvisual.git
-cd clickvisual &amp;&amp; cp api/config/default.toml data/helm/clickvisual/default.toml
+cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
 ```
 
 修改 data/helm/clickvisual/default.toml 中的 mysql、auth 以及其他段配置，将 mysql.dsn 、 auth.redisAddr、auth.redisPassword 替换为你自己的配置。
@@ -431,7 +431,7 @@ helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespac
 ```
 如果你已将 clickvisual 镜像推送到你自己的 harbor 仓库，可以通过 --set image.respository 指令修改仓库地址
 ```
-helm install clickvisual data/helm/clickvisual --set image.repository=${YOUR_HARBOR}/${PATH}/clickvisual --set image.tag=latest --namespace default<br/>
+helm install clickvisual data/helm/clickvisual --set image.repository=${YOUR_HARBOR}/${PATH}/clickvisual --set image.tag=latest --namespace default
 ```
 
 方法二：[可选] 使用 helm 渲染出 yaml 后，手动通过 kubectl 安装：
