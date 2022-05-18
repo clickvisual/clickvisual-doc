@@ -427,7 +427,7 @@ cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
 
 方法一：[推荐] 使用 helm 直接安装：
 ```
-helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespac default
+helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespace default
 ```
 如果你已将 clickvisual 镜像推送到你自己的 harbor 仓库，可以通过 --set image.respository 指令修改仓库地址
 ```
