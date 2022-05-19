@@ -1,4 +1,4 @@
-# clickvisual Auth
+# ClickVisual Auth
 
 clickvisual 有一个内置的用户认证系统，默认启用密码认证。默认账号/密码：clickvisual/clickvisual。
 
