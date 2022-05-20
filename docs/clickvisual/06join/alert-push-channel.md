@@ -4,16 +4,7 @@
 开发目录 `/api/pkg/push`
 
 例如实现微信推送，实现 Send 函数功能
-```
-package push
-
-import (
-	"errors"
-
-	"github.com/clickvisual/clickvisual/api/pkg/model/db"
-	"github.com/clickvisual/clickvisual/api/pkg/model/view"
-)
-
+```go
 type WeChat struct{}
 
 func (d *WeChat) Send(notification view.Notification, alarm *db.Alarm, channel *db.AlarmChannel) (err error) {
@@ -23,7 +14,7 @@ func (d *WeChat) Send(notification view.Notification, alarm *db.Alarm, channel *
 ```
 
 增加 Channel
-```
+```go
 const (
 	ChannelDingDing int = 1
 	ChannelWeChat   int = 2
@@ -52,7 +43,7 @@ func Instance(typ int) (Operator, error) {
 
 增加 ChannelTypes 内容即可，注意前端国际化，国际化文件位置在`/ui/src/locales`
 
-```
+```js
   const ChannelTypes = [
     { name: i18n.formatMessage({ id: "dingTalk" }), value: 1 },
   ];
