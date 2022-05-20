@@ -84,6 +84,14 @@ var _hmt = _hmt || [];
                     ],
                 },
                 {
+                    title: "代码贡献",
+                    collapsable: false, // 可选的, 默认值是 true,
+                    children: [
+                        "06join/pr",
+                        "06join/alert-push-channel",
+                    ],
+                },
+                {
                     title: "应用安装",
                     collapsable: false, // 可选的, 默认值是 true,
                     children: [
