@@ -106,6 +106,7 @@ var _hmt = _hmt || [];
                     title: "功能介绍",
                     collapsable: false, // 可选的, 默认值是 true,
                     children: [
+                        "03funcintro/instructions",
                         "03funcintro/system-settings",
                         "03funcintro/subpath-configuration",
                         "03funcintro/cluster-mode",
