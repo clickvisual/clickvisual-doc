@@ -1,0 +1,41 @@
+# 模板生成
+
+## 对 EGO 框架日志采集模板
+
+### 调用方式
+注意是否配置了 subpath，如果环境变量中配置了子路径例如 /clickvisual/ 则需要从
+`http://127.0.0.1:19001/api/v1/template/1` 替换为 `http://127.0.0.1:19001/clickvisual/api/v1/template/1`
+```sh
+curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "dsn": "tcp://127.0.0.1:9000?username=admin&password=admin&read_timeout=10&write_timeout=20&debug=true",
+    "clusterName": "clusterName",
+    "brokers": "kafka:9092"
+}'
+```
+
+#### topic 说明
+%s 为参数调用中的 clusterName
+```go
+var kafkaTopicORM = map[string]string{
+	"app_stdout":     "app-stdout-logs-%s",
+	"ego_stdout":     "ego-stdout-logs-%s",
+	"ingress_stdout": "ingress-stdout-logs-%s",
+	"ingress_stderr": "ingress-stderr-logs-%s",
+}
+```
+
+
+### 效果
+- 创建 clickvisual_default 的实例
+- 创建 clickvisual_default 的数据库
+- 创建 app-stdout, ego-stdout, ingress-stdout, ingress-stderr 日志库
+- 创建日志库中的分析字段
+
+
+![img.png](../../images/template_one_1.png)
+
+![img_1.png](../../images/template_one_2.png)
+
+![img_2.png](../../images/template_one_3.png)

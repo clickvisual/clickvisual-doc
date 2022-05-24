@@ -115,6 +115,7 @@ var _hmt = _hmt || [];
                         "03funcintro/fluent-bit-configuration-reference",
                         "03funcintro/alarm-function-configuration-description",
                         "03funcintro/clickvisual-configuration-description",
+                        "03funcintro/template-gen",
                     ],
                 },
                 {
