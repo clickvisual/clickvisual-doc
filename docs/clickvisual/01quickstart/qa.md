@@ -37,3 +37,10 @@ rootURL = "http://localhost:19001"
 这个配置在这里设置
 
 ![img_4.png](../../images/qa-2-5.png)
+
+### 解决
+
+1. 调整 kafka 采集数据内容，保证 kafka 采集数据字段为 stream 表的字段的子集
+2. 调整 `kafka_skip_broken_messages` 参数，跳过格式异常的数据
+
+![img.png](../06join/qa-2-6.png)
