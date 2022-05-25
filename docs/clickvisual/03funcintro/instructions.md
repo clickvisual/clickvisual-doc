@@ -23,6 +23,10 @@
 
 ![img_1.png](../../images/inst-2.png)
 
+配置完成或者已配置的分析字段是可以在左侧看到，这里可以进行对应字段的百分比分析和精确匹配。
+
+![img_1.png](../../images/inst-5.png)
+
 完成配置后，查询语句优化为
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
