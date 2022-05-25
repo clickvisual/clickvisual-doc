@@ -1,4 +1,4 @@
-# 通过 docker-compose 体验 ClickVisual
+# Docker-Compose ClickVisual
 
 本文主要介绍如何使用 docker-compose 在本地快速启动 ClickVisual Demo，体验日志生成、采集、查询的完整流程。
 
