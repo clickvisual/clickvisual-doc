@@ -44,3 +44,7 @@ rootURL = "http://localhost:19001"
 2. 调整 `kafka_skip_broken_messages` 参数，跳过格式异常的数据
 
 ![img.png](../06join/qa-2-6.png)
+
+## 3. database.sql的脚本里面没有建表的sql
+
+服务启动成功后访问 http://localhost:19001 可以初始化数据库
