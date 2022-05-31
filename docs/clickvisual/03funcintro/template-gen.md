@@ -2,7 +2,7 @@
 
 ## 对 EGO 框架日志采集模板
 
-### 调用方式
+### 单机创建
 注意是否配置了 subpath，如果环境变量中配置了子路径例如 /clickvisual/ 则需要从
 `http://127.0.0.1:19001/api/v1/template/1` 替换为 `http://127.0.0.1:19001/clickvisual/api/v1/template/1`
 ```sh
@@ -15,7 +15,24 @@ curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 }'
 ```
 
-#### topic 说明
+### 无副本集群创建
+注意是否配置了 subpath，如果环境变量中配置了子路径例如 /clickvisual/ 则需要从
+`http://127.0.0.1:19001/api/v1/template/1` 替换为 `http://127.0.0.1:19001/clickvisual/api/v1/template/1`
+
+k8sClusterName 为 k8s 集群的名称  
+instanceClusterName 为 ClickHouse 的 cluster
+```sh
+curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "dsn": "tcp://127.0.0.1:9000?username=admin&password=admin&read_timeout=10&write_timeout=20&debug=true",
+    "k8sClusterName": "clusterName", 
+    "brokers": "kafka:9092",
+    "instanceClusterName": "shard2-repl1"
+}'
+```
+
+### topic 说明
 %s 为参数调用中的 clusterName
 ```go
 var kafkaTopicORM = map[string]string{
