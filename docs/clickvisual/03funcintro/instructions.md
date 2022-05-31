@@ -19,21 +19,25 @@
 
 ![img_2.png](../../images/inst-3.png)
 
-可以配置对应的分析字段
+如果在右侧的分析界面看到了如下的配置，可直接使用以下语句进行查询
 
-![img_1.png](../../images/inst-2.png)
-
-配置完成或者已配置的分析字段是可以在左侧看到，这里可以进行对应字段的百分比分析和精确匹配。
+`body.browserName='browserName' and body.code='docs_text_copy'`
 
 ![img_1.png](../../images/inst-5.png)
 
-完成配置后，查询语句优化为
+如果没有配置分析字段，则需要进行相关的配置
+
+![img_2.png](../../images/inst-3.png)
+![img_1.png](../../images/inst-2.png)
+
+完成配置后，查询语句为：
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
 
-还可以进一步提升查询效率，这里设置 siphash 和 urlhash(会截断?后的参数进行hash)，通过建立 hash 映射，提升查询效率。  
-查询语句依旧是
-
-`body.browserName='browserName' and body.code='docs_text_copy'`
+这种情况下查询依旧很花时间，感觉很慢，可以开启下面的配置，这里设置 siphash 和 urlhash(会截断?后的参数进行hash)，通过建立 hash 映射，提升查询效率。
 
 ![img_3.png](../../images/inst-4.png)
+
+查询语句依旧是：
+
+`body.browserName='browserName' and body.code='docs_text_copy'`
