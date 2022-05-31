@@ -19,7 +19,7 @@
 
 ![img_2.png](../../images/inst-3.png)
 
-如果在右侧的分析界面看到了如下的配置，可直接使用以下语句进行查询
+如果在左侧的分析界面看到了如下的配置，可直接使用以下语句进行查询
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
 
