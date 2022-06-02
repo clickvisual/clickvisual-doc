@@ -17,6 +17,8 @@ hiddenFields = ["_cluster_", "_log_agent_", "_node_ip_", "_node_name_", "_time_s
 defaultFields = ["_namespace_","_container_name_","_pod_name_","_time_second_"]
 # 菜单配置文件，酌情调整菜单权限文件路径
 permissionFile = "./config/resource.yaml"
+# 限制最大查询时间跨度单位小时 0 或不填表示无限制
+queryLimitHours = 24
 ```
 
 logger 段配置说明：
