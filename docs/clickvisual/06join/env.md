@@ -24,7 +24,7 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 
 ### 新增日志库
 创建实例 
-> tcp://127.0.0.1:9000?username=root&password=shimo&read_timeout=10&writer_timeout=10&debug=true
+> tcp://127.0.0.1:9000?username=root&password=root&read_timeout=10&writer_timeout=10&debug=true
 
 ![img_3.png](../../images/env-3.png)
 
