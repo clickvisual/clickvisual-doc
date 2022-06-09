@@ -16,7 +16,16 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 ## 运行本地开发代码
 
 ### 初始化
+
+执行前端构建
+
+> make build.ui build.dist
+
+构建完成后执行
+
 > go run ./api/main.go --config=./config/default.toml
+
+服务启动后访问 [http://localhost:19001/](http://localhost:19001/)
 
 ![img_1.png](../../images/env-1.png)
 
