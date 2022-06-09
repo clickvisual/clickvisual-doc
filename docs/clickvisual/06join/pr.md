@@ -7,7 +7,7 @@
 
 ## 开发阶段
 1. git fetch upstream
-2. git rebase upstream/master
+2. git rebase -i upstream/master
 3. git add .
 4. git commit
 5. git push
