@@ -413,18 +413,27 @@ data:
         Time_Format %b %d %H:%M:%S
 ```
 
-2. 部署 clickvisual
+## 部署 clickvisual
    克隆仓库：
 
 ```
 git clone https://github.com/clickvisual/clickvisual.git
-cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
 ```
 
+### 使用自定义配置
+
+```
+cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
+```
 修改 data/helm/clickvisual/default.toml 中的 mysql、auth 以及其他段配置，将 mysql.dsn 、 auth.redisAddr、auth.redisPassword 替换为你自己的配置。
 
+修改 data/helm/clickvisual/templates/deployment.yaml 中 value 为 `configs/default.toml` 默认是 `config/default.toml` 即仓库中的默认配置
+```
+- name: EGO_CONFIG_PATH
+value: "configs/default.toml"
+```
 
-
+### 安装
 方法一：[推荐] 使用 helm 直接安装：
 ```
 helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespace default
