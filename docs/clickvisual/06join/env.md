@@ -10,6 +10,7 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 >  docker-compose -f docker-compose.devops.m1.yml up
 
 成功启动
+
 ![img.png](../../images/env.png)
 
 ## 运行本地开发代码
@@ -32,14 +33,16 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 ![img_2.png](../../images/env-2.png)
 
 创建日志库
-kafka:9092
-ingress-stdout
+- kafka:9092
+- ingress-stdout
 
 ![img_4.png](../../images/env-4.png)
 
 ### 测试数据生产
 
 访问 [http://localhost:19003/](http://localhost:19003/)
+
+![img.png](../../images/env-8.png)
 
 ![img_5.png](../../images/env-5.png)
 
@@ -49,6 +52,7 @@ ingress-stdout
 如果进行前端开发，需要进入 ui 目录，使用 yarn 启动
 
 保证 target 指向后端服务即可
+
 ![img_6.png](../../images/env-6.png)
 
 ![img_7.png](../../images/env-7.png)
