@@ -1,10 +1,11 @@
 # Q&A
 
-## clickvisual性能测试报告？特别是与ELK在同等规模下的对比测试。
+## clickvisual性能测试报告？特别是与ELK在同等规模下的对比测试
 ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 ClickHouse 的最佳实践。  
 性能相关的测试对比可以关注 ClickHouse 的 ES 的差异: 
-[https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg](https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg)
-[https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg](https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg)
+
+- [https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg](https://mp.weixin.qq.com/s/hP0ocT-cBCeIl9n1wL_HBg)
+- [https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg](https://mp.weixin.qq.com/s/n2I94X6tz2jOABzl1djxYg)
 
 ## 哪些组件是必需？
 可以参考这个图，clickvisual 大致上分为以下三个模块，每个模块使用依赖的组件不同，可以选择使用。
@@ -14,7 +15,7 @@ ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 Cl
 
 ![img.png](../../images/qa-3.png)
 
-## 组件是否可以使用已有的，而不是新建。
+## 组件是否可以使用已有的，而不是新建
 可以使用已有组件，不需要完全新建。例如 ClickHouse 使用已有的组件时进行数据库创建操作，可能出现重名问题，此时 ClickVisual 会对数据库创建失败。
 
 ## 目前只能测试使用？上生产环境没有集群版？
