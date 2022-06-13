@@ -20,4 +20,4 @@ curl -H "X-WEBAUTH-USER: admin"  http://localhost:19001/api/v1/users/info
 
 第三方系统通过 AuthProxy 嵌入clickvisual：
 
-![img.png](../../../images/auth-proxy.png)image.png
+![img.png](../../images/auth-proxy.png)image.png

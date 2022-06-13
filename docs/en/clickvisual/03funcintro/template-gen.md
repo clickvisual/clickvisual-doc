@@ -51,8 +51,8 @@ var kafkaTopicORM = map[string]string{
 - 创建日志库中的分析字段
 
 
-![img.png](../../../images/template_one_1.png)
+![img.png](../../images/template_one_1.png)
 
-![img_1.png](../../../images/template_one_2.png)
+![img_1.png](../../images/template_one_2.png)
 
-![img_2.png](../../../images/template_one_3.png)
+![img_2.png](../../images/template_one_3.png)

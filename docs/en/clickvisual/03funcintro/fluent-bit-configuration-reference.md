@@ -8,7 +8,7 @@
 
 先简单介绍下 fluent-bit 工作流程（[官方文档](https://docs.fluentbit.io/manual/v/1.0/getting_started)）：
 
-![img.png](../../../images/fluent-bit-workflow.png)
+![img.png](../../images/fluent-bit-workflow.png)
 
 日志通过数据管道从数据源发送到目的地，一个数据管道可以由 Input、Parser、Filter、Buffer、Routing、Output 等组成。
 
@@ -25,9 +25,9 @@
 
 下图是选择 `xxx-dev` 集群下的 `kube-system` 命名空间下 `fluent-bit-config` 这个 ConfigMap 来进行更新。
 
-![img.png](../../../images/config.png)
+![img.png](../../images/config.png)
 
-点击配置编辑区域上方『开始编辑』按钮，即编辑配置文件，编辑完成后，点击『保存』按钮，随后点击左侧![img_1.png](../../../images/uploader_button.png)按钮，选择指定配置文件和版本之后，点击『发布』按钮，即可将配置同步至 ConfigMap。修改 ConfigMap 配置后，重启 fluent-bit 生效。
+点击配置编辑区域上方『开始编辑』按钮，即编辑配置文件，编辑完成后，点击『保存』按钮，随后点击左侧![img_1.png](../../images/uploader_button.png)按钮，选择指定配置文件和版本之后，点击『发布』按钮，即可将配置同步至 ConfigMap。修改 ConfigMap 配置后，重启 fluent-bit 生效。
 
 ## 2. 配置说明
 

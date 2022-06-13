@@ -13,7 +13,7 @@ latest=$(curl -sL https://api.github.com/repos/clickvisual/clickvisual/releases/
 wget "https://github.com/clickvisual/clickvisual/releases/download/${latest}/clickvisual-${latest}-darwin-amd64.tar.gz" -O clickvisual-${latest}.tar.gz
 ```
 
-![img.png](../../../images/binary-download.png)
+![img.png](../../images/binary-download.png)
 
 ## Linux AMD64 架构
 ```

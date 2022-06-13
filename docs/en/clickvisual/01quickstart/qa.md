@@ -13,7 +13,7 @@ ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 Cl
 - 日志告警
 - 数据分析
 
-![img.png](../../../images/qa-3.png)
+![img.png](../../images/qa-3.png)
 
 ## 组件是否可以使用已有的，而不是新建
 可以使用已有组件，不需要完全新建。例如 ClickHouse 使用已有的组件时进行数据库创建操作，可能出现重名问题，此时 ClickVisual 会对数据库创建失败。
@@ -28,7 +28,7 @@ ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 Cl
 
 现象
 
-![img.png](../../../images/qa-1.png)
+![img.png](../../images/qa-1.png)
 
 解决
 
@@ -48,15 +48,15 @@ rootURL = "http://localhost:19001"
 现象
 
 在 kowl 中能看到 topics 是有数据的，但是在 ClickVisual 创建了 ClickHouse 实例，也在日志中添加了数据库列表并新增了日志库，但是没有数据出来。我这么看数据有没有到 ClickHouse。
-![img.png](../../../images/qa-2.png)
+![img.png](../../images/qa-2.png)
 
 排查
 
-![img_1.png](../../../images/qa-2-2.png)
+![img_1.png](../../images/qa-2-2.png)
 
-![img_2.png](../../../images/qa-2-3.png)
+![img_2.png](../../images/qa-2-3.png)
 
-![img_3.png](../../../images/qa-2-4.png)
+![img_3.png](../../images/qa-2-4.png)
 
 查看这个 steam_sql 的结构，确保如下图所示在 kafka 里面传输的日志数据是以上结构的子集。
 
@@ -64,14 +64,14 @@ rootURL = "http://localhost:19001"
 
 这个配置在这里设置
 
-![img_4.png](../../../images/qa-2-5.png)
+![img_4.png](../../images/qa-2-5.png)
 
 解决
 
 1. 调整 kafka 采集数据内容，保证 kafka 采集数据字段为 stream 表的字段的子集
 2. 调整 `kafka_skip_broken_messages` 参数，跳过格式异常的数据
 
-![img.png](../../../images/qa-2-6.png)
+![img.png](../../images/qa-2-6.png)
 
 ## database.sql的脚本里面没有建表的sql
 

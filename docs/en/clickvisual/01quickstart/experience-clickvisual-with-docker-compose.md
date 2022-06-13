@@ -20,7 +20,7 @@
 ### 2.2. 创建数据库
 创建实例，填写 dns 参数 tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&writer_timeout=10&debug=true
 
-![img.png](../../../images/create-database.png)
+![img.png](../../images/create-database.png)
 
 ### 2.3. 创建日志
 - 创建数据表：ingress_stdout
@@ -29,28 +29,28 @@
 - Brokers：填入 docker-compose 启动的中的 Kafka 容器访问地址：kafka:9092
 - Topic：Kafka 中采集日志的 topic name 是 ingress-stdout
 
-![img.png](../../../images/table-create.png)
+![img.png](../../images/table-create.png)
 
 ### 2.4 模拟访问
 打开浏览器并访问 http://127.0.0.1:19003，可看到页面输出 hello，i'm clickvisual，此时 Nginx 已产生一条 access 日志。
 
-![img.png](../../../images/simulation-access.png)
+![img.png](../../images/simulation-access.png)
 
 在浏览器中访问 http://localhost:19002/topics/ingress-stdout?o=-1&p=-1&q&s=50#messages，如可查到 Kafka 中日志内容，说明已经采集成功。随后再查看 consumers，可以看到 logger_ingress_stdout 这个消费组，说明 ClickHouse 正在消费。
 
-![img.png](../../../images/kafka-data.png)
-![img.png](../../../images/kafka-consume.png)
+![img.png](../../images/kafka-data.png)
+![img.png](../../images/kafka-consume.png)
 
 ### 2.5. 查看日志
 访问 http://localhost:19001/query ，我们可以查询到刚产生的 Nginx Access 日志。
 
-![img.png](../../../images/table-query.png)
+![img.png](../../images/table-query.png)
 
 ### 2.6. 增加分析字段
 因为没有创建分析字段，所有字段的背景色都是灰色的，这种方式下是使用模糊搜索，性能不是很好，所以我们需要按照下图创建分析字段。
 
-![img.png](../../../images/increase-index.png)
+![img.png](../../images/increase-index.png)
 
 创建完后，我们再访问几次 http://127.0.0.1:19003，增加几条新的 access 日志后，就可以根据分析字段查询日志。
 
-![img.png](../../../images/overall-introduction.png)
+![img.png](../../images/overall-introduction.png)

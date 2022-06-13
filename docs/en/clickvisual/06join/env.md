@@ -11,7 +11,7 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 
 成功启动
 
-![img.png](../../../images/env.png)
+![img.png](../../images/env.png)
 
 ## 运行本地开发代码
 
@@ -27,7 +27,7 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 
 服务启动后访问 [http://localhost:19001/](http://localhost:19001/)
 
-![img_1.png](../../../images/env-1.png)
+![img_1.png](../../images/env-1.png)
 
 完成数据库初始化之后，使用 clickvisual/clickvisual 登录
 
@@ -35,25 +35,25 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 创建实例 
 > tcp://127.0.0.1:9000?username=root&password=root&read_timeout=10&writer_timeout=10&debug=true
 
-![img_3.png](../../../images/env-3.png)
+![img_3.png](../../images/env-3.png)
 
 创建数据库
 
-![img_2.png](../../../images/env-2.png)
+![img_2.png](../../images/env-2.png)
 
 创建日志库
 - kafka:9092
 - ingress-stdout
 
-![img_4.png](../../../images/env-4.png)
+![img_4.png](../../images/env-4.png)
 
 ### 测试数据生产
 
 访问 [http://localhost:19003/](http://localhost:19003/)
 
-![img.png](../../../images/env-8.png)
+![img.png](../../images/env-8.png)
 
-![img_5.png](../../../images/env-5.png)
+![img_5.png](../../images/env-5.png)
 
 
 ### 前端开发
@@ -62,7 +62,7 @@ fork 代码后，在项目根目录可以看到，以下两个文件，根据自
 
 保证 target 指向后端服务即可
 
-![img_6.png](../../../images/env-6.png)
+![img_6.png](../../images/env-6.png)
 
-![img_7.png](../../../images/env-7.png)
+![img_7.png](../../images/env-7.png)
 

@@ -4,7 +4,7 @@
 
 ## 架构说明
 
-![img.png](../../../images/alarm-arch.png)
+![img.png](../../images/alarm-arch.png)
 
 ## 使用说明
 
@@ -21,7 +21,7 @@
 
 新增`graphite_rollup` 配置，配置路径可以参考，根据 clickhouse 的版本不通略有区别，具体以官方指导配置为准。
 
-![img.png](../../../images/graphite_rollup_tree.png)
+![img.png](../../images/graphite_rollup_tree.png)
 
 ```xml
 <?xml version="1.0" ?>
@@ -128,11 +128,11 @@ rule_files:
 - /etc/prometheus/rules/*.yaml
 ```
 
-![img.png](../../../images/alarm-store-file.png)
+![img.png](../../images/alarm-store-file.png)
 
 如果通过 k8s 方式部署，这个 configmap 即 rules 存储的位置。
-![img.png](../../../images/alarm-store-k8s.png)
+![img.png](../../images/alarm-store-k8s.png)
 
 报警消息推送效果
 
-![img.png](../../../images/alarm-msg-push.png)
+![img.png](../../images/alarm-msg-push.png)

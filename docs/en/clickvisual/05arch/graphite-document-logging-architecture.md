@@ -14,7 +14,7 @@
 
 经过详细调研后，我们发现使用ClickHouse能够很好的解决以上问题，并且ClickHouse省存储空间，非常省钱，所以我们选择了ClickHouse方案存储日志。但当我们深入研究后，ClickHouse作为日志存储有许多落地的细节，但业界并没有很好阐述相关ClickHouse采集日志的整套流程，以及没有一款优秀的ClickHouse日志查询工具帮助分析日志，为此我们写了一套ClickHouse日志系统贡献给开源社区，并将ClickHouse的日志采集架构的经验做了总结。先上个ClickHouse日志查询界面，让大家感受下石墨最懂前端的后端程序员。
 
-![img.png](../../../images/table-query.png)
+![img.png](../../images/table-query.png)
 
 ## 2. 架构原理
 
@@ -25,7 +25,7 @@
 - 日志存储：使用Clickhouse中的两种引擎数据表和物化视图
 - 日志管理：开源的clickvisual系统，能够查询日志，设置日志索引，设置LogCollector配置，设置Clickhouse表，设置报警等
 
-![img.png](../../../images/technical-architecture.png)
+![img.png](../../images/technical-architecture.png)
 
 以下我们按照这四大部分，阐述其中的架构原理
 
@@ -82,13 +82,13 @@ agent 类型采集方式daemonset部署sidecar部署ilogtail文件日志能够�
 
 #### 3.3.2. 容器信息目录
 应用的容器信息存储在/var/lib/docker/containers目录下，目录下的每一个文件夹为容器ID，我们可以通过cat config.v2.json获取应用的docker基本信息。
-![img.png](../../../images/arch-docker-info.png)
+![img.png](../../images/arch-docker-info.png)
 
 ## 3.4. LogCollector采集日志
 ### 3.4.1. 配置
 我们LogCollector采用的是fluent-bit，该工具是cncf旗下的，能够更好的与云原生相结合。通过clickvisual系统可以选择Kubernetes集群，很方便的设置fluent-bit configmap的配置规则。
 
-![img.png](../../../images/config.png)
+![img.png](../../images/config.png)
 
 ### 3.4.2. 数据结构
 fluent-bit的默认采集数据结构
@@ -106,15 +106,15 @@ Clickhouse如果使用@timestamp的时候，因为里面有@特殊字符，会�
 ### 3.4.3. 采集
 如果我们要采集ingress日志，我们需要在input配置里，设置ingress的日志目录，fluent-bit会把ingress日志采集到内存里。
 
-![img.png](../../../images/fluent-input-kube.png)
+![img.png](../../images/fluent-input-kube.png)
 
 然后我们在filter配置里，将log改写为_log_
 
-![img.png](../../../images/fluent-input-filter.png)
+![img.png](../../images/fluent-input-filter.png)
 
 然后我们在ouput配置里，将追加的日志采集时间设置为_time_，设置好日志写入的kafka borkers和kafka topics，那么fluent-bit里内存的日志就会写入到kafka中
 
-![img.png](../../../images/fluent-input-output.png)
+![img.png](../../images/fluent-input-output.png)
 
 日志写入到Kafka中_log_需要为json，如果你的应用写入的日志不是json，那么你就需要根据fluent-bit的parser文档，调整你的日志写入的数据结构：https://docs.fluentbit.io/manual/pipeline/filters/parser
 
@@ -123,7 +123,7 @@ Clickhouse如果使用@timestamp的时候，因为里面有@特殊字符，会�
 4. 日志传输
 Kafka主要用于日志传输。上文说到我们使用fluent-bit采集日志的默认数据结构，在下图kafka工具中我们可以看到日志采集的内容。 image.png 在日志采集过程中，会由于不用业务日志字段不一致，解析方式是不一样的。所以我们在日志传输阶段，需要将不同数据结构的日志，创建不同的Clickhouse表，映射到Kafka不同的Topic。这里以ingress为例，那么我们在Clickhouse中需要创建一个ingress_stdout_stream的Kafka引擎表，然后映射到Kafka的ingress-stdout Topic里。
 
-![img.png](../../../images/kafka-data.png)
+![img.png](../../images/kafka-data.png)
 
 5.日志存储
 我们会使用三种表，用于存储一种业务类型的日志。
@@ -146,7 +146,7 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 
 6.总结流程
 
-![img.png](../../../images/summarize-process.png)
+![img.png](../../images/summarize-process.png)
 
 日志会通过fluent-bit的规则采集到kafka，在这里我们会将日志采集到两个字段里
 - _time_字段用于存储fluent-bit采集的时间
@@ -164,7 +164,7 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 
 查询日志界面：
 
-![img.png](../../../images/overall-introduction.png)
+![img.png](../../images/overall-introduction.png)
 
 
 
@@ -172,7 +172,7 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 
 设置日志采集配置界面：
 
-![img.png](../../../images/fluent-config.png)
+![img.png](../../images/fluent-config.png)
 
 以上文档描述是针对石墨Kubernetes的日志采集，想了解物理机采集日志方案的，可以在下文中找到《clickvisual使用文档》的链接，运行docker-compose体验clickvisual 全部流程，查询Clickhouse日志。限于篇幅有限，clickvisual的日志报警功能，下次在讲解。
 
