@@ -9,7 +9,7 @@ clickvisual 是一个轻量级的开源日志查询、分析、报警的可视�
 - 支持 GitHub 和 GitLab 授权登录。
 - 支持 Proxy Auth 功能，能被被非常轻松的集成到第三方系统。
 - 支持物理机、Docker、Kubernetes 部署。
-- 支持基于 ClicHouse 日志的实时报警功能。
+- 支持基于 ClickHouse 日志的实时报警功能。
 
 ## 技术架构
 
