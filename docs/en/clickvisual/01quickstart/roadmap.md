@@ -1,34 +1,34 @@
 # 2022 Roadmap
 
-这里我们向大家公开我们的产品路线图（ Roadmap ）规划，一方面是保持开源项目的透明度，另一方面，开发者们也可以根据我们的工作优先级来制定更适合的工程方案。
+Here, we disclose our product roadmap plan to you. On the one hand, it is to maintain the transparency of open source projects. On the other hand, developers can also formulate more appropriate engineering solutions according to our work priorities.
 
-目前会着重关注以下几点：
+At present, we will focus on the following points:
 
-- 核心和基础
-- 易用性
+- Core and foundation
+- Ease of use
 
-我们的计划会根据大家的反馈来做调整。如果你有任何反馈，我们鼓励你通过 Issuse 与我们保持联系。ClickVisual 是一个开源项目，我们鼓励你参与到我们当中来。
+Our plan will be adjusted according to your feedback. If you have any feedback, we encourage you to keep in touch with us through issue. ClickVisual is an open source project. We encourage you to join us.
 
-## 版本发布
+## Release
 
-计划每月底进行一次版本发布，每周五进行一次 rc 版本提交。
+It is planned to release the version at the end of each month and submit the RC version every Friday.
 
-## 关注领域
+## Areas of concern
 
-### 核心和基础
+### Core and foundation
 
-目前首要任务是为 ClickVisual 的核心进行筑基：
-- 修复 Bug：包括不限于社区提出的安装、使用过程中出现的问题；
-- 性能优化：例如更新 clickhouse-go 版本；针对具体的查询场景优化请求逻辑；尽量给出在通用场景下通过 ClickVisual 可视化操作进行对 ClickHouse 的最佳实践；
-- 改进测试流程：提升单元测试覆盖率，确保功能开发不会对稳定版本产生版本回归；
+At present, the first task is to build the foundation for the core of ClickVisual:
+- Fix Bug: Including but not limited to the problems raised by the community during installation and use;
+- Performance Optimization: for example, update the ClickHouse go version; Optimize the request logic for specific query scenarios; Try to give the best practice of ClickHouse through ClickVisual visualization in general scenarios;
+- Improve the test process: improve the unit test coverage to ensure that the functional development will not produce version regression for the stable version;
 
-### 易用性
+### Ease of use
 
-- 用户体验优化：用户交互方面与社区使用者进行深入沟通，与同类型项目进行横向对比；
-- 功能模块：针对社区提出的高频需求进行新功能模块开发
-- 文档改进：更新官方文档以提供更详尽的文档和使用教程；
+- User experience Optimization: conduct in-depth communication with community users in terms of UI, and make horizontal comparison with similar projects;
+- Function module: develop new function modules according to the high-frequency requirements put forward by the community;
+- Document improvement: update the official documents to provide more detailed documents and tutorials;
 
-## 生态系统
+## Ecosystem
 
-关注生态系统的建设工作
-- 多样的日志采集支持
+Pay attention to the construction of ecosystem
+- Diverse log collection support

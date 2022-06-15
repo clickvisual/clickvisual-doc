@@ -18,7 +18,7 @@
 - 在浏览器里输入 http://127.0.0.1:19001，进入到 clickvisual 登录页面，输入账号/密码：clickvisual/clickvisual
 
 ### 2.2. 创建数据库
-创建实例，填写 dns 参数 tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&writer_timeout=10&debug=true
+创建实例，填写 DSN 参数 tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&writer_timeout=10&debug=true
 
 ![img.png](../../images/create-database.png)
 
@@ -26,7 +26,7 @@
 - 创建数据表：ingress_stdout
 - 选择采集日志的时间类型，采集日志的标示必须位 _time_，类型支持 string 或者 float，在 demo 演示中必须选择  float 类型
 - 日志保存时间：7 天
-- Brokers：填入 docker-compose 启动的中的 Kafka 容器访问地址：kafka:9092
+- Brokers：填入 docker-compose 启动的 Kafka 容器访问地址：kafka:9092
 - Topic：Kafka 中采集日志的 topic name 是 ingress-stdout
 
 ![img.png](../../images/table-create.png)
