@@ -1,10 +1,9 @@
-# 模板生成
+# Template Generation
 
-## 对 EGO 框架日志采集模板
+## Log collection template for ego framework
 
-### 单机创建
-注意是否配置了 subpath，如果环境变量中配置了子路径例如 /clickvisual/ 则需要从
-`http://127.0.0.1:19001/api/v1/template/1` 替换为 `http://127.0.0.1:19001/clickvisual/api/v1/template/1`
+### Single machine creation
+Note whether the subpath is configured. If the subpath is configured in the environment variable, such as /clickvisual/, you need to replace ` http://127.0.0.1:19001/api/v1/template/1 ` with ` http://127.0.0.1:19001/clickvisual/api/v1/template/1 `
 ```sh
 curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 --header 'Content-Type: application/json' \
@@ -15,12 +14,11 @@ curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 }'
 ```
 
-### 无副本集群创建
-注意是否配置了 subpath，如果环境变量中配置了子路径例如 /clickvisual/ 则需要从
-`http://127.0.0.1:19001/api/v1/template/1` 替换为 `http://127.0.0.1:19001/clickvisual/api/v1/template/1`
+### No replica cluster creation
+Note whether the subpath is configured. If the subpath is configured in the environment variable, such as /clickvisual/, you need to replace ` http://127.0.0.1:19001/api/v1/template/1 ` with ` http://127.0.0.1:19001/clickvisual/api/v1/template/1 `
 
-k8sClusterName 为 k8s 集群的名称  
-instanceClusterName 为 ClickHouse 的 cluster
+k8sClusterName is k8s cluster name  
+instanceClusterName is ClickHouse cluster
 ```sh
 curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 --header 'Content-Type: application/json' \
@@ -32,8 +30,8 @@ curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 }'
 ```
 
-### topic 说明
-%s 为参数调用中的 clusterName
+### topic 
+%s is clusterName for parameter call
 ```go
 var kafkaTopicORM = map[string]string{
 	"app_stdout":     "app-stdout-logs-%s",
@@ -44,11 +42,11 @@ var kafkaTopicORM = map[string]string{
 ```
 
 
-### 效果
-- 创建 clickvisual_default 的实例
-- 创建 clickvisual_default 的数据库
-- 创建 app-stdout, ego-stdout, ingress-stdout, ingress-stderr 日志库
-- 创建日志库中的分析字段
+### Results
+- Created a clickvisual_default instance
+- Created a clickvisual_default database
+- Created some log libraries: app-stdout, ego-stdout, ingress-stdout, ingress-stderr
+- Created some Analysis fields in log libraries
 
 
 ![img.png](../../images/template_one_1.png)

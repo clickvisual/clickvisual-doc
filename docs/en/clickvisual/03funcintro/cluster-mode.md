@@ -1,11 +1,11 @@
-# 集群模式使用
+# Cluster mode 
 
-`可用版本 >= 0.2.2`
+`version >= 0.2.2`
 
-选择类型：集群。填入集群名称，例如 shard2-repl1。
+Select Type：Cluster.Fill in Cluster name,such as shard2-repl1
 
 ![img.png](../../images/instance-create.png)
 
-选择对应的集群实例后新建数据库，数据库建立成功后，后续操作与单机模式一致。
+Select the corresponding cluster instance and create a new database. After the database is successfully established, the subsequent operations are consistent with the stand-alone mode.
 
 ![img_1.png](../../images/database-create-cluster.png)

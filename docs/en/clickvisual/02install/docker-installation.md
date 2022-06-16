@@ -1,18 +1,18 @@
-# Docker 安装
+# Docker Install
 
-clickvisual Docker 镜像地址：https://hub.docker.com/r/sevennt/clickvisual/tags
+ClickVisual Docker Image：https://hub.docker.com/r/sevennt/clickvisual/tags
 
-## Docker 启动配置
+## Docker start config
 > https://github.com/clickvisual/clickvisual/tree/master/data/all-in-one/clickvisual/config
 
-你需要把你的配置里 [mysql] 改成你本地 MySQL 的配置。
+You need to change [mysql] to your local MySQL configuration.
 
-## 使用 Docker 启动
+## Start with Docker
 > docker run --name clickvisual -e EGO_CONFIG_PATH=/clickvisual/config/docker.toml -e EGO_LOG_WRITER=stderr -p 19001:19001 -d sevennt/clickvisual:master -v ./config:/clickvisual/config
 
-需要把配置挂载到 docker 容器内
+The configuration needs to be attached to the docker container.
 
-## 使用 Docker-Compose 命令
+## Start with Docker-Compose 
 ```
 version: "3"
 services:
@@ -29,9 +29,9 @@ volumes:
 - ./config:/clickvisual/config
 command: [ '/bin/sh', '-c', './bin/clickvisual' ]<br/>
 ```
-需要把配置挂载到 docker 容器内
+The configuration needs to be attached to the docker container.
 
-最后访问 http://localhost:19001
+At last,access http://localhost:19001
 
 
 

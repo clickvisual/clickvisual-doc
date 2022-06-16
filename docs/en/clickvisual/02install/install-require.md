@@ -1,19 +1,19 @@
-# 安装基本要求
-本文主要介绍安装 clickvisual 所需要的硬件和软件配置。  
-要运行 clickvisual，您必须拥有受支持的操作系统、满足或超过最低要求的硬件、受支持的数据库和受支持的浏览器。
+# Install require
+To run clickvisual, you must have a supported operating system, hardware that meets or exceeds the minimum requirements, supported databases, and supported browsers.
 
-## 支持的操作系统
+## Supported operating system
 - Linux：amd64/arm64
 - MacOS: amd64/arm64
 
-## 支持的数据库
+## Supported database
 MySQL
 
-## 资源要求
-clickvisual 占用资源较小，在内存和 CPU 的使用上非常轻量级。  
-推荐使用 1核 CPU、128MB 内存来运行。
+## Hardware
+ClickVisual occupies less resources and is very lightweight in the use of memory and CPU.
 
-## 支持的浏览器
+It is recommended to use 1-core CPU and 128MB memory for operation.
+
+## Supported browsers
 - Chrome/Chromium
 - Firefox
 - Safari

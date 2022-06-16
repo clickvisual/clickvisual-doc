@@ -1,31 +1,32 @@
-# 系统设置
+# System Settings
 
-完成 clickvisual 部署后，首先要做的是配置 Kubernetes 集群、配置 ClickHouse 数据源。
+After ClickVisual deployment, the first thing to do is to configure the Kubernetes cluster and ClickHouse data source.
 
-## 1. 集群配置管理
+## 1. Instances Management
 
-在顶部导航栏中，选择 **系统设置 -> 集群管理：**
+In the top nav bar,select **Setting -> Cluster：**
 
 ![img.png](../../images/instance-list.png)
 
-由于我们尚未配置集群，此处列表为空。我们点击 **+新增集群**，在弹出表单中填入需要配置的集群信息，包括集群名称、API Server 地址、kube-config 配置等。
+As we haven't configure any clusters yet, the list is empty.Click **+Add cluster**,Fill in the pop-up form with the cluster information to be configured, including cluster name, API server address, Kube-config, etc. 
 
 ![img.png](../../images/k8s-create.png)
 
-提交后即可在做 LogAgent 配置下发时使用。
+After submission, it can be used for the distribution of LogAgent configuration.
 
-## 2. ClickHouse 数据源管理
+## 2. ClickHouse data source management
 
-在顶部导航栏中，选择 **系统设置 -> 实例管理：**
+In the top nav bar,select **Setting -> Instances：**
 
 ![img.png](../../images/instance-list.png)
 
-默认没有配置数据源实例，所以此处为空，点击 **+新增实例**，增加一个新的 ClickHouse 实例作为数据源。
+By default, no data source instance is configured, so this is blank,click **+Add instance**, add a new ClickHouse instance as datasource.
 
-数据源配置类似：`tcp://x.x.x.x:9000?username=x&password=x&read_timeout=10&write_timeout=20&debug=true`，可支持参数
+datasource config like that
+> `tcp://x.x.x.x:9000?username=x&password=x&read_timeout=10&write_timeout=20&debug=true`
 
 
-|参数| 类型    |
+|parameter| type    |
 |---|-------|
 |read_timeout| float |
 |write_timeout| float |
@@ -34,4 +35,4 @@
 
 ![img.png](../../images/instance-create.png)
 
-配置好 `dev-clickhouse` 这个数据源后，稍后即可以在日志查询页面中使用。
+After configuring the `dev-clickhouse` data source, it can be used in the log query page later.

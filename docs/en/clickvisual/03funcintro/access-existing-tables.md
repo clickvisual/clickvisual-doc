@@ -1,11 +1,11 @@
-# 已有数据表接入
+# Access existing tables 
 
-`可用版本 >= 0.2.2`
+`Available version >= 0.2.2`
 
-在系统设置中新增实例。
+Add an instance in Setting.
 
 ![img.png](../../images/instance-manager.png)
 
-点击新增日志库，选择`已有日志库`，时间解析字段是日志数据时间轴字段，可选类型为`DateTime64(3)`、`DateTime`、`Int32`、`Int64`，目标数据表需要包含其中一种类型的字段，才可以正常接入。
+In the top navigation bar, access  Logs - > and click 'Creating a Log library' button,change 'Creation Mode' to 'Select an existing log library'.Time Resolution Field is the log data timeline field,the optional types are `DateTime64(3)`、`DateTime`、`Int32`、`Int64`.The target data table needs to contain one of the fields before it can be accessed normally.
 
 ![img.png](../../images/exist-table-choice.png)

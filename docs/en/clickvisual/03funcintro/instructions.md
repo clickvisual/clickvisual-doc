@@ -1,43 +1,43 @@
-# 使用说明
+# Instructions
 
-日志查询条件筛选部分使用的 ClickHouse 原生 Where 子句语法。
+ClickHouse native Where clause syntax used in the log query criteria filter section.
 
-[官方文档](https://clickhouse.com/docs/zh/sql-reference/statements/select/where)
+[Official documents](https://clickhouse.com/docs/en/sql-reference/statements/select/where)
 
-## 从阿里云迁移过来后的使用案例
+## Use cases after migration from Alibaba cloud
 
-例如我们以前利用阿里云的模糊匹配进行搜索，以下语句会对这两个条件进行模糊匹配
+For example,we used to use  Alibaba cloud's fuzzy matching to search.The following statement will perform fuzzy matching on these two conditions.
 
 `Electron and docs_text_copy`
 
-那么在 ClickVisual 中如何使用呢，在默认情况下（通过 ClickVisual 建立整套的数据采集流程），使用以下语句进行模糊匹配可以达到相同效果
+So how to use it in ClickVisual? By default(establish a complete set of data collection process through clickVisual),use the following statement instead.
 
 `_raw_log_ like '%Electron%' and _raw_log_ like '%docs_text_copy%'`
 
-但是这样性能不太好，那么可以设置分析字段来提升查询效率  
-假设我们匹配的目标字段在嵌套的 json 中：body 内的 browserName 和 code 字段。如下图
+However, this performance is not very good,you can add Analysis fields to improve query efficiency.
+Suppose that the target field we match is in a nested JSON: browserName and code field in body as shown below
 
 ![img_2.png](../../images/inst-3.png)
 
-如果在左侧的分析界面看到了如下的配置，可直接使用以下语句进行查询
+If you see the following config in Analysis panel on the left,you can directly use  the following statement to query.
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
 
 ![img_1.png](../../images/inst-5.png)
 
-如果没有配置分析字段，则需要进行相关的配置
+If there is no any Analysis field,you need to configure.
 
 ![img_2.png](../../images/inst-3.png)
 ![img_1.png](../../images/inst-2.png)
 
-完成配置后，查询语句为：
+After configuration, the query statement is:
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
 
-这种情况下查询依旧很花时间，感觉很慢，可以开启下面的配置，这里设置 siphash 和 urlhash(会截断?后的参数进行hash)，通过建立 hash 映射，提升查询效率。
+If the query is still slow in this case,you can configure that:set siphash and urlhash(truncate parameters after '?'and hash).By establishing hash mapping, query efficiency is improved.
 
 ![img_3.png](../../images/inst-4.png)
 
-查询语句依旧是：
+The query statement is still:
 
 `body.browserName='browserName' and body.code='docs_text_copy'`

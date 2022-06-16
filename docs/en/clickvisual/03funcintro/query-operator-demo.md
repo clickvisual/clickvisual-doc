@@ -1,3 +1,3 @@
-# 常见的查询操作例子
+# Query Operator Demo
 
-clickvisual 的查询部分支持 clickhouse 的原生语法，可以参考 [https://clickhouse.com/docs/zh/sql-reference/statements/select/where/](https://clickhouse.com/docs/zh/sql-reference/statements/select/where/)
+The query function of ClickVisual supports the native syntax of ClickHouse. You can refer to [https://clickhouse.com/docs/en/sql-reference/statements/select/where/](https://clickhouse.com/docs/zh/sql-reference/statements/select/where/)

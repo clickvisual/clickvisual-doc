@@ -1,6 +1,6 @@
-# ClickHouse常用SQL
+# ClickHouse Commonly used SQL
 
-## 今日PV
+## Today PV
 ```sql
 with (
     select count(1) from ingress_stdout where toDate(_time_second_) = addDays(toDate(now()), -1)
@@ -12,7 +12,7 @@ where toDate(_time_second_) = toDate(now());
 
 ![img.png](../../images/sql-result-1.png)
 
-## 流入流出
+## Inflow and outflow
 ```sql
 select concat(formatDateTime(_time_second_,'%Y-%m-%d %H'),':00') as hour ,
       SUM(if(body_bytes_sent is null, 0, body_bytes_sent)) as net_out,
@@ -24,7 +24,7 @@ order by hour limit 24;
 ```
 ![img.png](../../images/sql-result-2.png)
 
-## TOP10 访问path
+## TOP10 access path
 ```sql
 select path(url) as _path, count(1) as pv
 from ingress_stdout
@@ -35,7 +35,7 @@ order by pv desc limit 10;
 ```
 ![img.png](../../images/sql-result-3.png)
 
-## PV趋势同比昨日（按时段）
+## PV trend compare yesterday (time period)
 ```sql
 select today._hour as hour,
        yesterday.pv as yesterday_pv,
@@ -51,7 +51,7 @@ order by today._hour
 ```
 ![img.png](../../images/sql-result-4.png)
 
-## PV、UV展示
+## PV、UV Display
 ```sql
 select
        concat(formatDateTime(_time_second_,'%Y-%m-%d %H'),':00') as hour,
@@ -65,7 +65,7 @@ order by hour
 ```
 ![img.png](../../images/sql-result-5.png)
 
-## 请求状态展示
+## Request status display
 ```sql
 select concat(formatDateTime(_time_second_,'%Y-%m-%d %H'),':00') as hour,
        count(1) as pv,
@@ -79,7 +79,7 @@ order by hour;
 ![img.png](../../images/sql-result-6.png)
 
 
-## 请求数和各状态码比例
+## Proportion of status codes to All Request 
 ```sql
 with (
 select count(1) from ingress_stdout where toDate(_time_second_) = addDays(toDate(now()), -1) and status >= 400
