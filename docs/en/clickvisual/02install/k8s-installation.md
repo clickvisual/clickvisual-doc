@@ -1,17 +1,20 @@
-# Kubernetes 集群安装
+# Kubernetes Cluster installation
 
-本文主要介绍如何使用 helm 或 kubectl 将 clickvisual 部署到 Kubernetes 集群。
+This article mainly introduces how to use helm or kubectl to deploy ClickVisual to kubernetes cluster.
 
-## 1. 部署要求
+## 1. Deployment requirements
 - Kubernetes >= 1.17
 - Helm >= 3.0.0
 
-## 2. 部署 fluent-bit（参考）
-可以直接参考 fluent-bit 官方网站进行部署 https://docs.fluentbit.io/，只需要保证，写入 kafka 的数据包含以下两个字段即可。
+## 2. Deploy fluent bit (Reference)
+
+You can directly refer to the official fluent bit website for deployment https://docs.fluentbit.io/ , just ensure that the data written to Kafka contains the following two fields.
 - _time_
 - _log_
 
-如果采用 DaemonSet 方式部署，可以使用如下的 DaemonSet yaml。注意需要挂载 configMap。fluentbit-daemonset.yaml 如下：
+
+If you deploy with DaemonSet , you can use the following DaemonSet yaml. Note that you need to mount the configMap. 
+fluentbit-daemonset.yaml is as follows:
 ```
 apiVersion: apps/v1
 kind: DaemonSet
@@ -77,7 +80,7 @@ spec:
 ```
 
 
-挂载的 fluentbit-configmap.yaml 配置可以参考如下：
+fluentbit-configmap.yaml is as follows:
 ``` 
 apiVersion: v1
 kind: ConfigMap
@@ -104,14 +107,14 @@ data:
     @INCLUDE filter-modify.conf
     @INCLUDE output-kafka.conf
 
-    # Deamonet中有配置ENV时禁用
+    # Disabled when env is configured in Deamonet
     #@Set CLUSTER_NAME=shimodev
     #@Set KAFKA_BROKERS=127.0.0.1:9092
 
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
-        # Tag 标识数据源，用于后续处理流程Filter,output时选择数据
+        # Tag identifies the data source, which is used to select data in the subsequent process Filter and Output
         Tag               ingress.*
         Path              /var/log/containers/nginx-ingress-controller*.log
         Parser            docker
@@ -119,15 +122,15 @@ data:
         Mem_Buf_Limit     15MB
         Buffer_Chunk_Size 32k
         Buffer_Max_Size   64k
-        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        # Skip the row when length greater than Buffer_Max_Size. If Skip_Long_Lines is Off, the collection will be stopped when encounter the row above.
         Skip_Long_Lines   On
         Refresh_Interval  10
-        # 采集文件没有数据库偏移位置记录的，从文件的头部开始读取，日志文件较大时会导致fluent内存占用率升高出现oomkill
+        # If the acquisition file has no database offset record, it is read from the header of the file. When the log file is large, it will lead to the increase of fluent memory usage and oomkill
         #Read_from_Head    On
 
     [INPUT]
         Name              tail
-        # Tag 标识数据源，用于后续处理流程Filter,output时选择数据
+        # Tag identifies the data source, which is used to select data in the subsequent process Filter and Output
         Tag               ingress_stderr.*
         Path              /var/log/containers/nginx-ingress-controller*.log
         Parser            docker
@@ -135,10 +138,10 @@ data:
         Mem_Buf_Limit     15MB
         Buffer_Chunk_Size 32k
         Buffer_Max_Size   64k
-        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        # Skip the row when length greater than Buffer_Max_Size. If Skip_Long_Lines is Off, the collection will be stopped when encounter the row above.
         Skip_Long_Lines   On
         Refresh_Interval  10
-        # 采集文件没有数据库偏移位置记录的，从文件的头部开始读取，日志文件较大时会导致fluent内存占用率升高出现oomkill
+        # If the acquisition file has no database offset record, it is read from the header of the file. When the log file is large, it will lead to the increase of fluent memory usage and oomkill
         #Read_from_Head    On
 
     [INPUT]
@@ -151,7 +154,7 @@ data:
         Mem_Buf_Limit     15MB
         Buffer_Chunk_Size 1MB
         Buffer_Max_Size   5MB
-        # 跳过长度大于 Buffer_Max_Size 的行，Skip_Long_Lines 若设为Off遇到超过长度的行会停止采集
+        # Skip the row when length greater than Buffer_Max_Size. If Skip_Long_Lines is Off, the collection will be stopped when encounter the row above.
         Skip_Long_Lines   On
         Refresh_Interval  10
 
@@ -176,11 +179,11 @@ data:
         Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
         Kube_Tag_Prefix     ingress.var.log.containers.
-        # Merge_Log=On 解析log字段的json内容，提取到根层级, 附加到Merge_Log_Key指定的字段上.
+        # When enabled,it parses the JSON content of the log field, extract it to the root level, and attach it to the field specified by Merge_Log_Key. 
         Merge_Log           Off
         #Merge_Log_Key       log_processed
         #Merge_Log_Trim      On
-        # 合并log字段后是否保持原始log字段
+        # Whether to keep the original log field after merging the log field
         Keep_Log            On
         K8S-Logging.Parser  On
         K8S-Logging.Exclude Off
@@ -195,9 +198,9 @@ data:
         Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
         Kube_Tag_Prefix     ingress_stderr.var.log.containers.
-        # Merge_Log=On 解析log字段的json内容，提取到根层级, 附加到Merge_Log_Key指定的字段上.
+        # Merge_Log=On Parse the JSON content of the log field, extract it to the root level, and attach it to the field specified by Merge_Log_Key.
         Merge_Log           Off
-        # 合并log字段后是否保持原始log字段
+        # Whether to keep the original log field after merging the log field
         Keep_Log            Off
         K8S-Logging.Parser  On
         K8S-Logging.Exclude Off
@@ -261,7 +264,7 @@ data:
         Remove          kubernetes_container_image
         Add             _cluster_ ${CLUSTER_NAME}
         Add             _log_agent_ ${HOSTNAME}
-        # ${NODE_IP} 通过daemonset中配置ENV注入
+        # ${NODE_IP} Configure ENV injection through the daemonset
         Add             _node_ip_ ${NODE_IP}
 
     [FILTER]
@@ -270,7 +273,7 @@ data:
         #Regex container_name ^nginx-ingress-controller$
         #Regex stream ^stdout$
         Exclude _source_ ^stderr$
-        # 排除 TCP 代理日志（日志格式不同影响采集）
+        # Exclude TCP agent logs (different log formats affect Collection)
         Exclude log ^\[*
 
     [FILTER]
@@ -393,7 +396,7 @@ data:
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
-        # 与FILTER 阶段中Merge_Log=On 效果类似，解析log字段的json内容，但无法提到根层级
+        # Similar to the effect Merge_Log=On at filter stage, the JSON content of the log field is parsed, but cannot be extracted to the root level
         #Decode_Field_As escaped_utf8 kubernetes do_next
         #Decode_Field_As json kubernetes
 
@@ -413,44 +416,44 @@ data:
         Time_Format %b %d %H:%M:%S
 ```
 
-## 部署 clickvisual
-   克隆仓库：
+## Deploy ClickVisual
+   Clone git repository:
 
 ```
 git clone https://github.com/clickvisual/clickvisual.git
 ```
 
-### 使用自定义配置
+### Use custom configuration
 
 ```
 cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
 ```
-修改 data/helm/clickvisual/default.toml 中的 mysql、auth 以及其他段配置，将 mysql.dsn 、 auth.redisAddr、auth.redisPassword 替换为你自己的配置。
+Edit mysql、auth and other segment configurations in data/helm/clickvisual/default.toml,update mysql.dsn,auth.redisAddr,auth.redisPassword as you want.
 
-修改 data/helm/clickvisual/templates/deployment.yaml 中 value 为 `configs/default.toml` 默认是 `config/default.toml` 即仓库中的默认配置
+Update the value `configs/default.toml` in data/helm/clickvisual/templates/deployment.yaml if you need
 ```
 - name: EGO_CONFIG_PATH
 value: "configs/default.toml"
 ```
 
-### 安装
-方法一：[推荐] 使用 helm 直接安装：
+### Install
+Method 1: [recommended] install directly with Helm:
 ```
 helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespace default
 ```
-如果你已将 clickvisual 镜像推送到你自己的 harbor 仓库，可以通过 --set image.respository 指令修改仓库地址
+If you have pushed the clickvisual image to your own harbor repository,use --set image.respository to change respository address.
 ```
 helm install clickvisual data/helm/clickvisual --set image.repository=${YOUR_HARBOR}/${PATH}/clickvisual --set image.tag=latest --namespace default
 ```
 
-方法二：[可选] 使用 helm 渲染出 yaml 后，手动通过 kubectl 安装：
+Method 2: [optional] after rendering yaml with helm, install it manually through kubectl:
 ```
-# 使用 helm template 指令渲染安装的 yaml
+# Use helm template render clickvisual.yaml for install
 helm template clickvisual data/helm/clickvisual --set image.tag=latest > clickvisual.yaml
 
-# 可以使用 "--set image.repository" 来覆盖默认镜像路径
+# You can use "--set image.repository" to override the default image path
 # helm template clickvisual clickvisual --set image.repository=${YOUR_HARBOR}/${PATH}/clickvisual --set image.tag=latest > clickvisual.yaml
 
-# 检查 clickvisual.yaml 是否无误，随后通过 kuebctl apply clickvisual.yaml
+# Check clickvisual.yaml and use kuebctl apply 
 kubectl apply -f clickvisual.yaml --namespace default
 ```

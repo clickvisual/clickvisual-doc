@@ -1,125 +1,125 @@
-# ClickVisual 配置说明
+# ClickVisual Config
 
-本文主要对 clickvisual 启动的配置项做详细说明。
+This article mainly describes the configuration items of ClickVisual startup in detail.
 
-app 段配置说明：
+Description of app segment configuration:
 ```toml
 [app]
-# OAuth 签发 hashStatecode 所需的 secretKey
+# OAuth sign and issue secretKey required for hashstatecode
 secretKey = "secretKey"
-# 如果配置了 clickvisual 域名，需要将 rootURL 配置为 clickvisual 域名　　　　　　　
+# If the clickvisual domain name is configured, you need to configure the rootURL as the clickvisual domain name　　　　　　　
 rootURL = "https://dev.clickvisual.com/"
-# 登录后默认访问的 URL　
+# URL accessed by default after login
 baseURL = "/api/admin/login/"
-# 日志查询中需要隐藏的元数据字段　　　　
+# Metadata fields to be hidden in log query　　　　
 hiddenFields = ["_cluster_", "_log_agent_", "_node_ip_", "_node_name_", "_time_second_", "_time_nanosecond_", "_source_"]
-# 日志查询中需要显示的元数据字段
+# Metadata fields to be displayed in log query
 defaultFields = ["_namespace_","_container_name_","_pod_name_","_time_second_"]
-# 菜单配置文件，酌情调整菜单权限文件路径
+# Menu access permission configuration file path
 permissionFile = "./config/resource.yaml"
-# 限制最大查询时间跨度单位小时 0 或不填表示无限制
+# Limit the maximum query time span in hours, 0 or left blank means unlimited
 queryLimitHours = 24
 ```
 
-logger 段配置说明：
+logger segment configuration description:
 ```toml
 [logger]
-# 日志等级，可选 debug|info|warn|error|panic|fatal，建议测试环境选择 debug，生产环境选择 error
+# Log level,Optional: debug|info|warn|error|panic|fatal. It is recommended to select debug for the test environment and error for the production environment
 level = "debug"
-# 日志输出 writer，可选 file|stderr
+# Log Output: writer，Optional: file|stderr
 writer = "stderr"
-# 如果 writer 是 file，dir 配置有效，表示输出日志文件目录
+# If writer is file，dir configuration works and indicates the output log file directory
 dir = "./logs"
-# 如果 writer 是 file，name 配置有效，表示日志文件名
+# If writer is file，name configuration works and indicates the log file name
 name = "default.log"
 ```
 
-server 段配置说明：
+server segment configuration description
 ```toml
-# clickvisual API Server 配置
+# ClickVisual API Server Config
 [server.http]
-# 启动的 HTTP API Server Host
+# Started HTTP API Server Host
 host = "0.0.0.0"
-# 启动的 HTTP API Server Port
+# Started HTTP API Server Port
 port = 9001
 
-# clickvisual governor Server 配置，governor 用户提供 metrics 采集、profling 调试、日志级别调整等。
+# ClickVisual governor Server Config，governor provides metrics collection, profiling debugging, log level adjustment, etc.
 [server.governor]
-# 启动的 HTTP Governor Server Host
+# Started HTTP Governor Server Host
 host = "0.0.0.0"
-# 启动的 HTTP Governor Server Port
+# Started HTTP Governor Server Port
 port = 9003
 ```
 
-mysql 段配置说明
+mysql segment configuration description
 ```toml
 [mysql]
-# 连接的最大存活时间，默认300s
+# The maximum lifetime of the connection is 300s by default
 connMaxLifetime = "300s"
-# 是否开启 debug 模式，debug 模式下会打印 plain sql
+# Whether to enable the debug mode. Plain SQL will be printed in the debug mode.
 debug = true
-# MySQL 实例的 DSN 连接串
+# DSN connection string of MySQL instance
 dsn = "root:root@tcp(127.0.0.1:3306)/clickvisual?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=True&loc=Local&readTimeout=1s&timeout=1s&writeTimeout=3s"
-# 日志级别
+# Log Level
 level = "error"
-# 最大空闲连接数
+# Maximum idle connections
 maxIdleConns = 5
-# 最大活动连接数
+# Maximum open connections
 maxOpenConns = 50
 ```
 
-auth 段配置说明
+auth segment configuration description
 ```toml
 [auth]
-# 使用 redis 存储用户 session
+# Using redis to store users session
 mode = "redis"
-# 组件名，默认 clickvisual-session
+# Component name,default: clickvisual-session 
 name = "clickvisual-session"
 keypairs = "secret"
 redisSize = 10
 redisNetwork = "tcp"
-# redis 实例地址，默认使用 127.0.0.1:6379，你可以修改为自己的 redis 地址
+# redis instance address，use 127.0.0.1:6379 by default,update that when you need
 redisAddr = "127.0.0.1:6379"
-# redis 实例密码，默认为空
+# redis password,default to empty
 redisPassword = "
 
-# 匿名访问配置
+# Anonymous access config
 [auth.anonymous]
-# 是否允许匿名访问
+# Enable/disable anonymous access
 enabled = false
 
-# auth 代理配置
+# auth proxy config
 [auth.proxy]
-# 是否允许开启代理模式
+# Enable proxy mode
 enabled = true
-# 代理模式下默认使用 'X-clickvisual-USER' 读取 username
+# In proxy mode,'x-clickvisual-user'is used by default to read username
 headerName = "X-clickvisual-USER"
 
-# 第三方登录配置
+# Third party login config
 [[auth.tps]]
-# 第三方登录类型，此处设置为 'github'
+# Third party login type，now set as 'github'
 typ = "github"
-# 是否启用
+# Enable or not
 enable = true
-# 是否静默注册
+# Whether to register silently
 allowSignUp = true
-# 应用 Client ID
+# Apply Client ID
 clientId = ""
-# 应用 Client Secret
+# Apply Client Secret
 clientSecret = ""
-# 授权范围
+# Scopes of authorization
 scopes = ["user:email", "read:org"]
-# 第三方授权地址
+# Third party authorized address
 authUrl = "https://github.com/login/oauth/authorize"
-# 第三方获取 access_token 地址
+# Third party access_token address
 tokenUrl = "https://github.com/login/oauth/access_token"
-# 第三方 api 地址
+# Third party api address
 apiUrl = "https://api.github.com/user"
 allowedDomains = []
 teamIds = []
 allowedOrganizations = []
 
-# 第三方登录配置
+# Third party login config
 [[auth.tps]]
 typ = "gitlab"
 enable = true

@@ -1,25 +1,25 @@
-# 告警功能配置说明
+# Alarm function configuration
 
-`可用版本 >= 0.2.1`
+`Available version >= 0.2.1`
 
-## 架构说明
+## Architecture 
 
 ![img.png](../../images/alarm-arch.png)
 
-## 使用说明
+## Instructions
 
-1. 在 ClickHouse 中产生对应数据表的 Materialized View，作用是将数据按照配置的规则以秒为单位录入 metrics.samples 表中
-2. 产生的 Prometheus 告警规则写入配置的文件或者 configmap 中
-3. Prometheus 读取 metrics.samples 的数据，并根据告警规则产生告警，推送到 Prometheus AlertManager
-4. Prometheus AlertManager 通过 webhook 推送到 clickvisual，再由 clickvisual 分发到钉钉
+1. Generate Materialized View of the corresponding data table in ClickHouse to enter data into metrics.samples in seconds according to the configured rules.
+2. Write the generated Prometheus alarm rules to the configured file or configmap.
+3. Prometheus reads data from metrics.samples, generate alarms according to alarm rules, and push them to Prometheus AlertManager.
+4. Prometheus Alertmanager is pushed to ClickVisual through webhook, and then ClickVisual distributes it to third party communication platform such as DingDing.
 
-## 集群部署
+## Cluster deployment
 
-可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
+Refer to the config:[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus)
 
-### ClickHouse 配置
+### ClickHouse Config
 
-新增`graphite_rollup` 配置，配置路径可以参考，根据 clickhouse 的版本不通略有区别，具体以官方指导配置为准。
+Newly add `graphite_rollup` configuration,the configuration path can be slightly different according to the version of ClickHouse, and the specific configuration shall be subject to the official guidance.
 
 ![img.png](../../images/graphite_rollup_tree.png)
 
@@ -49,8 +49,7 @@
     </graphite_rollup>
 </yandex>
 ```
-
-需要创建 metrics.samples 表，依赖 `graphite_rollup` 配置
+You need to create etrics.samples with `graphite_ Rollup` configuration
 
 ```sql
 CREATE DATABASE IF NOT EXISTS metrics;
@@ -65,26 +64,26 @@ CREATE TABLE IF NOT EXISTS metrics.samples
 )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup');
 ```
 
-### prom2click 配置
+### prom2click config
 
-prom2click 仓库地址：[https://github.com/mindis/prom2click](https://github.com/mindis/prom2click)
+prom2click repository：[https://github.com/mindis/prom2click](https://github.com/mindis/prom2click)
 
-修改服务启动参数，-ch.dsn 参数，保证该服务可以访问到 clickhouse。
+Modify the service startup parameter, -ch.dsn parameter to ensure that the service can access the ClickHouse.
 
-### Prometheus 配置
+### Prometheus config
 
-启动文件里面增加如下配置：
+Add the following configuration in the startup file:
 
-- prom2click 为对应服务访问地址
-- alertmanager 为对应服务访问地址
+- prom2click (corresponding service address)
+- alertmanager (corresponding service address)
 
 ```yaml
 alerting:
-  # 告警配置文件
+  # Alarm configuration file
   alertmanagers:
-  # 修改：使用静态绑定
+  # Modify: using static binding
   - static_configs:
-    # 修改：targets、指定地址与端口
+    # Modify: targets, specified address and port
     - targets: ["alertmanager:9093"]
 remote_read:
   - url: "http://prom2click:9201/read"
@@ -97,9 +96,9 @@ remote_write:
       max_samples_per_send: 500
 ```
 
-### Prometheus AlertManager 配置
+### Prometheus AlertManager Config
 
-告警方式为 webhook，回调到 clickvisual 服务，修改 url 地址，保证可以正常访问 clickvisual 服务。
+If the alarm mode is webhook, it calls back to the ClickVisual service. So you need change the url address to ensure normal access to the ClickVisual service.
 
 ```yaml
 route:
@@ -115,13 +114,13 @@ receivers:
   - url: 'http://clickvisual:9001/api/v1/prometheus/alerts'
 ```
 
-### clickvisual 配置
+### ClickVisual Config
 
-访问：系统设置 -> 实例管理
+In the top navigation bar access:Setting -> Instances
 
-新增和编辑实例数据可以再更多设置中，可以看到如下配置，这个部分配置的作用是将告警规则下发到 Prometheus。
+In Create/edit instance modal,click "More Options",you can see the config to send alarm rules to Prometheus.
 
-如果 Prometheus 采用本地配置文件方式启动，例如下面这个例子，则将文件路径配置为 `/etc/prometheus/rules`
+If Prometheus is started in the local configuration file mode, such as the following example, configure the file path as `/etc/prometheus/rules`
 
 ```yaml
 rule_files:
@@ -130,9 +129,9 @@ rule_files:
 
 ![img.png](../../images/alarm-store-file.png)
 
-如果通过 k8s 方式部署，这个 configmap 即 rules 存储的位置。
+If deployed in k8s mode, this configmap is the location where the rules are stored.
 ![img.png](../../images/alarm-store-k8s.png)
 
-报警消息推送效果
+Alarm message push effect display
 
 ![img.png](../../images/alarm-msg-push.png)
