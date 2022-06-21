@@ -71,6 +71,11 @@ rootURL = "http://localhost:19001"
 1. 调整 kafka 采集数据内容，保证 kafka 采集数据字段为 stream 表的字段的子集
 2. 调整 `kafka_skip_broken_messages` 参数，跳过格式异常的数据
 
+需要保证日志部分数据在 kafka 中为
+
+> `_time_`: 对应 string 或 float 类型  
+> `_log_`: 原始日志
+
 ![img.png](../../images/qa-2-6.png)
 
 ## database.sql的脚本里面没有建表的sql
