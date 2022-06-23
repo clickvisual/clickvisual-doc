@@ -37,7 +37,7 @@
 
 `flient-bit.conf` 存储层配置全局环境配置。
 
-```
+```conf
 [SERVICE]
     # 刷新output输出的时间间隔，单位秒
     Flush         1
@@ -68,7 +68,7 @@
 
 `parse.conf` 配置了解析 INPUT 的 parser，Parse 组件主要是将非结构化消息转换为结构化消息。
 
-```
+```conf
 [PARSER]
     Name   nginx
     Format regex
@@ -83,6 +83,7 @@
     Time_Format %d/%b/%Y:%H:%M:%S %z
 
 [PARSER]
+    # 注高版本k8s可能需要使用cri PARSER
     Name        docker
     Format      json
     Time_Key    time
@@ -112,16 +113,16 @@
 
 `input-kubernetes.conf` 配置 fluent-bit 具体采集哪些日志（Nginx Ingress、业务标准输出日志、节点系统日志等），以及采集的具体参数。
 
-```
+```conf
 # 采集ingress access日志，目前不区分access和error日志，后面通过filter插件分离
 [INPUT]
     # 使用 tail 插件
     Name              tail
     # Tag 标识数据源，用于后续处理流程Filter,output时选择数据
     Tag               ingress.*
-    # Nginx Ingress 日志采集路径
+    # Nginx Ingress 日志采集路径，注：高版本可能需要修改为 /var/log/containers/ingress-nginx-controller*.log
     Path              /var/log/containers/nginx-ingress-controller*.log
-    # 使用 docker parser
+    # 使用 docker parser，注：高版本k8s可能需要使用cri PARSER
     Parser            docker
     # 指定监控的文件名及offsets持久化的数据库
     DB                /var/log/flb_ingress.db
@@ -142,7 +143,9 @@
 [INPUT]
     Name              tail
     Tag               ingress_stderr.*
+    # Nginx Ingress Error 日志采集路径，注：高版本可能需要修改为 /var/log/containers/ingress-nginx-controller*.log
     Path              /var/log/containers/nginx-ingress-controller*.log
+    # 使用 docker parser，注：高版本k8s可能需要使用cri PARSER
     Parser            docker
     DB                /var/log/flb_ingress_stderr.db
     Mem_Buf_Limit     15MB
@@ -157,7 +160,8 @@
     Name              tail
     Tag               kube.*
     Path              /var/log/containers/*.log
-    Exclude_path     *fluent-bit-*,*mongo-*,*minio-*,*mysql-*
+    Exclude_path     *fluent-bit-*,*mongo-*,*minio-*,*mysql-*,*clickvisual-*
+    # 使用 docker parser，注：高版本k8s可能需要使用cri PARSER
     Parser            docker
     DB                /var/log/flb_kube.db
     Mem_Buf_Limit     15MB
@@ -171,7 +175,7 @@
 
 `filter-kubernetes.conf` 主要在 Kubernetes 环境下对采集的日志追加 Kubernetes 元数据，比如 `kubernetes_host`、`kubernetes_namespace_name`、`kubernetes_container_name`、`kubernetes_pod_name` 等。
 
-```
+```conf
 [FILTER]
     # 使用kubernetes过滤器
     Name                kubernetes
@@ -231,7 +235,7 @@
 
 `filter-modify.conf` 主要是修改和调整日志字段。
 
-```
+```conf
 # nest过滤器此处主要是对包含pod_name的日志，在其字段中追加kubernetes_前缀
 [FILTER]
     Name         nest
@@ -285,7 +289,7 @@
 
 `output-kafka.conf` 主要定义日志如何推送到 Kafka。
 
-```
+```conf
 # 此处kafka output插件将Nginx Ingress access日志推送到Kafka
 [OUTPUT]
     # 使用kafka插件
