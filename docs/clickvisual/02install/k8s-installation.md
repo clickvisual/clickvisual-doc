@@ -7,75 +7,11 @@
 - Helm >= 3.0.0
 
 ## 2. 部署 fluent-bit（参考）
-可以直接参考 fluent-bit 官方网站进行部署 https://docs.fluentbit.io/，只需要保证，写入 kafka 的数据包含以下两个字段即可。
-- _time_
-- _log_
+可以直接参考 fluent-bit 官方网站进行部署，只需要保证，写入 kafka 的数据包含以下两个字段即可。
+- `_time_`
+- `_log_`
 
-如果采用 DaemonSet 方式部署，可以使用如下的 DaemonSet yaml。注意需要挂载 configMap。fluentbit-daemonset.yaml 如下：
-```
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: fluent-bit
-  namespace: kube-system
-  labels:
-    k8s-app: fluent-bit-logging
-    version: v1
-    kubernetes.io/cluster-service: "true"
-spec:
-  updateStrategy:
-    type: RollingUpdate
-  selector:
-    matchLabels:
-      k8s-app: fluent-bit-logging
-  template:
-    metadata:
-      labels:
-        k8s-app: fluent-bit-logging
-        version: v1
-        kubernetes.io/cluster-service: "true"
-    spec:
-      containers:
-      - name: fluent-bit  
-        image: bitnami/fluent-bit:1.8.12      
-        imagePullPolicy: Always
-        env:
-        - name: CLUSTER_NAME
-          value: ${CLUSTER_NAME}
-        - name: KAFKA_BROKERS
-          value: ${KAFKA_BROKERS}
-        - name: NODE_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.hostIP
-        resources:
-          requests:
-            cpu: 5m
-            memory: 32Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
-        - name: fluent-bit-config
-          mountPath: /fluent-bit/etc/
-      volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
-      - name: fluent-bit-config
-        configMap:
-          name: fluent-bit-config
-```
-
+[https://docs.fluentbit.io/manual/installation/kubernetes#installation](https://docs.fluentbit.io/manual/installation/kubernetes#installation)
 
 挂载的 fluentbit-configmap.yaml 配置可以参考如下：
 ``` 
