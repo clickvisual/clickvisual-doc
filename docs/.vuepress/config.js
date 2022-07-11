@@ -133,6 +133,7 @@ var _hmt = _hmt || [];
                                 "03funcintro/alarm-function-configuration-description",
                                 "03funcintro/clickvisual-configuration-description",
                                 "03funcintro/template-gen",
+                                "03funcintro/bigdata",
                             ],
                         },
                         {
