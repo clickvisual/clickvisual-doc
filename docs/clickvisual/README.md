@@ -18,21 +18,22 @@ clickvisual 是一个轻量级的开源日志查询、分析、报警的可视�
 
 ## clickvisual 使用效果
 
-### 日志查询
+### 日志
 
-![](../images/table-query.png)
+![](../images/logs.gif)
 
-### 可视化配置
+### 告警
 
-![](../images/visual-configuration.png)
+![](../images/alarm.gif)
 
-### 增加告警规则
+### 分析
 
-![](../images/adding-alarm-rule.png)
+![](../images/bigdata.gif)
 
-### 查看历史告警
 
-![](../images/alarms-history.png)
+### DAG 工作流
+
+![](../images/dag.png)
 
 ### 场景支持
 
