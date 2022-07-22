@@ -1,4 +1,4 @@
-# Q&A
+# 常见问题
 
 ## clickvisual性能测试报告？特别是与ELK在同等规模下的对比测试
 ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 ClickHouse 的最佳实践。  

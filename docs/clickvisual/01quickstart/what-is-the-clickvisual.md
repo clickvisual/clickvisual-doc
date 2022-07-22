@@ -12,25 +12,25 @@ ClickVisual 是一个轻量级的开源日志查询、分析、报警的可视�
 * 支持物理机、Docker、Kubernetes 部署。
 * 支持基于 ClicHouse 日志的实时报警功能。
 
-## 技术架构
+## 架构
 
 ![](../../images/technical-architecture.png)
 
-## ClickVisual 使用效果
+## 预览
 
 ### 日志查询
 
 ![](../../images/table-query.png)
 
-### 可视化配置
+### ConfigMap 配置
 
 ![](../../images/visual-configuration.png)
 
-### 增加告警规则
+### 告警规则
 
 ![](../../images/adding-alarm-rule.png)
 
-### 查看历史告警
+### 历史告警
 
 ![](../../images/alarms-history.png)
 

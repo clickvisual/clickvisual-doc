@@ -94,24 +94,15 @@ var _hmt = _hmt || [];
                             children: [
                                 "01quickstart/roadmap",
                                 "01quickstart/what-is-the-clickvisual",
-                                "01quickstart/quick-learning",
                                 "01quickstart/experience-clickvisual-with-docker-compose",
                                 "01quickstart/qa",
-                            ],
-                        },
-                        {
-                            title: "代码贡献",
-                            collapsable: false, // 可选的, 默认值是 true,
-                            children: [
-                                "06join/env",
-                                "06join/pr",
-                                "06join/alert-push-channel",
                             ],
                         },
                         {
                             title: "应用安装",
                             collapsable: false, // 可选的, 默认值是 true,
                             children: [
+                                "02install/quick-start",
                                 "02install/install-introduce",
                                 "02install/install-require",
                                 "02install/binary-installation",
@@ -152,6 +143,15 @@ var _hmt = _hmt || [];
                             collapsable: false, // 可选的, 默认值是 true,
                             children: [
                                 "05arch/graphite-document-logging-architecture",
+                            ],
+                        },
+                        {
+                            title: "加入我们",
+                            collapsable: false, // 可选的, 默认值是 true,
+                            children: [
+                                "06join/env",
+                                "06join/pr",
+                                "06join/alert-push-channel",
                             ],
                         },
                     ]
