@@ -1,6 +1,6 @@
 # 常见问题
 
-## clickvisual性能测试报告？特别是与ELK在同等规模下的对比测试
+## ClickVisual 性能测试报告？
 ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 ClickHouse 的最佳实践。  
 性能相关的测试对比可以关注 ClickHouse 的 ES 的差异: 
 
@@ -13,18 +13,17 @@ ClickVisual 的定位是 ClickHouse 的 GUI 工具，帮助用户快速搭建 Cl
 - 日志告警
 - 数据分析
 
-![img.png](../../images/qa-3.png)
+![](../../images/technical-architecture.png)
 
-## 组件是否可以使用已有的，而不是新建
 可以使用已有组件，不需要完全新建。例如 ClickHouse 使用已有的组件时进行数据库创建操作，可能出现重名问题，此时 ClickVisual 会对数据库创建失败。
 
-## 目前只能测试使用？上生产环境没有集群版？
+## 上生产环境没有集群版？
 石墨内部已在生产环境使用，自建集群和阿里云集群都在正常使用。
 
 ## 目前哪些企业已使用该日志平台？
 可以参考这个 issues，由使用者自发填写 [https://github.com/clickvisual/clickvisual/issues/154](https://github.com/clickvisual/clickvisual/issues/154)
 
-## 服务启动后跳转到 localhost
+## 服务启动后跳转到 localhost?
 
 现象
 
@@ -43,7 +42,7 @@ rootURL = "http://localhost:19001"
 - docker：/data/all-in-one/clickvisual/config/docker.toml
 - 代码启动：/config/default.toml
 
-## Kafka 有数据 ClickVisual 中没日志
+## Kafka 有数据 ClickVisual 中没日志?
 
 现象
 
@@ -78,6 +77,6 @@ rootURL = "http://localhost:19001"
 
 ![img.png](../../images/qa-2-6.png)
 
-## database.sql的脚本里面没有建表的sql
+## 没有建表的 SQL?
 
 服务启动成功后访问 http://localhost:19001 可以初始化数据库
