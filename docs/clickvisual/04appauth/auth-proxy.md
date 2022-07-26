@@ -5,7 +5,7 @@
 
 
 HTTP Proxy 配置：
-```yaml
+```toml
 [auth.proxy]
 # Defaults to false, but set to true to enable this feature
 enabled = true
@@ -22,7 +22,7 @@ curl -H "X-WEBAUTH-USER: admin"  http://localhost:19001/api/v1/users/info
 
 第三方系统通过 AuthProxy 嵌入clickvisual：
 
-![img.png](../../images/auth-proxy.png)image.png
+![img.png](../../images/auth-proxy.png)
 
 ## 管理员模式
 在 ClickVisual 的配置中配置 rootTokenKey 和 rootTokenValue 后，访问的 header 头中增加对应参数，这样的用户通过 proxy 方式登录后默认成为管理员。
