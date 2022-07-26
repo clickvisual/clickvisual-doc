@@ -11,6 +11,8 @@ HTTP Proxy 配置：
 enabled = true
 # HTTP Header name that will contain the username or email
 headerName = "X-WEBAUTH-USER"
+rootTokenKey = "X-CLICKVISUAL-TOKEN"
+rootTokenValue = "xxx"
 ```
 
 使用 Curl 测试 clickvisual 的 AuthProxy 功能：
@@ -21,3 +23,10 @@ curl -H "X-WEBAUTH-USER: admin"  http://localhost:19001/api/v1/users/info
 第三方系统通过 AuthProxy 嵌入clickvisual：
 
 ![img.png](../../images/auth-proxy.png)image.png
+
+## 管理员模式
+在 ClickVisual 的配置中配置 rootTokenKey 和 rootTokenValue 后，访问的 header 头中增加对应参数，这样的用户通过 proxy 方式登录后默认成为管理员。
+```sh
+curl -H "X-WEBAUTH-USER: admin" \
+     -H "X-CLICKVISUAL-TOKEN: xxx" http://localhost:19001/api/v1/users/info
+```
