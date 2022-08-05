@@ -41,3 +41,5 @@
 查询语句依旧是：
 
 `body.browserName='browserName' and body.code='docs_text_copy'`
+
+![img.png](../../images/inst-6.png)
