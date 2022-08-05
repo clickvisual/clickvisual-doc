@@ -32,7 +32,7 @@
         <value_column_name>val</value_column_name>
         <version_column_name>updated</version_column_name>
         <default>
-            <function>avg</function>
+            <function>max</function>
             <retention>
                 <age>0</age>
                 <precision>10</precision>

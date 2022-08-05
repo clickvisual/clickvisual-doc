@@ -1,4 +1,4 @@
-# Kubernetes 集群安装
+# K8s 集群安装
 
 本文主要介绍如何使用 helm 或 kubectl 将 clickvisual 部署到 Kubernetes 集群。
 
@@ -6,7 +6,10 @@
 - Kubernetes >= 1.17
 - Helm >= 3.0.0
 
-## 2. 部署 fluent-bit（参考）
+## 2. 日志采集
+选择其中一个工具采集日志即可。
+
+### 2.1 部署 fluent-bit（参考）
 可以直接参考 fluent-bit 官方网站进行部署，只需要保证，写入 kafka 的数据包含以下两个字段即可。
 - `_time_`
 - `_log_`
@@ -352,14 +355,18 @@ data:
         Time_Format %b %d %H:%M:%S
 ```
 
-## 部署 clickvisual
+### 2.2 loggie-io
+
+https://github.com/loggie-io/loggie
+
+## 3. 部署 clickvisual
    克隆仓库：
 
 ```
 git clone https://github.com/clickvisual/clickvisual.git
 ```
 
-### 使用自定义配置
+### 3.1 使用自定义配置
 
 ```
 cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
@@ -372,7 +379,7 @@ cd clickvisual && cp config/default.toml data/helm/clickvisual/default.toml
 value: "configs/default.toml"
 ```
 
-### 安装
+### 3.2 安装
 方法一：[推荐] 使用 helm 直接安装：
 ```
 helm install clickvisual data/helm/clickvisual --set image.tag=latest --namespace default
