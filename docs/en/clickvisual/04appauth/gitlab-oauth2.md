@@ -1,45 +1,43 @@
 # GitLab Oauth2
 
-clickvisual 支持对接 GitLab OAuth2，你需要在 GitLab 中注册应用程序。 GitLab 将生成一个客户端 ID 和密钥供 clickvisual 使用。
+To enable GitLab OAuth2, you need to register the application in GitLab. GitLab will generate a client ID and secret for you to use.
 
-## 1. 创建 GitLab 密钥
-假设你私有部署的 GitLab 域名是 mygitlab.com，clickvisual 域名是 clickvisual.example.com，流程可参考 GitLab 官方文档。
+## 1. Create GitLab key
+This example assumes your privately deployed GitLab domain name is mygitlab.com,and com，and ClickVisual domain name is clickvisual.example.com.Meanwhile,you can find guide from the official GitLab documentation.
 
 
-
-使用管理员角色账号，访问 https://mygitlab.com/admin/applications，左侧菜单选择 Application，右边页面点击 New Application。
+To use administrator role account,access https://mygitlab.com/admin/applications ,select 'Application' in the left menu, then click 'New Application' in the right panel.
 
 ![img.png](../../images/gitlab-new-application.png)image.png
 
-填入需要新建的 Application 名称（比如 clickvisual），并使用 https://clickvisual.example.com/api/admin/login/gitlab 这个 Redirect URI（如果部署的 clickvisual 没有启用 HTTPS，也可使用 IP:Port 方式访问）。
+Fill in the name of the application you need to create (such as clickvisual) and use the redirect URI https://clickvisual.example.com/api/admin/login/gitlab (if the deployed ClickVisual does not have HTTPS enabled, you can also use IP:Port to instead).
 
 ![img.png](../../images/gitlab-new-application-config.png)image.png
 
-提交创建 Application 表单后，返回的页面中会显示当前创建的 clickvisual Application 的 Application ID 和 Secret，注意保存 Application ID和 Secret，稍后会在 clickvisual 中配置。
+After submitting the create Application form, the returned page displays the Application ID and Secret of the currently created clickvisual Application, take care to save the Application ID and Secret, which will be configured later in clickvisual.
 
 ![img.png](../../images/gitlab-application-secret.png)image.png
 
-## 2. 开启 GitLab 授权认证功能
-   下面是在 clickvisual 本地配置中，开启 GitLab 授权认证的配置样例：
+## 2.Enable GitLab Oauth2 
+   Go through the demo:
 ```toml
 [app]
-rootURL = "https://clickvisual.example.com/"　　　　　　　　　　　# 你的 clickvisual 域名
+rootURL = "https://clickvisual.example.com/"　　　　　　　　　　　# your clickvisual domain
 
 [[auth.tps]]
-typ = "gitlab"　　　　　　　　　　　　　　　　　　　　　　　　 # 注意此处需要选择授权类型为 gitlab
+typ = "gitlab"　　　　　　　　　　　　　　　　　　　　　　　　 # need to be gitlab here
 enable = true
 allowSignUp = true
-clientId = "clickvisual_APPLICATION_ID"　　　　　　　　　　　　　 # 使用上文中获得的 Application ID
-clientSecret = "clickvisual_SECRET"　　　　　　　　　　　　　　　　# 使用上文中获得的 Secret
-scopes = ["api"]　　　　　　　　　　　　　　　　　　　　　　　# 授权范围和上文中配置保持一致，填 ["api"] 即可
-authUrl = "https://mygitlab.com/oauth/authorize"　　　　# 注意此处替换为你的 GitLab 域名
-tokenUrl = "https://mygitlab.com/oauth/token"　　　　　 # 注意此处替换为你的 GitLab 域名
-apiUrl = "https://mygitlab.com/api/v4"　　　　　　　　　　# 注意此处替换为你的 GitLab 域名
+clientId = "clickvisual_APPLICATION_ID"　　　　　　　　　　　　　 #Use the Application ID got above 
+clientSecret = "clickvisual_SECRET"　　　　　　　　　　　　　　　　#Use the Secret got above 
+scopes = ["api"]　　　　　　　　　　　　　　　　　　　　　　　# consistent with the configuration above, just fill in ["api"]
+authUrl = "https://mygitlab.com/oauth/authorize"　　　　# Replace here with your GitLab domain name
+tokenUrl = "https://mygitlab.com/oauth/token"　　　　　 # Replace here with your GitLab domain name
+apiUrl = "https://mygitlab.com/api/v4"　　　　　　　　　　# Replace here with your GitLab domain name
 allowedDomains = []
 teamIds = []
 allowedOrganizations = []
 ```
-
-重启 clickvisual 服务，随后访问 https://clickvisual.example.com/user/login/，点击 『使用 GitLab 登录』，随后跳转到 GitLab 登录页面，即可完成 clickvisual 授权登录配置。
+Restart ClickVisual service,then access https://clickvisual.example.com/user/login/ ,click 『Sign in with  GitLab』,then go to the GitLab login page to complete the ClickVisual authorization login configuration.
 
 ![img.png](../../images/login-page.png)image.png

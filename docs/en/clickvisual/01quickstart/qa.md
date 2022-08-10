@@ -71,6 +71,11 @@ How to fix it
 
 1. Adjust the Kafka collected data content to ensure that the Kafka collected data fields are subsets of the fields in the stream table.
 2. Adjust `kafka_ skip_ broken_ Messages` parameter, skipping data with abnormal format
+   
+Log data in Kafka needs to be guaranteed to be :
+
+> `_time_`: string or float   
+> `_log_`: original log
 
 ![img.png](../../images/qa-2-6.png)
 

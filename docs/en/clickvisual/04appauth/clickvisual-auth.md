@@ -1,25 +1,27 @@
 # ClickVisual Auth
 
-clickvisual 有一个内置的用户认证系统，默认启用密码认证。默认账号/密码：clickvisual/clickvisual。
+ ClickVisual has a built-in user authentication system,password authentication is enabled by default.Default account/password:clickvisual/clickvisual.
 
-你也可以通过启用允许匿名访问来禁用身份验证，这样 clickvisual 就不需要登录直接可以访问。
 
-用户认证设置
+When anonymous authentication is enabled,your can access ClickvVisual withou login.
+
+
+User Auth Config
 ```toml
 [auth]
-mode = "memstore" # session可以使用memstore或者redis，默认使用内存模式，那么重启clickvisual，session会全部被清掉，如果上生产，建议使用redis模式
-name = "clickvisual_session" # session名称
+mode = "memstore" # Default Mode is memory mode and the session will be all cleared when restart clickvisual.It is recommended to use redis mode in production environment.
+name = "clickvisual_session" # session name
 debug = true       
-keypairs = "secret" # session加密对
-# clickvisual如果上生产，建议使用redis模式，开启下面的配置信息
+keypairs = "secret" # session key pairs
+# To use redis mode,you need to enable the settings below
 # redisSize = 10
 # redisNetwork = "tcp"
 # redisAddr = ""
 # redisPassword = ""
 ```
-允许匿名访问设置
+Enable anonymous access setting
 ```toml
 [auth.anonymous]
-# 默认不开启匿名设置，开启后clickvisual就无需身份验证，即可访问
+# default is false
 enabled = false
 ```
