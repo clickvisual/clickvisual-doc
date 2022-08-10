@@ -44,7 +44,7 @@ Kubernetes容器内日志收集的方式通常有以下三种方案
 
 DaemonSet方式网络方式SideCar方式采集日志类型标准输出+文件应用日志部署运维一般，维护DaemonSet低，维护配置文件日志分类存储可通过容器/路径等映射业务独立配置支持集群规模取决于配置数无限制适用场景日志分类明确、功能较单一性能要求极高的场景资源消耗中低
 
-我们主要采用DaemonSet方式和网络方式采集日志。DaemonSet方式用于ingress、应用日志的采集，网络方式用于大数据日志的采集。以下我们主要介绍下DeamonSet方式的采集方式。
+我们主要采用DaemonSet方式和网络方式采集日志。DaemonSet方式用于ingress、应用日志的采集，网络方式用于大数据日志的采集。以下我们主要介绍下DaemonSet方式的采集方式。
 
 ### 3.2.日志输出
 从上面的介绍中可以看到，我们的DaemonSet会有两种方式采集日志类型，一种是标准输出，一种是文件。 引用元乙的描述：虽然使用 Stdout 打印日志是 Docker 官方推荐的方式，但大家需要注意：这个推荐是基于容器只作为简单应用的场景，实际的业务场景中我们还是建议大家尽可能使用文件的方式，主要的原因有以下几点：
@@ -56,9 +56,18 @@ DaemonSet方式网络方式SideCar方式采集日志类型标准输出+文件应
 
 从这个描述中，我们可以看出在docker中输出文件在采集到日志中心是一个更好的实践。绝大部分日志采集工具都支持采集文件日志方式，但是我们在配置日志采集规则的时候，发现开源的一些日志采集工具，例如fluentbit、filebeat在DaemonSet部署下采集文件日志是不支持追加例如pod、namespace、container_name、container_id 等 label信息，并且也无法通过这些label做些定制化的日志采集。
 
-agent 类型采集方式daemonset部署sidecar部署ilogtail文件日志能够追加label信息，能够根据label过滤采集能够追加label信息，能够根据label过滤采集fluentbit文件日志无法追加label信息，无法根据label过滤采集能够追加abel信息，能够根据label过滤采集filebeat文件日志无法追加label信息，无法根据label过滤采集能够追加label信息，能够根据label过滤采集ilogtail标准输出能够追加label信息，能够根据label过滤采集能够追加label信息，能够根据label过滤采集fluentbit标准输出能够追加label信息，能够根据label过滤采集能够追加abel信息，能够根据label过滤采集filebeat标准输出能够追加label信息，能够根据label过滤采集能够追加label信息，能够根据label过滤采集
+|Agent类型|采集方式|DaemonSet部署|SideCar部署|
+|-|-|-|-|
+|ilogtail|文件日志|✅|✅|
+|fluentbit|文件日志|:x:|✅|
+|filebeat|文件日志|:x:|✅|
+|ilogtail|标准输出|✅|✅|
+|fluentbit|标准输出|✅|✅|
+|filebeat|标准输出|✅|✅|
 
-基于无法追加label信息的原因，我们暂时放弃了DeamonSet部署下文件日志采集方式，采用的是基于DeamonSet部署下标准输出的采集方式。
+表中 ✅ 代表“能够追加label信息，能够根据label过滤采集”；:x: 代表“无法追加label信息，无法根据label过滤采集”。
+
+基于无法追加label信息的原因，我们暂时放弃了DaemonSet部署下文件日志采集方式，采用的是基于DaemonSet部署下标准输出的采集方式。
 
 ### 3.3. 日志目录
 
