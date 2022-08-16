@@ -155,23 +155,9 @@ rule_files:
 例如你需要配置 nginx 访问失败率的告警，正常的语句如下所示：
 
 ```mysql
-SELECT  proxy_upstream_name  as service, 
-       round(sum( case when status > 499 then 1 else 0 end ) * 100.0 / count(1), 2) as "访问失败率" 
-from ingress.ingress_stdout
-WHERE ("_time_second_" >= toDateTime(NOW() - 3600)) AND ("_time_second_" < toDateTime(NOW()))
-group by service
-having  length(service) > 3 
-ORDER by "访问失败率" desc    
-limit 10
-```
-
-如何将这个告警配置到 ClickVisual 里面开启聚合模式，并将以上语句改造为如下结构
-1. limit 限制为 1
-2. 指标参数（访问失败率），即监控的参数需要放在 select 的第一个参数位
-
-```mysql
-SELECT round(sum(case when status > 499 then 1 else 0 end ) * 100.0 / count(1), 2) as "访问失败率",
-proxy_upstream_name  as service
+SELECT 
+       round(sum( case when status > 499 then 1 else 0 end ) * 100.0 / count(1), 2) as "访问失败率",
+       proxy_upstream_name  as service
 from ingress.ingress_stdout
 WHERE ("_time_second_" >= toDateTime(NOW() - 3600)) AND ("_time_second_" < toDateTime(NOW()))
 group by service
@@ -179,5 +165,11 @@ having  length(service) > 3
 ORDER by "访问失败率" desc    
 limit 1
 ```
+
+两个要求：
+1. limit 限制为 1
+2. 指标参数（访问失败率），即监控的参数需要放在 select 作为第一个参数
+
+![img.png](../../images/alarm-agg.png)
 
 
