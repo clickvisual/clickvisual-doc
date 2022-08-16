@@ -156,19 +156,19 @@ rule_files:
 
 ```mysql
 SELECT 
-       round(sum( case when status > 499 then 1 else 0 end ) * 100.0 / count(1), 2) as "访问失败率",
+       round(sum( case when status > 499 then 1 else 0 end ) * 100.0 / count(1), 2) as val,
        proxy_upstream_name  as service
 from ingress.ingress_stdout
 WHERE ("_time_second_" >= toDateTime(NOW() - 3600)) AND ("_time_second_" < toDateTime(NOW()))
 group by service
 having  length(service) > 3 
-ORDER by "访问失败率" desc    
+ORDER by val desc    
 limit 1
 ```
 
 两个要求：
-1. limit 限制为 1
-2. 指标参数（访问失败率），即监控的参数需要放在 select 作为第一个参数
+1. limit 限制为 1, 否则数据统计可能不准
+2. 预期的告警指标需要使用`as val`
 
 ![img.png](../../images/alarm-agg.png)
 

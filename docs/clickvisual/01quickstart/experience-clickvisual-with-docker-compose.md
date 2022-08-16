@@ -28,7 +28,7 @@
 ### 2.3. 创建日志
 
 * 创建数据表：ingress_stdout
-* 选择采集日志的时间类型，采集日志的标示必须位 _time_，类型支持 string 或者 float，在 demo 演示中必须选择  float 类型
+* 选择采集日志的时间类型，采集日志的标示必须位 `_time_`，类型支持 string 或者 float，在 demo 演示中必须选择  float 类型
 * 日志保存时间：7 天
 * Brokers：填入 docker-compose 启动的 Kafka 容器访问地址：kafka:9092
 * Topic：Kafka 中采集日志的 topic name 是 ingress-stdout
