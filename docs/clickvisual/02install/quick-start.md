@@ -40,7 +40,11 @@ ClickVisual 可以安装在不同种类的操作系统上，并且可以使用�
 ![img_1.png](../../images/table-create-1.png)
 
 ### Source 说明
-点击`转换`按钮，选择两个关键字段
+点击`转换`按钮，选择两个关键字段，
+
+source 数据就是 kafka 采集的原始 JSON 数据
+
+![img.png](../../images/mock-data.png)
 
 这个部分的数据就是 kafka 采集的原始数据格式，目前`key`的`vlaue`只支持一下三种基础类型
 - string
@@ -67,10 +71,7 @@ ClickVisual 可以安装在不同种类的操作系统上，并且可以使用�
 - 业务日志内容，类型 string，从右侧择任意符合类型的字段，比如可以选择`_yyy_`
 ![img.png](../../images/table-create-2.png)
 
-## 第七步：模拟插入一条日志
-![img.png](../../images/mock-data.png)
-
-## 第八步：查询日志
+## 第七步：查询日志
 访问 http://localhost:19001/query ，此时我们已可以看到日志。
 
 ![img.png](../../images/query.png)
