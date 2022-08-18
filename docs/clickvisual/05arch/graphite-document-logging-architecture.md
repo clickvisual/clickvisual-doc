@@ -71,16 +71,22 @@ DaemonSet方式网络方式SideCar方式采集日志类型标准输出+文件应
 
 ### 3.3. 日志目录
 
-以下列举了日志目录的基本情况
-
-目录描述类型/var/log/containers存放的是软链接，软链到/var/log/pods里的标准输出日志标准输出/var/log/pods存放标准输出日志标准输出/var/log/kubernetes/master存放Kubernetes 审计输出日志标准输出/var/lib/docker/overlay2存放应用日志文件信息文件日志/var/run获取docker.sock，用于docker通信文件日志/var/lib/docker/containers用于存储容器信息两种都需要
+以下列举了日志目录的基本情况：
+- 目录描述类型/var/log/containers存放的是软链接，软链到/var/log/pods里的标准输出日志标准输出
+- /var/log/pods存放标准输出日志标准输出
+- /var/log/kubernetes/master存放Kubernetes 审计输出日志标准输出
+- /var/lib/docker/overlay2存放应用日志文件信息文件日志
+- /var/run获取docker.sock，用于docker通信文件日志/var/lib/docker/containers用于存储容器信息两种都需要
 
 因为我们采集日志是使用的标准输出模式，所以根据上表我们的LogCollector只需要挂载/var/log，/var/lib/docker/containers两个目录。
 
 #### 3.3.1 标准输出日志目录
-应用的标准输出日志存储在/var/log/containers目录下，文件名是按照K8S日志规范生成的。这里以nginx-ingress的日志作为一个示例。我们通过ls /var/log/containers/ | grep nginx-ingress指令，可以看到nginx-ingress的文件名。 image.png nginx-ingress-controller-mt2wx_kube-system_nginx-ingress-controller-be3741043eca1621ec4415fd87546b1beb29480ac74ab1cdd9f52003cf4abf0a.log
 
-我们参照K8S日志的规范：/var/log/containers/%{DATA:pod_name}_%{DATA:namespace}_%{GREEDYDATA:container_name}-%{DATA:container_id}.log。可以将nginx-ingress日志解析为：
+应用的标准输出日志存储在/var/log/containers目录下，文件名是按照K8S日志规范生成的。这里以nginx-ingress的日志作为一个示例。我们通过ls /var/log/containers/ | grep nginx-ingress指令，可以看到nginx-ingress的文件名。
+
+我们参照K8S日志的规范：/var/log/containers/%{DATA:pod_name}_%{DATA:namespace}_%{GREEDYDATA:container_name}-%{DATA:container_id}.log。
+
+可以将nginx-ingress日志解析为：
 
 - pod_name：nginx-ingress-controller-mt2w
 - namespace：kube-system
