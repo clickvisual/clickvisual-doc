@@ -22,33 +22,47 @@ ClickVisual 可以安装在不同种类的操作系统上，并且可以使用�
 
 ## 第四步：添加 ClickHouse 实例
 在顶部导航栏，访问 系统设置 -> 实例管理，准备添加新的 ClickHouse 实例。  
-设置准备添加的 ClickHouse 实例 DSN 地址。  
-在顶部导航栏，访问 日志，点击 image.png 选择刚添加的 ClickHouse 实例，并设置数据库。  
 
+![img.png](../../images/instance-create.png)
+
+## 第五步：添加数据库
+回到日志页面，右键点击实例，弹出菜单，创建数据库。  
 ![img.png](../../images/database-create.png)
 
-## 第五步：创建日志
-创建数据表：ingress_stdout 
-选择采集日志的时间类型，采集日志的标示为 `_time_`，类型可以是 string 或者 float  
-日志保存时间：7 天  
-Brokers：填入 docker 中的 kafka 配置：kafka:9092    
-Topic：kafka 中采集日志的 Topic Name 是 ingress-stdout  
+## 第六步：创建日志库
 
 ![img.png](../../images/table-create.png)
 
-## 第六步：模拟插入一条日志
+- source：部分是 kafka 中采集的日志数据（JSON）
+- Brokers：填入 docker 中的 kafka 配置：kafka:9092
+- Topic：kafka 中采集日志的 Topic Name 是 ingress-stdout
 
-## 第七步：查询日志
+![img_1.png](../../images/table-create-1.png)
+
+点击`转换`按钮，选择两个关键字段
+- timeField 为日志采集时间戳字段，类型必须是 string 或者 float
+- rawLogField 为完整的日志原数据
+
+
+![img.png](../../images/table-create-2.png)
+
+
+
+
+## 第七步：模拟插入一条日志
+![img.png](../../images/mock-data.png)
+
+## 第八步：查询日志
 访问 http://localhost:19001/query ，此时我们已可以看到日志。
 
-![img.png](../../images/table-query.png)
+![img.png](../../images/query.png)
 
-增加索引
-由于尚未创建索引，所有字段的背景色都是灰色的，此时我们只可以使用模糊搜索，但性能不是很好，所以我们需要按照下图创建索引。
+增加分析字段
+由于尚未创建分析字段，所有字段的背景色都是灰色的，此时我们只可以使用模糊搜索，但性能不是很好，所以我们需要按照下图创建分析字段。
 
 ![img.png](../../images/increase-index.png)
 
-创建完索引后，我们在按照第五步插入几条日志，就可以根据索引查看日志：
+创建完分析字段后，我们在按照第五步插入几条日志，就可以根据分析字段查看日志：
 
 ![img.png](../../images/overall-introduction.png)
 
