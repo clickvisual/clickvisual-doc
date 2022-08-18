@@ -1,13 +1,14 @@
-# 授权介绍
+# Introduction to Authorization
 
-clickvisual 支持了多种方式来对用户进行身份验证，下表显示了所有受支持的身份验证提供程序及其可用的功能。
+ClickVisual supports several ways to authenticate users, and the following table shows all the supported authentication providers and the features available to them.
 
-| 提供                                                                                     |说明|支持版本|
+| provider                                                                                     |description|available  version|
 |----------------------------------------------------------------------------------------|---|---|
-| [clickvisual Auth](https://clickvisual.gocn.vip/clickvisual/04appauth/clickvisual-auth.html)     |一个内置的用户认证系统|>= v0.2.0|
-| [Auth Proxy](https://clickvisual.gocn.vip/clickvisual/04appauth/auth-proxy.html)       |HTTP 反向代理身份验证，通过这种方式可以方便的将clickvisual嵌入到你的系统里|>= v0.2.0|
-| [GitLab Oauth2](https://clickvisual.gocn.vip/clickvisual/04appauth/gitlab-oauth2.html) |GitLab OAuth2登录|>= v0.2.0|
-| [GitHub Oauth2](https://clickvisual.gocn.vip/clickvisual/04appauth/github-oauth2.html) |Github OAuth2登录|>= v0.2.0|
+| [ClickVisual Auth](https://clickvisual.gocn.vip/clickvisual/04appauth/clickvisual-auth.html)     |A built-in user authentication system|>= v0.2.0|
+| [Auth Proxy](https://clickvisual.gocn.vip/clickvisual/04appauth/auth-proxy.html)       |HTTP Reverse proxy authentication, which makes it easy to embed ClickVisual into your system|>= v0.2.0|
+| [GitLab Oauth2](https://clickvisual.gocn.vip/clickvisual/04appauth/gitlab-oauth2.html) |GitLab OAuth2 Login|>= v0.2.0|
+| [GitHub Oauth2](https://clickvisual.gocn.vip/clickvisual/04appauth/github-oauth2.html) |Github OAuth2 Login|>= v0.2.0|
+
 
 
 

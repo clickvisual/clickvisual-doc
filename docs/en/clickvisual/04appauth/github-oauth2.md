@@ -1,20 +1,20 @@
 # GitHub Oauth2
 
-要启用 Github OAuth2，您需要在 Github 中注册应用程序。 Github 将生成一个客户端 ID 和密钥供您使用。
+To enable Github OAuth2, you need to register the application in Github. Github will generate a client ID and secret for you to use.
 
-创建 GitHub OAuth 应用
-你需要创建一个 Github Oauth 应用，选择一个描述性名称，并使用以下重定向 URI
+Create GitHub OAuth Application
+
+You need to create a GitHub OAuth Application,choose a descriptive name,and use the redirect URI below:
 ```sh
 https://clickvisual.example.com/login/github
 ```
 
-在这里 https://clickvisual.example.com 是你访问 clickvisual 的地址。如果你没有使用 HTTPS，使用 IP+Port 方式，那么你需要将地址设置为
+Here https://clickvisual.example.com is the URL where you access ClickVisual. If you are not using HTTPS and using the IP+Port method, then you need to set the address to :
 ```sh
 http://ip:port/login/github
 ```
 
-开启 GitHub 功能
-下面是开启Github授权的配置
+Enable Github OAuth2 Config
 ```toml
 [[auth.tps]]
 typ = "github"
@@ -30,7 +30,6 @@ allowedDomains = []
 teamIds = []
 allowedOrganizations = []
 ```
+If the URL where you access ClickVisual is not localhost.Then when you set the URL, you also need to change the root_url option of [app] in the configuration to the URL you filled in, so that the callback URL is correct.
 
-如果你访问 clickvisual 的地址不是 localhost，那么你在设置地址的时候，还需要将配置中 [app] 的 root_url 选项改成填写的地址，才能使回调 URL 正确。
-
-重启 clickvisual 服务可以使得你的配置生效。
+Restarting the clickvisual service will make your configuration take effect.

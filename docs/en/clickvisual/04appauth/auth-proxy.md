@@ -1,10 +1,10 @@
 # Auth Proxy
 
-你可以将 clickvisual 配置为让 HTTP 反向代理处理身份验证，通过这种方式你可以很方便的将 clickvisual 嵌入到其他系统里。下面我们详细介绍 auth proxy 的配置选项。
+You can configure ClickVisual to let HTTP reverse proxy handle authentication, which makes it easy to embed clickvisual into other systems. Below we detail the configuration options for Auth Proxy.
 
 
 
-HTTP Proxy 配置：
+HTTP Proxy Config：
 ```yaml
 [auth.proxy]
 # Defaults to false, but set to true to enable this feature
@@ -13,11 +13,10 @@ enabled = true
 headerName = "X-WEBAUTH-USER"
 ```
 
-使用 Curl 测试 clickvisual 的 AuthProxy 功能：
+Use Curl to test Auth Proxy function：
 ```sh
 curl -H "X-WEBAUTH-USER: admin"  http://localhost:19001/api/v1/users/info
 ```
-
-第三方系统通过 AuthProxy 嵌入clickvisual：
+Third party system use Auth Proxy to embed ClickVisual:
 
 ![img.png](../../images/auth-proxy.png)image.png
