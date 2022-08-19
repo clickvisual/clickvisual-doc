@@ -26,7 +26,7 @@ docker-compose up
 ### 2.2. Create Database
 Create an instance and fill in the DSN parameter
 ```param
-tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&writer_timeout=10&debug=true
+tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&write_timeout=10&debug=true
 ```
 ![img.png](../../images/create-database.png)
 
