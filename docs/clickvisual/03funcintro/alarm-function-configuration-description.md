@@ -164,9 +164,8 @@ ORDER by val desc
 limit 1
 ```
 
-两个要求：
-1. select 第一个字段为后续的监控指标字段
-2. limit 限制为 1, 否则无法配置
+要求：
+1. select 监控指标必须使用 `as val`
 
 ![img.png](../../images/alarm-agg.png)
 
