@@ -1,4 +1,4 @@
-# ClickHouse 常用 SQL
+# 常用 SQL
 
 ## 今日 PV
 

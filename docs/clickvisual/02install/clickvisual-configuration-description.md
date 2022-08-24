@@ -1,4 +1,4 @@
-# ClickVisual 配置说明
+# 配置说明
 
 本文主要对 clickvisual 启动的配置项做详细说明。
 
