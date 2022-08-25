@@ -11,10 +11,6 @@ secretKey = "secretKey"
 rootURL = "https://dev.clickvisual.com/"
 # 登录后默认访问的 URL　
 baseURL = "/api/admin/login/"
-# 日志查询中需要隐藏的元数据字段　　　　
-hiddenFields = ["_cluster_", "_log_agent_", "_node_ip_", "_node_name_", "_time_second_", "_time_nanosecond_", "_source_"]
-# 日志查询中需要显示的元数据字段
-defaultFields = ["_namespace_","_container_name_","_pod_name_","_time_second_"]
 # 菜单配置文件，酌情调整菜单权限文件路径
 permissionFile = "./config/resource.yaml"
 # 限制最大查询时间跨度单位小时 0 或不填表示无限制
