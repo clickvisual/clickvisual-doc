@@ -33,43 +33,20 @@ ClickVisual 可以安装在不同种类的操作系统上，并且可以使用�
 
 ![img.png](../../images/table-create.png)
 
-- source：部分是 kafka 中采集的日志数据（JSON）
-- Brokers：填入 docker 中的 kafka 配置：kafka:9092
-- Topic：kafka 中采集日志的 Topic Name 是 ingress-stdout
-
 ![img_1.png](../../images/table-create-1.png)
 
-### Source 说明
-点击`转换`按钮，选择两个关键字段，
-
-source 数据就是 kafka 采集的原始 JSON 数据
+- source：部分是 kafka 中采集的日志数据 Value 部分（JSON）
 
 ![img.png](../../images/mock-data.png)
 
-这个部分的数据就是 kafka 采集的原始数据格式，目前`key`的`vlaue`只支持一下三种基础类型
-- string
-- float
-- int
+点击`转换`按钮，选择时间轴字段，类型 string/float，从左侧选择任意符合类型的字段，比如可以选择`_xxx_`
 
-```json
-{
-    # 基础采集信息
-    "key": "value",
-    "_source_": "stdout",
-    "_cluster_": "xx",
-    "_log_agent_": "fluent-bit-xx",
-    "_node_ip_": "xx.xx.xx.xx"
-    ...
-    # 采集时间戳
-    "_xxx_": "2022-08-18T02:44:42.567608Z",
-    # 业务日志内容
-    "_yyy_": "{\"time\": \"2022-08-18T10:44:42+08:00\", \"client_ip\": \"xx.xx.1.20\", \"method\": \"GET\", \"version\": \"HTTP/2.0\", \"status\": \"200\", \"...\": \"...\"}",
-}
-```
+![img_1.png](../../images/table-create-2.png)
 
-- 采集时间，类型 string/float，从左侧选择任意符合类型的字段，比如可以选择`_xxx_`
-- 业务日志内容，类型 string，从右侧择任意符合类型的字段，比如可以选择`_yyy_`
-![img.png](../../images/table-create-2.png)
+- Brokers：填入 docker 中的 kafka 配置：kafka:9092
+- Topic：kafka 中采集日志的 Topic Name 是 ingress-stdout
+
+![img.png](../../images/table-create-3.png)
 
 ## 第七步：查询日志
 访问 http://localhost:19001/query ，此时我们已可以看到日志。

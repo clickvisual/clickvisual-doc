@@ -16,7 +16,7 @@ ClickVisual 是一个轻量级的开源日志查询、分析、报警的可视�
 
 ![](../images/technical-architecture.png)
 
-## clickvisual 使用效果
+## ClickVisual 使用效果
 
 ### 日志
 
@@ -35,4 +35,4 @@ ClickVisual 是一个轻量级的开源日志查询、分析、报警的可视�
 * 日志查询
 * 日志报警
 * 配置下发
-* 快速集成
+* 数据分析
