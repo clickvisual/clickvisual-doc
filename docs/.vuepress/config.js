@@ -92,6 +92,7 @@ var _hmt = _hmt || [];
                             title: "快速开始",
                             collapsable: false, // 可选的, 默认值是 true,
                             children: [
+                                "01quickstart/changelogs",
                                 "/clickvisual/",
                                 "01quickstart/roadmap",
                                 "01quickstart/experience-clickvisual-with-docker-compose",
