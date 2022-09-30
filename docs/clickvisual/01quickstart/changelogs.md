@@ -2,6 +2,8 @@
 
 ## ClickVisual 版本 2022-09-30 v0.4.2
 
+[https://github.com/clickvisual/clickvisual/releases/tag/v0.4.2](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.2)
+
 ### 新功能
 - 增加对链路日志库数据分析功能
 - 用户管理模块，基础 CURD 和用户密码重置功能
