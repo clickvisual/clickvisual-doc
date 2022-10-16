@@ -1,4 +1,4 @@
-# 服务告警
+# 日志告警
 
 `可用版本 >= 0.2.1`
 
@@ -16,6 +16,24 @@
 ## 集群部署
 
 可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
+
+### ClickVisual 配置
+
+增加如下配置，xxx 为自定义字符串，以下配置作用是让 Prometheus 远程读写 ClickHouse
+- host 和 port 表示 prometheus 配置
+- 其余配置为 clickhouse 配置
+
+```
+[prom2click]
+enable = true
+
+[prom2click.xxx]
+host = "127.0.0.1"
+port = 9222
+clickhouseDSN = "tcp://127.0.0.1:9000"
+clickhouseDB = "metrics"
+clickhouseTable = "samples"
+```
 
 ### ClickHouse 配置
 
