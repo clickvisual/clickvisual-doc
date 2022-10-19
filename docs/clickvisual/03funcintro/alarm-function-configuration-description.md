@@ -17,24 +17,6 @@
 
 可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
 
-### ClickVisual 配置
-
-增加如下配置，以下配置作用是让 Prometheus 远程读写 ClickHouse
-- host 和 port 表示 prometheus 配置
-- 其余配置为 clickhouse 配置
-
-```
-[prom2click]
-enable = true
-
-[prom2click.dev]
-host = "127.0.0.1"
-port = 9222
-clickhouseDSN = "tcp://127.0.0.1:9000"
-clickhouseDB = "metrics"
-clickhouseTable = "samples"
-```
-
 ### ClickHouse 配置
 
 新增`graphite_rollup` 配置，配置路径可以参考，根据 clickhouse 的版本不通略有区别，具体以官方指导配置为准。
@@ -127,7 +109,27 @@ receivers:
   - url: 'http://clickvisual:9001/api/v1/prometheus/alerts'
 ```
 
-### clickvisual 配置
+### ClickVisual 配置
+
+#### 启动配置
+
+配置文件中增加如下配置，作用是让 Prometheus 远程读写 ClickHouse
+- host 和 port 表示 prometheus 配置
+- 其余配置为 clickhouse 配置
+
+```
+[prom2click]
+enable = true
+
+[prom2click.dev]
+host = "127.0.0.1"
+port = 9222
+clickhouseDSN = "tcp://127.0.0.1:9000"
+clickhouseDB = "metrics"
+clickhouseTable = "samples"
+```
+
+#### 系统设置
 
 访问：系统设置 -> 实例管理
 
@@ -140,12 +142,9 @@ rule_files:
 - /etc/prometheus/rules/*.yaml
 ```
 
-![img.png](../../images/alarm-store-file.png)
-
-如果通过 k8s 方式部署，这个 configmap 即 rules 存储的位置。
 ![img.png](../../images/alarm-store-k8s.png)
 
-报警消息推送效果
+## 报警消息推送效果
 
 ![img.png](../../images/alarm-msg-push.png)
 
