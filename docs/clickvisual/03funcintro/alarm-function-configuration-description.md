@@ -19,7 +19,7 @@
 
 ### ClickVisual 配置
 
-增加如下配置，xxx 为自定义字符串，以下配置作用是让 Prometheus 远程读写 ClickHouse
+增加如下配置，以下配置作用是让 Prometheus 远程读写 ClickHouse
 - host 和 port 表示 prometheus 配置
 - 其余配置为 clickhouse 配置
 
@@ -27,7 +27,7 @@
 [prom2click]
 enable = true
 
-[prom2click.xxx]
+[prom2click.dev]
 host = "127.0.0.1"
 port = 9222
 clickhouseDSN = "tcp://127.0.0.1:9000"
