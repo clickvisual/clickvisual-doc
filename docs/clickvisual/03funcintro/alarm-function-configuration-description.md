@@ -114,8 +114,9 @@ receivers:
 #### 启动配置
 
 配置文件中增加如下配置，作用是让 Prometheus 远程读写 ClickHouse
-- host 和 port 表示 prometheus 配置
+- host:port 表示 prometheus 配置的 remote_read/remote_write 需要的 host:port
 - 其余配置为 clickhouse 配置
+
 
 ```
 [prom2click]
@@ -123,7 +124,7 @@ enable = true
 
 [prom2click.dev]
 host = "127.0.0.1"
-port = 9222
+port = 9021
 clickhouseDSN = "tcp://127.0.0.1:9000"
 clickhouseDB = "metrics"
 clickhouseTable = "samples"
