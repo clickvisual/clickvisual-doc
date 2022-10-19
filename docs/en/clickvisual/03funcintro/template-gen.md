@@ -8,7 +8,7 @@ Note whether the subpath is configured. If the subpath is configured in the envi
 curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "dsn": "tcp://127.0.0.1:9000?username=admin&password=admin&read_timeout=10&write_timeout=20&debug=true",
+    "dsn": "clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60",
     "clusterName": "clusterName",
     "brokers": "kafka:9092"
 }'
@@ -23,7 +23,7 @@ instanceClusterName is ClickHouse cluster
 curl --location --request POST 'http://127.0.0.1:19001/api/v1/template/1' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "dsn": "tcp://127.0.0.1:9000?username=admin&password=admin&read_timeout=10&write_timeout=20&debug=true",
+    "dsn": "clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60",
     "k8sClusterName": "clusterName", 
     "brokers": "kafka:9092",
     "instanceClusterName": "shard2-repl1"
