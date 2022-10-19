@@ -124,7 +124,7 @@ enable = true
 
 [prom2click.dev]
 host = "127.0.0.1"
-port = 9021
+port = 9201
 clickhouseDSN = "tcp://127.0.0.1:9000"
 clickhouseDB = "metrics"
 clickhouseTable = "samples"
