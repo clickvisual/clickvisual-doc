@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS metrics.samples
 
 启动文件里面增加如下配置：
 
-- prom2click 为对应服务访问地址
+- clickvisual 为对应服务访问地址
 - alertmanager 为对应服务访问地址
 
 ```yaml
@@ -81,10 +81,10 @@ alerting:
     # 修改：targets、指定地址与端口
     - targets: ["alertmanager:9093"]
 remote_read:
-  - url: "http://prom2click:9201/read"
+  - url: "http://clickvisual:9201/read"
     read_recent: true
 remote_write:
-  - url: "http://prom2click:9201/write"
+  - url: "http://clickvisual:9201/write"
     queue_config:
       capacity: 10000
       max_shards: 1
