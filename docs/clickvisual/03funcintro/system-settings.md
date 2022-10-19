@@ -22,15 +22,9 @@
 
 默认没有配置数据源实例，所以此处为空，点击 **+新增实例**，增加一个新的 ClickHouse 实例作为数据源。
 
-数据源配置类似：`tcp://x.x.x.x:9000?username=x&password=x&read_timeout=10&write_timeout=20&debug=true`，可支持参数
+数据源配置类似：`clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60`，可支持参数
 
-
-|参数| 类型    |
-|---|-------|
-|read_timeout| float |
-|write_timeout| float |
-|block_size| int   |
-|compress| bool  |
+基于 [clickhouse-go](https://github.com/ClickHouse/clickhouse-go)
 
 ![img.png](../../images/instance-create.png)
 

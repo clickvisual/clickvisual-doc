@@ -21,7 +21,7 @@
 
 ### 2.2. 创建数据库
 
-创建实例，填写 DSN 参数 tcp://clickhouse:9000?username=root&password=shimo&read_timeout=10&write_timeout=10&debug=true
+创建实例，填写 DSN 参数 clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60
 
 ![img.png](../../images/create-database.png)
 

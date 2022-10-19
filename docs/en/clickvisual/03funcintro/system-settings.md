@@ -23,15 +23,7 @@ In the top nav bar,select **Setting -> Instances：**
 By default, no data source instance is configured, so this is blank,click **+Add instance**, add a new ClickHouse instance as datasource.
 
 datasource config like that
-> `tcp://x.x.x.x:9000?username=x&password=x&read_timeout=10&write_timeout=20&debug=true`
-
-
-|parameter| type    |
-|---|-------|
-|read_timeout| float |
-|write_timeout| float |
-|block_size| int   |
-|compress| bool  |
+> clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60
 
 ![img.png](../../images/instance-create.png)
 
