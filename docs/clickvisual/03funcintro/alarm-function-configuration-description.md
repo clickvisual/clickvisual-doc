@@ -83,12 +83,6 @@ CREATE TABLE IF NOT EXISTS metrics.samples
 )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup');
 ```
 
-### prom2click 配置
-
-prom2click 仓库地址：[https://github.com/mindis/prom2click](https://github.com/mindis/prom2click)
-
-修改服务启动参数，-ch.dsn 参数，保证该服务可以访问到 clickhouse。
-
 ### Prometheus 配置
 
 启动文件里面增加如下配置：
