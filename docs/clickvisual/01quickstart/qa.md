@@ -113,11 +113,11 @@ rootURL = "http://localhost:19001"
 
 ## 告警触发后三方客户端无法收到消息
 
-1. 确认 Alertmanager 中填写的回调地址是否正确
-2. 确认 Alertmanager 告警推送记录
-3. 查询 clickvisual 报错日志，提交 [github clickvisual issue](https://github.com/clickvisual/clickvisual/issues)
+1. 确认 AlertManager 中填写的回调地址是否正确
+2. 确认 AlertManager 告警推送记录
+3. 查询 ClickVisual 报错日志，提交 [GitHub ClickVisual Issue](https://github.com/clickvisual/clickvisual/issues)
    > 过滤关键字 webhook 和 notification
-4. 如果没有上述报错日志，提交 [github clickvisual issue](https://github.com/clickvisual/clickvisual/issues)
+4. 如果没有上述报错日志，提交 [GitHub ClickVisual Issue](https://github.com/clickvisual/clickvisual/issues)
    - 提供通知方式的 Type 类型：钉钉/飞书/Stack
    - 提供 debug 日志，修改项目日志级别 level 为 debug
    > 过滤关键字 alarm 和 notification
