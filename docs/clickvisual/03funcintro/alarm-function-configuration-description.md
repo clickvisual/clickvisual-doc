@@ -197,6 +197,8 @@ having  length(service) > 3
 ORDER by val desc
 ```
 
+以上这个 SQL 会每秒触发一次，进行 val 计算。
+
 根据这个配置计算出来，metrics 是实际写入 metrics.samples 的值，即触发条件配置的目标数据。
 
 ![img.png](../../images/alarm-demo.png)
