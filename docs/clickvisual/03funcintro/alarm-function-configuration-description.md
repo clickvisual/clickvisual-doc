@@ -183,9 +183,8 @@ rule_files:
 在输入框部分填入 where 部分语句即可，点击预览后进入后续告警流程。
 
 ### 聚合模式
-为了解决常规模式满足不了的日志 group by 需求
 
-使用方式，例如你需要配置 nginx 访问失败率的告警，正常的语句如下所示：
+例如你需要配置 nginx 访问失败率的告警，正常的语句如下所示：
 
 ```mysql
 SELECT 
@@ -195,12 +194,15 @@ from ingress.ingress_stdout
 WHERE ("_time_second_" >= toDateTime(NOW() - 3600)) AND ("_time_second_" < toDateTime(NOW()))
 group by service
 having  length(service) > 3 
-ORDER by val desc    
-limit 1
+ORDER by val desc
 ```
 
-要求：
-1. select 监控指标必须使用 `as val`
+根据这个配置计算出来，metrics 是实际写入 metrics.samples 的值，即触发条件配置的目标数据。
+
+![img.png](../../images/alarm-demo.png)
+
+要求： 
+- select 监控指标必须使用 `as val`
 
 ![img.png](../../images/alarm-agg.png)
 
