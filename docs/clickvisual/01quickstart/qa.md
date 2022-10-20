@@ -111,6 +111,9 @@ rootURL = "http://localhost:19001"
 
 2. 确认 [graphite_rollup 配置](https://clickvisual.gocn.vip/clickvisual/03funcintro/alarm-function-configuration-description.html#clickhouse-%E9%85%8D%E7%BD%AE)， function 部分使用 sum，保证 1s 内的多条数据进行求和，保证数据准确。
 
+### 相关文档
+- [clickhouse 物化视图的踩坑记录](https://juejin.cn/post/6903508511637340173)
+
 ## 告警触发后三方客户端无法收到消息
 
 1. 确认 AlertManager 中填写的回调地址是否正确
