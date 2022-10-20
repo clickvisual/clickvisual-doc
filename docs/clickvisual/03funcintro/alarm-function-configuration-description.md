@@ -205,6 +205,7 @@ ORDER by val desc
 
 要求： 
 - select 监控指标必须使用 `as val`
+- 其他的语法为 clickhouse 语法 [参考文档](https://clickhouse.com/docs/zh/sql-reference/statements/select/)
 
 ![img.png](../../images/alarm-agg.png)
 
