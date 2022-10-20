@@ -24,29 +24,32 @@
 ![img.png](../../images/graphite_rollup_tree.png)
 
 ```xml
-<?xml version="1.0" ?>
 <yandex>
-    <graphite_rollup>
-        <path_column_name>tags</path_column_name>
-        <time_column_name>ts</time_column_name>
-        <value_column_name>val</value_column_name>
-        <version_column_name>updated</version_column_name>
-        <default>
-            <function>max</function>
-            <retention>
-                <age>0</age>
-                <precision>10</precision>
-            </retention>
-            <retention>
-                <age>86400</age>
-                <precision>30</precision>
-            </retention>
-            <retention>
-                <age>172800</age>
-                <precision>300</precision>
-            </retention>
-        </default>
-    </graphite_rollup>
+  <graphite_rollup>
+    <path_column_name>tags</path_column_name>
+    <time_column_name>ts</time_column_name>
+    <value_column_name>val</value_column_name>
+    <version_column_name>updated</version_column_name>
+    <default>
+      <function>sum</function>
+      <retention>
+        <age>0</age>
+        <precision>1</precision>
+      </retention>
+      <retention>
+        <age>360</age>
+        <precision>60</precision>
+      </retention>
+      <retention>
+        <age>3600</age>
+        <precision>300</precision>
+      </retention>
+      <retention>
+        <age>86400</age>
+        <precision>3600</precision>
+      </retention>
+    </default>
+  </graphite_rollup>
 </yandex>
 ```
 
@@ -54,7 +57,8 @@
 
 ```sql
 CREATE DATABASE IF NOT EXISTS metrics;
-CREATE TABLE IF NOT EXISTS metrics.samples
+
+CREATE TABLE IF NOT EXISTS metrics.samples [ON CLUSTER cluster]
 (
     date Date DEFAULT toDate(0),
     name String,
@@ -62,17 +66,31 @@ CREATE TABLE IF NOT EXISTS metrics.samples
     val Float64,
     ts DateTime,
     updated DateTime DEFAULT now()
-)ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup');
+)ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
+  [PARTITION BY expr]
+  [ORDER BY expr]
+  [SAMPLE BY expr]
+  [SETTINGS name=value, ...]
 ```
 
 ### Prometheus 配置
+
+需要支持配置热更新，[参考文档](https://songjiayang.gitbooks.io/prometheus/content/qa/hotreload.html)
+
+> 从 2.0 开始，hot reload 功能是默认关闭的，如需开启，需要在启动 Prometheus 的时候，添加 --web.enable-lifecycle 参数。
 
 启动文件里面增加如下配置：
 
 - clickvisual 为对应服务访问地址
 - alertmanager 为对应服务访问地址
 
+rule_files 中配置的路径需要与系统配置中下发路径一致
+
 ```yaml
+global:
+  evaluation_interval: "15s"
+rule_files:
+  - /etc/prometheus/rules/*.yaml
 alerting:
   # 告警配置文件
   alertmanagers:
@@ -106,7 +124,7 @@ route:
 receivers:
 - name: 'webhook'
   webhook_configs:
-  - url: 'http://clickvisual:9001/api/v1/prometheus/alerts'
+  - url: 'http://clickvisual:19001/api/v1/prometheus/alerts'
 ```
 
 ### ClickVisual 配置
@@ -116,7 +134,6 @@ receivers:
 配置文件中增加如下配置，作用是让 Prometheus 远程读写 ClickHouse
 - host:port 表示 prometheus 配置的 remote_read/remote_write 需要的 host:port
 - 其余配置为 clickhouse 配置
-
 
 ```
 [prom2click]

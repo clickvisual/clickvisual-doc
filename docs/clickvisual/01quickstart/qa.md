@@ -80,3 +80,34 @@ rootURL = "http://localhost:19001"
 ## 没有建表的 SQL?
 
 服务启动成功后访问 http://localhost:19001 可以初始化数据库
+
+## 报警有数据满足触发条件却没触发？
+
+告警是将 metrics.samples 作为 prometheus 的远程存储，所以从一下两个方向去排查：
+1. metrics.samples 是否有数据，并且 prometheus 能否正常读取到数据
+2. prometheus 的 rule 是否正常下发了
+   - 可能存在 rule 路径配置不正确
+   - prometheus 没有热更新 [https://songjiayang.gitbooks.io/prometheus/content/qa/hotreload.html](https://songjiayang.gitbooks.io/prometheus/content/qa/hotreload.html)
+
+## metrics.samples 数据与预期不一致
+
+![img.png](../../images/qa-data-diff.png)
+
+该表数据写入的逻辑：
+1. 通过物化视图将日志表中的数据经过转换写入，例如如下物化视图，在数据写入 yy.yy 中的时候触发转换，此时只对缓冲区内的数据进行了统计，可能出现 1s 内多条数据的情况；
+
+```
+   CREATE MATERIALIZED VIEW xx.xx TO metrics.samples AS
+   SELECT
+   toDate(_time_second_) as date,
+   'clickvisual_alert_metrics' as name,
+   array('uuid=6ec0fd1c-0103-4d28-abb5-b317e5977c0c') as tags,
+   toFloat64(count(*)) as val,
+   _time_second_ as ts,
+   toDateTime(_time_second_) as updated
+   FROM yy.yy
+   WHERE (`_container_name_`='app' or `_container_name_`='app') and `_namespace_`='default' and `code`>'499' GROUP by _time_second_;
+```
+
+2. 确认 [graphite_rollup 配置](https://clickvisual.gocn.vip/clickvisual/03funcintro/alarm-function-configuration-description.html#clickhouse-%E9%85%8D%E7%BD%AE)， function 部分使用 sum，保证 1s 内的多条数据进行求和，保证数据准确。
+
