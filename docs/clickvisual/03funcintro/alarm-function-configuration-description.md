@@ -55,10 +55,11 @@
 
 需要创建 metrics.samples 表，依赖 `graphite_rollup` 配置
 
+#### 单机
 ```sql
 CREATE DATABASE IF NOT EXISTS metrics;
 
-CREATE TABLE IF NOT EXISTS metrics.samples [ON CLUSTER cluster]
+CREATE TABLE IF NOT EXISTS metrics.samples
 (
     date Date DEFAULT toDate(0),
     name String,
@@ -67,10 +68,33 @@ CREATE TABLE IF NOT EXISTS metrics.samples [ON CLUSTER cluster]
     ts DateTime,
     updated DateTime DEFAULT now()
 )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
-  [PARTITION BY expr]
-  [ORDER BY expr]
-  [SAMPLE BY expr]
-  [SETTINGS name=value, ...]
+```
+
+#### 集群
+
+```mysql
+CREATE DATABASE IF NOT EXISTS metrics;
+
+create table if not exists metrics.samples
+(
+    date    Date     default toDate(0),
+    name    String,
+    tags Array(String),
+    val     Float64,
+    ts      DateTime,
+    updated DateTime default now()
+)
+engine = Distributed([cluster], 'metrics', 'samples_local', sipHash64(name));
+
+CREATE TABLE IF NOT EXISTS metrics.samples_local ON CLUSTER [cluster]
+(
+  date Date DEFAULT toDate(0),
+  name String,
+  tags Array(String),
+  val Float64,
+  ts DateTime,
+  updated DateTime DEFAULT now()
+  )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
 ```
 
 ### Prometheus 配置
