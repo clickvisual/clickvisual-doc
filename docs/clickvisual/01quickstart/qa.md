@@ -131,3 +131,11 @@ rootURL = "http://localhost:19001"
 level = "debug"
 name = "clickvisual.log"
 ```
+
+
+## query failed 9000: i/o timeout
+
+可能原因：DSN 上面有参数配置 read_timeout 参数，可以调整为 max_execution_time 参数，该参数单位是【秒】
+
+参考：
+> clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60
