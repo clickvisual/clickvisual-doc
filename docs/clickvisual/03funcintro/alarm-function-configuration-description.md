@@ -139,7 +139,7 @@ receivers:
 [prom2click]
 enable = true
 
-[prom2click.dev]
+[[prom2click.cfgs]]
 host = "127.0.0.1"
 port = 9201
 clickhouseDSN = "tcp://127.0.0.1:9000"
