@@ -132,10 +132,17 @@ level = "debug"
 name = "clickvisual.log"
 ```
 
-
 ## query failed 9000: i/o timeout
 
 可能原因：DSN 上面有参数配置 read_timeout 参数，可以调整为 max_execution_time 参数，该参数单位是【秒】
 
 参考：
 > clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60
+
+
+## kafka 包含不同的json格式(字段不一样) 都需要单独创建吗?
+
+可以选择 JSONAsString 模式创建，但是建立分析字段的时候，会出现很多空数据。
+
+![img.png](../../images/qa-create-v3.png)
+
