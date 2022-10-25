@@ -159,6 +159,9 @@ receivers:
 - host:port 表示 prometheus 配置的 remote_read/remote_write 需要的 host:port
 - 其余配置为 clickhouse 配置
 
+clickhouseDSN 格式参考：
+> clickhouse://username:password@host1:9000/metrics?dial_timeout=200ms&max_execution_time=60
+
 ```
 [prom2click]
 enable = true
