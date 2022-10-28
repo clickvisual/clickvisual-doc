@@ -5,28 +5,37 @@
 [https://github.com/clickvisual/clickvisual/releases/tag/v0.4.3](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.3)
 
 ### 新功能
-- 日志查询代码提示，记录查询历史以及常用函数提示
-- 拓扑页面点击查看建表语句
 - 告警模块
   - 独立告警配置，增加基础组件环境检测包括 prometheus/alertmanager，并进行 remote_read 配置检测
   - 告警规则下发时增加【配置中】状态，在完成 prometheus 规则加载检测后，变更为【正常】
   - 支持多条件告警
+- 拓扑页面支持节点建表语句查询
+- 支持按照 select 字段次序显示结果
+- 日志查询提示，记录查询历史以及常用函数提示
 
 ### 优化
-- 支持 array 显示以及通过菜单点击查询
+- 支持数组显示以及点击查询
 - 链路库展示兼容更多的日期格式
-- 将日志查询编辑器更改为 codemirror
-- 支持按照 select 字段次序显示结果
+- 日志查询编辑器更改为 codemirror
+
 
 ### 修复
-- 修复日志库链路模式下的错误显示，兼容大小写样式
-- 修复隐藏字段更新权限检测错误
-- 修复集群中已有日志库添加告警规则提示的 cluster 缺失问题
+- 修复隐藏字段权限检测错误
 - 修复日志库潜在的事务锁定问题
+- 修复日志库链路模式下的错误显示，兼容大小写样式
+- 修复集群中已有日志库添加告警规则提示的 cluster 缺失问题
 
 ### v0.4.4 开发计划
-- 支持按标签输入查询语句，强化检索流程优化
 - 支持检索条件收藏
+- 支持按标签输入查询语句，强化检索流程优化
+
+#### 协助
+社区需要微信方式推送告警，有朋友想参与开发吗，可以通过 issues 进行沟通。
+[https://github.com/clickvisual/clickvisual/issues/702](https://github.com/clickvisual/clickvisual/issues/702)
+
+开发帮助文档
+[https://clickvisual.gocn.vip/clickvisual/06join/alert-push-channel.html#%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91](https://clickvisual.gocn.vip/clickvisual/06join/alert-push-channel.html#%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91)
+
 
 ## ClickVisual 版本 2022-09-30 v0.4.2
 
