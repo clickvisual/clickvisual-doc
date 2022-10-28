@@ -146,3 +146,9 @@ name = "clickvisual.log"
 
 ![img.png](../../images/qa-create-v3.png)
 
+## kafka 出现消费阻塞
+
+首先看 kafka engine table 的 kafka_format
+
+- JSONAsString，可能是 kafka 数据落地的 MergeTree Table 的物化视图出现了报错；
+- JSONEachRow， 可能是 kafka 里面的 json 数据中混入了与表字段不一致的内容；
