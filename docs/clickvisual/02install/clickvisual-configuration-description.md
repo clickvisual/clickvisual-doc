@@ -2,7 +2,7 @@
 
 本文主要对 clickvisual 启动的配置项做详细说明。
 
-app 段配置说明：
+## app 段配置说明：
 ```toml
 [app]
 # OAuth 签发 hashStatecode 所需的 secretKey
@@ -17,7 +17,7 @@ permissionFile = "./config/resource.yaml"
 queryLimitHours = 24
 ```
 
-logger 段配置说明：
+## logger 段配置说明：
 ```toml
 [logger]
 # 日志等级，可选 debug|info|warn|error|panic|fatal，建议测试环境选择 debug，生产环境选择 error
@@ -30,7 +30,7 @@ dir = "./logs"
 name = "default.log"
 ```
 
-server 段配置说明：
+## server 段配置说明：
 ```toml
 # clickvisual API Server 配置
 [server.http]
@@ -47,7 +47,7 @@ host = "0.0.0.0"
 port = 9003
 ```
 
-mysql 段配置说明
+## mysql 段配置说明
 ```toml
 [mysql]
 # 连接的最大存活时间，默认300s
@@ -64,7 +64,7 @@ maxIdleConns = 5
 maxOpenConns = 50
 ```
 
-auth 段配置说明
+## auth 段配置说明
 ```toml
 [auth]
 # 使用 redis 存储用户 session
@@ -129,4 +129,29 @@ apiUrl = "https://mygitlab.com/api/v4"
 allowedDomains = []
 teamIds = []
 allowedOrganizations = []
+```
+
+## 多实例部署
+```toml
+[app]
+isMultiCopy = true
+
+[redis]
+debug = true
+addr = "127.0.0.1:6379"
+writeTimeout = "3s"
+password = "**"
+```
+
+## prometheus 代理配置
+```toml
+[prom2click]
+enable = true
+
+[[prom2click.cfgs]]
+host = "127.0.0.1"
+port = 9222
+clickhouseDSN = "tcp://127.0.0.1:9000"
+clickhouseDB = "metrics"
+clickhouseTable = "samples"
 ```
