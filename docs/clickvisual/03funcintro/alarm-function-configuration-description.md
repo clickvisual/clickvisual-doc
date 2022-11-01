@@ -72,19 +72,11 @@ CREATE TABLE IF NOT EXISTS metrics.samples
 
 #### 集群
 
-```mysql
-CREATE DATABASE IF NOT EXISTS metrics;
+```sql
+CREATE DATABASE IF NOT EXISTS metrics ON CLUSTER [cluster];
 
-create table if not exists metrics.samples
-(
-    date    Date     default toDate(0),
-    name    String,
-    tags Array(String),
-    val     Float64,
-    ts      DateTime,
-    updated DateTime default now()
-)
-engine = Distributed([cluster], 'metrics', 'samples_local', sipHash64(name));
+CREATE TABLE if NOT EXISTS metrics.samples ON CLUSTER [cluster] AS metrics.samples_local
+ENGINE = Distributed([cluster], 'metrics', 'samples_local', sipHash64(name));
 
 CREATE TABLE IF NOT EXISTS metrics.samples_local ON CLUSTER [cluster]
 (
@@ -94,7 +86,8 @@ CREATE TABLE IF NOT EXISTS metrics.samples_local ON CLUSTER [cluster]
   val Float64,
   ts DateTime,
   updated DateTime DEFAULT now()
-  )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
+)
+ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
 ```
 
 ### Prometheus 配置
