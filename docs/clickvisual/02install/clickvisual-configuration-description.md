@@ -2,7 +2,7 @@
 
 本文主要对 clickvisual 启动的配置项做详细说明。
 
-## app 段配置说明：
+## app 段配置说明
 ```toml
 [app]
 # OAuth 签发 hashStatecode 所需的 secretKey
@@ -17,7 +17,7 @@ permissionFile = "./config/resource.yaml"
 queryLimitHours = 24
 ```
 
-## logger 段配置说明：
+## logger 段配置说明
 ```toml
 [logger]
 # 日志等级，可选 debug|info|warn|error|panic|fatal，建议测试环境选择 debug，生产环境选择 error
@@ -30,7 +30,7 @@ dir = "./logs"
 name = "default.log"
 ```
 
-## server 段配置说明：
+## server 段配置说明
 ```toml
 # clickvisual API Server 配置
 [server.http]
