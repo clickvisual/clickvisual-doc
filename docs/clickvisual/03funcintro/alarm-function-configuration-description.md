@@ -118,12 +118,6 @@ alerting:
 remote_read:
   - url: "http://clickvisual:9201/read"
     read_recent: true
-remote_write:
-  - url: "http://clickvisual:9201/write"
-    queue_config:
-      capacity: 10000
-      max_shards: 1
-      max_samples_per_send: 500
 ```
 
 ### Prometheus AlertManager 配置
