@@ -20,11 +20,11 @@ const (
 	ChannelWeChat   int = 2
 )
 
-type Operator interface {
-	Send(notification view.Notification, alarm *db.Alarm, channel *db.AlarmChannel) (err error)
+type IPusher interface {
+    Send(view.Notification, *db.Alarm, *db.AlarmChannel, string) error
 }
 
-func Instance(typ int) (Operator, error) {
+func GetPusher(typ int) (IPusher, error) {
 	var err error
 	switch typ {
 	case ChannelDingDing:
