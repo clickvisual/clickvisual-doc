@@ -1,7 +1,7 @@
 # 新增告警推送途径
 
 ## 后端开发
-开发目录 `/api/pkg/push`
+开发目录 `/api/internal/service/alert/pusher`
 
 例如实现微信推送，实现 Send 函数功能
 ```go

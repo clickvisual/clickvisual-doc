@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS metrics.samples
 )ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
 ```
 
-#### 集群
+#### 集群(无副本)
 
 ```sql
 CREATE DATABASE IF NOT EXISTS metrics ON CLUSTER [cluster];
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS metrics.samples_local ON CLUSTER [cluster]
   val Float64,
   ts DateTime,
   updated DateTime DEFAULT now()
-)
+)       
 ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
 ```
 
