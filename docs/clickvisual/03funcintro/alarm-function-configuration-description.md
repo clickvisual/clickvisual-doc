@@ -55,6 +55,15 @@
 
 需要创建 metrics.samples 表，依赖 `graphite_rollup` 配置
 
+
+### 创建 metrics.samples 表
+
+如果 clickvisual 版本 > 0.4.4 可以在界面上直接操作
+
+![img.png](../../images/alarm-store-samples.png)
+
+其他版本需要手动创建，参考如下语句。
+
 #### 单机
 ```sql
 CREATE DATABASE IF NOT EXISTS metrics;
