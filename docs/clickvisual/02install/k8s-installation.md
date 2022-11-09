@@ -190,13 +190,13 @@ data:
     [FILTER]
         Name            modify
         Match           *
+        #Rename          time _time_
         Rename          log _log_
         Rename          stream _source_
         Rename          kubernetes_host _node_name_
         Rename          kubernetes_namespace_name _namespace_
         Rename          kubernetes_container_name _container_name_
         Rename          kubernetes_pod_name _pod_name_
-        Remove          time
         Remove          kubernetes_pod_id
         Remove          kubernetes_docker_id
         Remove          kubernetes_container_hash
