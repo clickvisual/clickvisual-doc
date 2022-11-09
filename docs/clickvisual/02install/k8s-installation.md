@@ -46,7 +46,7 @@ data:
     @INCLUDE filter-modify.conf
     @INCLUDE output-kafka.conf
 
-    # Deamonet中有配置ENV时禁用
+    # DaemonSet中有配置ENV时禁用
     #@Set CLUSTER_NAME=shimodev
     #@Set KAFKA_BROKERS=127.0.0.1:9092
 
@@ -213,7 +213,7 @@ data:
         #Regex stream ^stdout$
         Exclude _source_ ^stderr$
         # 排除 TCP 代理日志（日志格式不同影响采集）
-        Exclude log ^\[*
+        Exclude _log_ ^\[*
 
     [FILTER]
         Name    grep
@@ -224,13 +224,13 @@ data:
         Name    grep
         Match   kube.*
         #Regex stream ^stdout$
-        Exclude log (ego.sys)
+        Exclude _log_ (ego.sys)
 
     [FILTER]
         Name    grep
         Match   ego.*
         #Regex lname ^(ego.sys)$
-        Regex   log ("lname":"ego.sys")
+        Regex   _log_ ("lname":"ego.sys")
 
     # [FILTER]
     #     Name            modify

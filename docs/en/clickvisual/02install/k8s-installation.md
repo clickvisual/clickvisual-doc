@@ -44,7 +44,7 @@ data:
     @INCLUDE filter-modify.conf
     @INCLUDE output-kafka.conf
 
-    # Disabled when env is configured in Deamonet
+    # Disabled when env is configured in DaemonSet
     #@Set CLUSTER_NAME=shimodev
     #@Set KAFKA_BROKERS=127.0.0.1:9092
 
