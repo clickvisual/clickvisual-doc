@@ -190,7 +190,7 @@ data:
     [FILTER]
         Name            modify
         Match           *
-        Rename          time _time_
+        #Rename          time _time_
         Rename          log _log_
         Rename          stream _source_
         Rename          kubernetes_host _node_name_
