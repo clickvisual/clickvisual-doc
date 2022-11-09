@@ -245,6 +245,7 @@ data:
         Topics         ingress-stdout-logs-${CLUSTER_NAME}
         #Timestamp_Key  @timestamp
         Timestamp_Key  _time_
+        Timestamp_Format  iso8601
         Retry_Limit    false
         # hides errors "Receive failed: Disconnected" when kafka kills idle connections
         rdkafka.log.connection.close false
@@ -260,6 +261,7 @@ data:
         Topics         ingress-stderr-logs-${CLUSTER_NAME}
         #Timestamp_Key  @timestamp
         Timestamp_Key  _time_
+        Timestamp_Format  iso8601
         Retry_Limit    false
         # hides errors "Receive failed: Disconnected" when kafka kills idle connections
         rdkafka.log.connection.close false
@@ -274,6 +276,7 @@ data:
         Brokers        ${KAFKA_BROKERS}
         Topics         app-stdout-logs-${CLUSTER_NAME}
         Timestamp_Key  _time_
+        Timestamp_Format  iso8601
         Retry_Limit    false
         # hides errors "Receive failed: Disconnected" when kafka kills idle connections
         rdkafka.log.connection.close false
@@ -288,6 +291,7 @@ data:
         Brokers        ${KAFKA_BROKERS}
         Topics         ego-stdout-logs-${CLUSTER_NAME}
         Timestamp_Key  _time_
+        Timestamp_Format  iso8601
         Retry_Limit    false
         # hides errors "Receive failed: Disconnected" when kafka kills idle connections
         rdkafka.log.connection.close false
