@@ -13,11 +13,34 @@
 3. Prometheus 读取 metrics.samples 的数据，并根据告警规则产生告警，推送到 Prometheus AlertManager
 4. Prometheus AlertManager 通过 webhook 推送到 clickvisual，再由 clickvisual 分发到钉钉
 
-## 集群部署
+## 组件配置
 
-可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
+按照文档完成安装后告警触发流程如下
 
-### ClickHouse 配置
+![img.png](../../images/alarm-flow.png)
+
+### ClickVisual
+
+配置文件中增加如下配置，作用是让 Prometheus 远程读写 ClickHouse
+- host:port 表示 prometheus 配置的 remote_read/remote_write 需要的 host:port
+- 其余配置为 clickhouse 配置
+
+clickhouseDSN 格式参考：
+> clickhouse://username:password@host:9000/metrics?dial_timeout=200ms&max_execution_time=60
+
+```
+[prom2click]
+enable = true
+
+[[prom2click.cfgs]]
+host = "127.0.0.1"
+port = 9201 
+clickhouseDSN = "tcp://127.0.0.1:9000"
+clickhouseDB = "metrics"
+clickhouseTable = "samples"
+```
+
+### ClickHouse
 
 新增`graphite_rollup` 配置，配置路径可以参考，根据 clickhouse 的版本不通略有区别，具体以官方指导配置为准。
 
@@ -53,53 +76,7 @@
 </yandex>
 ```
 
-需要创建 metrics.samples 表，依赖 `graphite_rollup` 配置
-
-
-### 创建 metrics.samples 表
-
-如果 clickvisual 版本 > 0.4.4 可以在界面上直接操作
-
-![img.png](../../images/alarm-store-samples.png)
-
-其他版本需要手动创建，参考如下语句。
-
-#### 单机
-```sql
-CREATE DATABASE IF NOT EXISTS metrics;
-
-CREATE TABLE IF NOT EXISTS metrics.samples
-(
-    date Date DEFAULT toDate(0),
-    name String,
-    tags Array(String),
-    val Float64,
-    ts DateTime,
-    updated DateTime DEFAULT now()
-)ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
-```
-
-#### 集群(无副本)
-
-```sql
-CREATE DATABASE IF NOT EXISTS metrics ON CLUSTER [cluster];
-
-CREATE TABLE if NOT EXISTS metrics.samples ON CLUSTER [cluster] AS metrics.samples_local
-ENGINE = Distributed([cluster], 'metrics', 'samples_local', sipHash64(name));
-
-CREATE TABLE IF NOT EXISTS metrics.samples_local ON CLUSTER [cluster]
-(
-  date Date DEFAULT toDate(0),
-  name String,
-  tags Array(String),
-  val Float64,
-  ts DateTime,
-  updated DateTime DEFAULT now()
-)       
-ENGINE = GraphiteMergeTree(date, (name, tags, ts), 8192, 'graphite_rollup')
-```
-
-### Prometheus 配置
+### Prometheus
 
 需要支持配置热更新，[参考文档](https://songjiayang.gitbooks.io/prometheus/content/qa/hotreload.html)
 
@@ -129,7 +106,7 @@ remote_read:
     read_recent: true
 ```
 
-### Prometheus AlertManager 配置
+### AlertManager
 
 告警方式为 webhook，回调到 clickvisual 服务，修改 url 地址，保证可以正常访问 clickvisual 服务。
 
@@ -147,49 +124,28 @@ receivers:
   - url: 'http://clickvisual:19001/api/v1/prometheus/alerts'
 ```
 
-### ClickVisual 配置
+## 进入 ClickVisual 进行后续操作
 
-#### 启动配置
+### 基础配置
 
-配置文件中增加如下配置，作用是让 Prometheus 远程读写 ClickHouse
-- host:port 表示 prometheus 配置的 remote_read/remote_write 需要的 host:port
-- 其余配置为 clickhouse 配置
+如果已添加实例，可以看到如下界面，检测上面配置的各组件是否正确。  
 
-clickhouseDSN 格式参考：
-> clickhouse://username:password@host1:9000/metrics?dial_timeout=200ms&max_execution_time=60
+点击提示没有 mertics.samples 表，点击操作中的 + ，即可完成基础数据表创建。
 
-```
-[prom2click]
-enable = true
+![img.png](../../images/alarm-manager.png)
 
-[[prom2click.cfgs]]
-host = "127.0.0.1"
-port = 9201
-clickhouseDSN = "tcp://127.0.0.1:9000"
-clickhouseDB = "metrics"
-clickhouseTable = "samples"
-```
-
-#### 系统设置
-
-访问：系统设置 -> 实例管理
-
-新增和编辑实例数据可以在 “更多设置” 中，可以看到如下配置，这个部分配置的作用是将告警规则下发到 Prometheus。
-
-如果 Prometheus 采用本地配置文件方式启动，例如下面这个例子，则将文件路径配置为 `/etc/prometheus/rules`
+- 如果 Prometheus 使用本地文件，则将文件路径配置为 `/etc/prometheus/rules`
 
 ```yaml
 rule_files:
 - /etc/prometheus/rules/*.yaml
 ```
 
+- 如果是使用 configmap 则选择对应 configmap 即可
+
 ![img.png](../../images/alarm-store-k8s.png)
 
-## 报警消息推送效果
-
-![img.png](../../images/alarm-msg-push.png)
-
-## 告警配置
+### 告警配置
 
 ![img.png](../../images/alarm-config.png)
 
@@ -232,4 +188,10 @@ ORDER by val desc
 
 ![img.png](../../images/alarm-agg.png)
 
+### 推送效果
 
+![img.png](../../images/alarm-msg-push.png)
+
+## 其他文档
+
+集群部署可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
