@@ -194,4 +194,4 @@ ORDER by val desc
 
 ## 其他文档
 
-集群部署可参考[https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus) 中的配置。
+[集群部署配置](https://github.com/clickvisual/clickvisual/tree/master/data/k8s/prometheus)
