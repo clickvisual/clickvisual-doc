@@ -142,6 +142,7 @@ var _hmt = _hmt || [];
                             collapsable: false, // 可选的, 默认值是 true,
                             children: [
                                 "05arch/graphite-document-logging-architecture",
+                                "05arch/clickvisual-intro-doc",
                             ],
                         },
                         {

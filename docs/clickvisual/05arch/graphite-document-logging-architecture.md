@@ -182,9 +182,6 @@ create table logger.ingress_stdout ( _time_second_ DateTime, _time_nanosecond_ D
 ![img.png](../../images/overall-introduction.png)
 
 
-
-
-
 设置日志采集配置界面：
 
 ![img.png](../../images/fluent-config.png)
