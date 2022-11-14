@@ -111,7 +111,7 @@ rootURL = "http://localhost:19001"
 
 2. 确认 [graphite_rollup 配置](https://clickvisual.gocn.vip/clickvisual/03funcintro/alarm-function-configuration-description.html#clickhouse-%E9%85%8D%E7%BD%AE)， function 部分使用 sum，保证 1s 内的多条数据进行求和，保证数据准确。
 
-### 相关文档
+相关文档
 - [clickhouse 物化视图的踩坑记录](https://juejin.cn/post/6903508511637340173)
 
 ## 告警触发后三方客户端无法收到消息
@@ -132,7 +132,7 @@ level = "debug"
 name = "clickvisual.log"
 ```
 
-## query failed 9000: i/o timeout
+## Query Failed 9000: i/o timeout
 
 可能原因：DSN 上面有参数配置 read_timeout 参数，可以调整为 max_execution_time 参数，该参数单位是【秒】
 
@@ -140,15 +140,19 @@ name = "clickvisual.log"
 > clickhouse://username:password@host1:9000,host2:9000/database?dial_timeout=200ms&max_execution_time=60
 
 
-## kafka 包含不同的json格式(字段不一样) 都需要单独创建吗?
+## Kafka 包含不同的json格式(字段不一样) 都需要单独创建吗?
 
 可以选择 JSONAsString 模式创建，但是建立分析字段的时候，会出现很多空数据。
 
 ![img.png](../../images/qa-create-v3.png)
 
-## kafka 出现消费阻塞
+## Kafka 出现消费阻塞
 
 首先看 kafka engine table 的 kafka_format
 
 - JSONAsString，可能是 kafka 数据落地的 MergeTree Table 的物化视图出现了报错；
 - JSONEachRow， 可能是 kafka 里面的 json 数据中混入了与表字段不一致的内容；
+
+## ClickVisual 版本更新后菜单不一致
+如果出现菜单不一致的情况需要更新 config/resource.yaml 文件
+![img.png](../../images/qa-menu.png)
