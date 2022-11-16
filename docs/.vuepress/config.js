@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
                     },
                     {
                         text: "API",
-                        link: "/api/",
+                        link: "https://clickvisual.gocn.vip/api",
                     },
                     {
                         text: "GitHub",
