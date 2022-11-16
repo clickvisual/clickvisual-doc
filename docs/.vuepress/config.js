@@ -78,6 +78,10 @@ var _hmt = _hmt || [];
                         link: "/clickvisual/",
                     },
                     {
+                        text: "API",
+                        link: "/api/",
+                    },
+                    {
                         text: "GitHub",
                         link: "https://github.com/clickvisual/clickvisual",
                     },
