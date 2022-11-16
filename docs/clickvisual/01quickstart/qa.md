@@ -154,5 +154,7 @@ name = "clickvisual.log"
 - JSONEachRow， 可能是 kafka 里面的 json 数据中混入了与表字段不一致的内容；
 
 ## ClickVisual 版本更新后菜单不一致
-如果出现菜单不一致的情况需要更新 config/resource.yaml 文件
+
+如果出现菜单不一致的情况需要更新 config/resource.yaml 文件  
+
 ![img.png](../../images/qa-menu.png)
