@@ -19,7 +19,7 @@ queryLimitHours = 24
 
 ## logger 段配置说明
 ```toml
-[logger]
+[logger.default]
 # 日志等级，可选 debug|info|warn|error|panic|fatal，建议测试环境选择 debug，生产环境选择 error
 level = "debug"
 # 日志输出 writer，可选 file|stderr
