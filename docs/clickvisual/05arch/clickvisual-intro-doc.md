@@ -110,7 +110,6 @@
 ```plain
 {
 	// 基础属性字段
-    "_source_": "stdout",
     "_pod_name_": "nginx-ingress-controller-internal-565449885b-c27hv",
     "_namespace_": "kube-system",
     "_cluster_": "xxx",
