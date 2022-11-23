@@ -105,6 +105,8 @@
 * 采集必须字段：
     * 时间字段，日志展示的时间轴字段，支持 string、float 两种类型；
     * 项目日志字段， 具体服务产生的业务日志，支持 string 类型；
+
+以下为 source 填写示例
 ```plain
 {
 	// 基础属性字段
@@ -120,7 +122,7 @@
     "_log_": "{\"time\": \"2022-09-08T17:29:06+08:00\", \"client_ip\": \"xx.xx.xx.xx\", \"method\": \"GET\", \"url\": \"/static/js/2.dc02066e.chunk.js\", \"version\": \"HTTP/2.0\", \"status\": \"200\", \"body_bytes_sent\": \"538283\", \"http_user_agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36\", \"request_length\": \"49\", \"request_time\": \"0.189\", \"upstream_status\": \"200\", \"req_id\": \"334bc867425106ad15eb815e2bb7a4da\"}",
 }
 ```
-例如上面的例子，选择 _time_ 作为时间字段，选择 _log_ 作为项目日志字段，这两个字段的选择可以在配置的时候自行决定。
+例如上面的例子，选择 `_time_` 作为时间字段，选择 `_log_` 作为项目日志字段，这两个字段的选择可以在配置的时候自行决定。
 
 ![img.png](../../images/cv-eachrow.png)
 
