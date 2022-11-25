@@ -1,6 +1,6 @@
 # 变更日志
 
-## ClickVisual 版本 2022-10-28 v0.4.4
+## ClickVisual 版本 2022-11-25 v0.4.4
 
 [https://github.com/clickvisual/clickvisual/releases/tag/v0.4.4](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.4)
 
