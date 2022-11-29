@@ -67,17 +67,15 @@ maxOpenConns = 50
 ## auth 段配置说明
 ```toml
 [auth]
-# 使用 redis 存储用户 session
-mode = "redis"
+mode = "memstore" # redis memstore
 # 组件名，默认 clickvisual-session
 name = "clickvisual-session"
 keypairs = "secret"
-redisSize = 10
-redisNetwork = "tcp"
-# redis 实例地址，默认使用 127.0.0.1:6379，你可以修改为自己的 redis 地址
-redisAddr = "127.0.0.1:6379"
-# redis 实例密码，默认为空
-redisPassword = "
+# if use mode redis
+# redisSize = 10
+# redisNetwork = "tcp"
+# redisAddr = ""
+# redisPassword = ""
 
 # 匿名访问配置
 [auth.anonymous]
