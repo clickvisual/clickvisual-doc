@@ -62,9 +62,11 @@ rootURL = "http://localhost:19001/clickvisual/"
 
 ## 4. ClickHouse 集群配置
 
-选择类型：集群。填入集群名称，例如 shard2-repl1。
+选择类型：集群
+填入集群名称，例如 shard2-repl1  
+有分片勾选分片即可  
 
-![img.png](../../images/instance-create.png)
+![img.png](../../images/instance-create-cluster-config.png)
 
 选择对应的集群实例后新建数据库，数据库建立成功后，后续操作与单机模式一致。
 
