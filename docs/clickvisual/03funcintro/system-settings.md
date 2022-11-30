@@ -63,8 +63,8 @@ rootURL = "http://localhost:19001/clickvisual/"
 ## 4. ClickHouse 集群配置
 
 选择类型：集群
-填入集群名称，例如 shard2-repl1  
-有分片勾选分片即可  
+- 有副本，勾选副本即可
+- 填入集群名称，例如 shard2-repl1  
 
 ![img.png](../../images/instance-create-cluster-config.png)
 
