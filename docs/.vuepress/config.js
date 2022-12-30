@@ -117,6 +117,14 @@ var _hmt = _hmt || [];
                             ],
                         },
                         {
+                            title: "日志采集",
+                            collapsable: false, // 可选的, 默认值是 true,
+                            children: [
+                                "07collect/fluent-bit-configuration-reference",
+                                "07collect/loggie-io",
+                            ],
+                        },
+                        {
                             title: "功能介绍",
                             collapsable: false, // 可选的, 默认值是 true,
                             children: [
@@ -125,7 +133,6 @@ var _hmt = _hmt || [];
                                 "03funcintro/alarm-function-configuration-description",
                                 "03funcintro/bigdata",
                                 "03funcintro/casbin",
-                                "03funcintro/fluent-bit-configuration-reference",
                                 "03funcintro/clickhouse-commonly-used-sql",
                                 "03funcintro/template-gen",
                             ],
