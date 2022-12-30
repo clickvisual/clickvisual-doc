@@ -1,8 +1,31 @@
 # 变更日志
 
+## ClickVisual 版本 2022-12-30 v0.4.5
+
+[v0.4.5](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.5)
+
+### 功能
+- 支持 databend 数据库作为数据源 [#823](https://github.com/clickvisual/clickvisual/pull/823)
+- 支持 buffer-null-mv 方式进行日志存储 [#826](https://github.com/clickvisual/clickvisual/pull/826)
+- 支持 metrics.samples 存储自定义 tags [#840](https://github.com/clickvisual/clickvisual/pull/840)
+
+### 优化&修复
+- 修复调度配置保存失败的问题 [#799](https://github.com/clickvisual/clickvisual/pull/799)
+- 优化日志页面/时间兼容更多格式/搜索高亮显示不区分大小写 [#804](https://github.com/clickvisual/clickvisual/pull/804)
+- 日志列表接口增加可选 count 数据返回 [#805](https://github.com/clickvisual/clickvisual/pull/805)
+- 优化告警检测中 alertmanager url 获取方式 [#808](https://github.com/clickvisual/clickvisual/pull/808)
+- 优化搜索框模糊匹配性能 [#814](https://github.com/clickvisual/clickvisual/pull/814)
+- 使用标签过滤日志的时使用精确类型匹配 [#839](https://github.com/clickvisual/clickvisual/pull/839)
+- 将告警检查统计信息的查询框更改为 codemirror 编辑器 [#842](https://github.com/clickvisual/clickvisual/pull/842)
+- 修复告警触发中配置的 sum/avg/max/min/count 函数支持 [#845](https://github.com/clickvisual/clickvisual/pull/845)
+
+### 新贡献者
+* [@hantmac](https://github.com/hantmac) made their first contribution in [#819](https://github.com/clickvisual/clickvisual/pull/819)
+
+
 ## ClickVisual 版本 2022-11-25 v0.4.4
 
-[https://github.com/clickvisual/clickvisual/releases/tag/v0.4.4](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.4)
+[v0.4.4](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.4)
 
 ### 功能
 - 支持检索条件收藏
@@ -31,7 +54,7 @@
 
 ## ClickVisual 版本 2022-10-28 v0.4.3
 
-[https://github.com/clickvisual/clickvisual/releases/tag/v0.4.3](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.3)
+[v0.4.3](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.3)
 
 ### 功能
 - 告警模块
@@ -54,7 +77,7 @@
 
 ## ClickVisual 版本 2022-09-30 v0.4.2
 
-[https://github.com/clickvisual/clickvisual/releases/tag/v0.4.2](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.2)
+[v0.4.2](https://github.com/clickvisual/clickvisual/releases/tag/v0.4.2)
 
 ### 功能
 - 增加对链路日志库数据分析功能
